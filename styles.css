@@ -2204,7 +2204,7 @@ h1, p {
     margin: 0 auto;
 }
 
-.events-content h2 {
+events-content h2 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 20px;
@@ -3593,4 +3593,39 @@ h1, p {
     .footer-logo, .footer-links, .footer-contact, .footer-social {
         width: 100%;
     }
+}
+
+/* Stick note mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .stick-note {
+        position: relative;
+        top: auto;
+        right: auto;
+        transform: none;
+        margin: 20px auto;
+        max-width: 300px;
+        max-height: fit-content;
+        z-index: 1;
+    }
+    
+    .hero {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .hero-content {
+        width: 100%;
+        padding: 0 20px;
+    }
+    
+    .note-pin {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* Ensures the stick-note is always visible */
+.mobile-visible {
+    display: block !important;
 }
