@@ -28,9 +28,11 @@
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(6, 78, 59, 0.1);
             width: 100%;
-            height: 450px; /* Fixed height for all cards */
+            height: auto; /* Changed from fixed height */
             display: flex;
             flex-direction: column;
+            position: relative; /* Added */
+            margin-bottom: 20px;
         }
 
         .event-image {
@@ -91,13 +93,18 @@
         }
 
         .event-footer {
+            position: relative; /* Changed from static */
+            bottom: 0;
+            left: 0;
+            right: 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             background: rgba(4, 120, 87, 0.05);
             border-top: 1px solid rgba(6, 78, 59, 0.1);
-            gap: 1rem;
+            z-index: 2; /* Added */
+            margin-top: auto; /* Added */
         }
 
         .event-location {
@@ -140,6 +147,19 @@
         .register-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
+        }
+
+        .event-btn {
+            padding: 8px 20px;
+            background: linear-gradient(145deg, #064e3b, #047857);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            min-width: 120px;
+            text-align: center;
         }
 
         .back-btn {
@@ -460,7 +480,7 @@
                 <!-- Dance Competition -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/dance.jpg" alt="Dance Competition">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Dance Competition">
                         <div class="event-date">9:00 AM</div>
                     </div>
                     <div class="event-content">
@@ -477,14 +497,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Main Auditorium</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Singing Competition -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/singing.jpg" alt="Singing Competition">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Singing Competition">
                         <div class="event-date">10:30 AM</div>
                     </div>
                     <div class="event-content">
@@ -501,14 +521,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Main Stage</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Drama Performance -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/drama.jpg" alt="Drama Performance">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Drama Performance">
                         <div class="event-date">11:30 AM</div>
                     </div>
                     <div class="event-content">
@@ -525,14 +545,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Drama Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Art Exhibition -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/art.jpg" alt="Art Exhibition">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Art Exhibition">
                         <div class="event-date">All Day</div>
                     </div>
                     <div class="event-content">
@@ -549,14 +569,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Exhibition Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Photography Contest -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/photography.jpg" alt="Photography Contest">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Photography Contest">
                         <div class="event-date">All Day</div>
                     </div>
                     <div class="event-content">
@@ -573,14 +593,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Photography Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Fashion Show -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/fashion.jpg" alt="Fashion Show">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Fashion Show">
                         <div class="event-date">2:00 PM</div>
                     </div>
                     <div class="event-content">
@@ -597,14 +617,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Fashion Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Poetry Recitation -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/poetry.jpg" alt="Poetry Recitation">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Poetry Recitation">
                         <div class="event-date">3:30 PM</div>
                     </div>
                     <div class="event-content">
@@ -621,14 +641,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Poetry Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Quiz Competition -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/quiz.jpg" alt="Quiz Competition">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Quiz Competition">
                         <div class="event-date">11:00 AM</div>
                     </div>
                     <div class="event-content">
@@ -645,14 +665,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Quiz Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Debate Competition -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/debate.jpg" alt="Debate Competition">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Debate Competition">
                         <div class="event-date">1:00 PM</div>
                     </div>
                     <div class="event-content">
@@ -669,14 +689,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Debate Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Short Film Festival -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/film.jpg" alt="Short Film Festival">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Short Film Festival">
                         <div class="event-date">4:00 PM</div>
                     </div>
                     <div class="event-content">
@@ -693,14 +713,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Film Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Music Band Performance -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/music.jpg" alt="Music Band Performance">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Music Band Performance">
                         <div class="event-date">5:30 PM</div>
                     </div>
                     <div class="event-content">
@@ -717,14 +737,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Music Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Stand-up Comedy -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/comedy.jpg" alt="Stand-up Comedy">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Stand-up Comedy">
                         <div class="event-date">7:00 PM</div>
                     </div>
                     <div class="event-content">
@@ -741,14 +761,14 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Comedy Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
 
                 <!-- Traditional Arts -->
                 <div class="event-card">
                     <div class="event-image">
-                        <img src="assets/images/events/traditional.jpg" alt="Traditional Arts">
+                        <img src="assets/images/orlia25mkce.jpg" alt="Traditional Arts">
                         <div class="event-date">All Day</div>
                     </div>
                     <div class="event-content">
@@ -765,7 +785,7 @@
                             <i class="ri-map-pin-line"></i>
                             <span>Traditional Hall</span>
                         </div>
-                        <a href="#register" class="register-btn">Register Now</a>
+                        <a href="register.html" class="event-btn">Register Now</a>
                     </div>
                 </div>
             </div>
@@ -811,7 +831,7 @@
                 <button class="close-modal"><i class="ri-close-line"></i></button>
             </div>
             <form class="modal-form">
-                <div class="form-group">
+                <div class="form-group"></div>
                     <label for="name">Full Name</label>
                     <input type="text" id="name" required>
                 </div>
