@@ -1115,6 +1115,28 @@ h1, p {
     max-width: 280px;
 }
 
+.patron-grid.chief-patrons {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+    gap: 2rem;
+}
+
+.patron-grid.chief-patrons .patron-card.prominent {
+    grid-column: auto;
+    max-width: 280px;
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
 @media (max-width: 992px) {
     .patron-grid {
         grid-template-columns: repeat(2, 1fr);

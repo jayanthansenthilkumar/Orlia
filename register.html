@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         .registration-container {
-            min-height: 100vh;
+            min-height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -40,13 +40,8 @@
 
         .form-group {
             margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #064e3b;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .form-group input {
@@ -119,14 +114,12 @@
         @media (max-width: 576px) {
             .registration-form {
                 padding: 1.5rem;
+                max-width: 95%;
+                margin: 0 auto;
             }
 
             .form-group {
                 margin-bottom: 1rem;
-            }
-
-            .form-group label {
-                font-size: 0.9rem;
             }
 
             .form-group input {
@@ -174,56 +167,209 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
         }
+
+        /* Enhanced and mobile-optimized dropdown styles */
+        select {
+            width: 100%;
+            max-width: 100%; /* Ensure it doesn't overflow */
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(6, 78, 59, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(6, 78, 59, 0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            box-shadow: 0 2px 4px rgba(6, 78, 59, 0.05);
+            color: #1e3a29;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            font-weight: 400;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        
+        select:hover {
+            border-color: #047857;
+            background-color: rgba(4, 120, 87, 0.02);
+            box-shadow: 0 4px 8px rgba(6, 78, 59, 0.08);
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #047857;
+            box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+            background-color: white;
+        }
+        
+        select:disabled {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+            color: #6b7280;
+            border-color: rgba(6, 78, 59, 0.1);
+            box-shadow: none;
+            opacity: 0.7;
+        }
+        
+        select option {
+            padding: 12px;
+            background-color: white;
+            color: #1e3a29;
+            font-weight: 400;
+            white-space: normal; /* Allow wrapping in dropdown items */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        
+        /* Styling for dropdown placeholder */
+        select option[disabled]:first-child {
+            color: rgba(30, 58, 41, 0.6);
+            font-style: italic;
+        }
+        
+        /* Enhanced mobile styles for dropdowns */
+        @media (max-width: 768px) {
+            select {
+                padding: 0.8rem 1rem;
+                background-position: right 0.8rem center;
+                font-size: 0.95rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            select {
+                padding: 0.7rem 0.9rem;
+                font-size: 0.85rem; /* Slightly smaller font on mobile */
+                background-position: right 0.7rem center;
+                border-radius: 8px;
+                padding-right: 2rem; /* Ensure space for dropdown arrow */
+            }
+            
+            .form-group {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* Fix for iOS devices which often have issues with custom select styling */
+        @supports (-webkit-touch-callout: none) {
+            select {
+                /* iOS-specific tweaks */
+                padding-right: 2rem; /* Extra space for the dropdown arrow */
+            }
+        }
+        
+        /* Improve tap target sizes on mobile */
+        @media (max-width: 576px) {
+            select, 
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                min-height: 3rem; /* Larger tap targets on mobile */
+            }
+            
+            .submit-btn {
+                min-height: 3.2rem;
+                margin-top: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <nav class="sidebar">
-        <ul class="nav-links">
-            <li><a href="index.html"><i class="ri-home-5-line"></i>Home</a></li>
-            <li><a href="#"><i class="ri-information-line"></i>About</a></li>
-            <li><a href="#"><i class="ri-user-star-line"></i>Patrons</a></li>
-            <li><a href="#"><i class="ri-calendar-event-line"></i>Events</a></li>
-            <li><a href="#"><i class="ri-image-2-line"></i>Gallery</a></li>
-            <li><a href="#"><i class="ri-chat-1-line"></i>Contact</a></li>
-        </ul>
-    </nav>
     <div class="registration-container">
         <div class="registration-form">
             <h2>Register for Orlia'25</h2>
             <form id="registerForm">
                 <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                    <input type="text" id="fullName" name="fullName" placeholder="Name" required>                </div>                <div class="form-group">                    <input type="text" id="rollNumber" name="rollNumber" placeholder="Roll Number" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <select id="department" name="department" required>
+                        <option value="" disabled selected>Select Department</option>
+                        <option value="CSE">Computer Science Engineering</option>
+                        <option value="ECE">Electronics & Communication Engineering</option>
+                        <option value="EEE">Electrical & Electronics Engineering</option>
+                        <option value="MECH">Mechanical Engineering</option>
+                        <option value="CIVIL">Civil Engineering</option>
+                        <option value="IT">Information Technology</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="college">College/Institution</label>
-                    <input type="text" id="college" name="college" required>
+                    <select id="daySelection" name="daySelection" required onchange="updateEvents()">
+                        <option value="" disabled selected>Select Day</option>
+                        <option value="day1">Day 1</option>
+                        <option value="day2">Day 2</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <select id="events" name="events" required disabled>
+                        <option value="" disabled selected>Select Event</option>
+                        <!-- Events will be populated based on day selection -->
+                    </select>
                 </div>
                 <button type="submit" class="submit-btn">Register</button>
                 <div class="event-footer">
                     <div class="event-location">
                         <i class="ri-map-pin-line"></i>
-                        <span>MKCE Campus</span>
+                        <span>MKCE</span>
                     </div>
-                    <a href="index.html" class="event-btn">Back to Home</a>
-                </div>
-                <div class="login-link">
-                    Already have an account? <a href="login.html">Login here</a>
+                    <a href="index.html" class="event-btn">Home</a>
                 </div>
             </form>
         </div>
     </div>
+
+    <script>
+        function updateEvents() {
+            const daySelection = document.getElementById('daySelection');
+            const eventsDropdown = document.getElementById('events');
+            
+            // Clear previous options
+            eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
+            
+            // Enable events dropdown
+            eventsDropdown.disabled = false;
+            
+            if (daySelection.value === 'day1') {
+                // Day 1 events
+                const day1Events = [
+                    { value: 'paper_presentation', text: 'Paper Presentation' },
+                    { value: 'technical_quiz', text: 'Technical Quiz' },
+                    { value: 'coding_competition', text: 'Coding Competition' },
+                    { value: 'project_expo', text: 'Project Expo' }
+                ];
+                
+                day1Events.forEach(event => {
+                    const option = document.createElement('option');
+                    option.value = event.value;
+                    option.textContent = event.text;
+                    eventsDropdown.appendChild(option);
+                });
+            } else if (daySelection.value === 'day2') {
+                // Day 2 events
+                const day2Events = [
+                    { value: 'hackathon', text: 'Hackathon' },
+                    { value: 'debate', text: 'Technical Debate' },
+                    { value: 'workshop', text: 'Workshop' },
+                    { value: 'gaming', text: 'Gaming Competition' }
+                ];
+                
+                day2Events.forEach(event => {
+                    const option = document.createElement('option');
+                    option.value = event.value;
+                    option.textContent = event.text;
+                    eventsDropdown.appendChild(option);
+                });
+            }
+        }
+    </script>
 </body>
 </html>
