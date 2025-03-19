@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Orlia'25</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .registration-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: #f0fdf4;
+        }
+
+        .registration-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(6, 78, 59, 0.1);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registration-form h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            background: linear-gradient(145deg, #064e3b, #047857, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #064e3b;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(6, 78, 59, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #047857;
+            box-shadow: 0 0 0 2px rgba(4, 120, 87, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(145deg, #064e3b, #047857, #059669);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #064e3b;
+        }
+
+        .login-link a {
+            color: #047857;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #064e3b;
+        }
+
+        @media (max-width: 768px) {
+            .registration-container {
+                padding: 1rem;
+                padding-bottom: 80px;
+            }
+
+            .registration-form {
+                padding: 2rem;
+                border-radius: 15px;
+            }
+
+            .registration-form h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .registration-form {
+                padding: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="ri-home-5-line"></i>Home</a></li>
+            <li><a href="#"><i class="ri-information-line"></i>About</a></li>
+            <li><a href="#"><i class="ri-user-star-line"></i>Patrons</a></li>
+            <li><a href="#"><i class="ri-calendar-event-line"></i>Events</a></li>
+            <li><a href="#"><i class="ri-image-2-line"></i>Gallery</a></li>
+            <li><a href="#"><i class="ri-chat-1-line"></i>Contact</a></li>
+        </ul>
+    </nav>
+    <div class="registration-container">
+        <div class="registration-form">
+            <h2>Register for Orlia'25</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="college">College/Institution</label>
+                    <input type="text" id="college" name="college" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Register</button>
+                <div class="login-link">
+                    Already have an account? <a href="login.html">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
