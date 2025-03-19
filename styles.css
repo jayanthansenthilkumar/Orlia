@@ -114,25 +114,92 @@ body {
     color: #fff;
 }
 
+/* Base social links styles */
 .social-links {
-    position: absolute;
-    bottom: 25px;
-    left: 0;
-    width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    gap: 20px;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 1rem;
 }
 
 .social-links a {
-    color: #000;
-    font-size: 24px;
-    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(4, 120, 87, 0.08);
+    color: #064e3b;
+    transition: all 0.3s ease;
 }
 
-social-links a:hover {
-    color: #000;
-    transform: translateY(-5px) scale(1.1);
+@media (max-width: 768px) {
+    /* Hide sidebar social links */
+    .sidebar .social-links {
+        display: none !important;
+    }
+
+    /* Keep contributor social links but hide specific ones */
+    .contributor-info .social-links {
+        display: inline-flex !important;
+        flex-direction: row !important;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: auto;
+        padding: 0;
+        margin: 0.5rem auto;
+    }
+
+    .contributor-info .social-links a[href*="linkedin"],
+    .contributor-info .social-links a[href*="instagram"] {
+        display: none !important;
+    }
+
+    .contributor-info .social-links a {
+        width: 32px;
+        height: 32px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .social-links {
+        position: static;
+        flex-direction: row !important;
+        gap: 12px;
+        padding: 5px 0;
+    }
+
+    .social-links a {
+        width: 32px;
+        height: 32px;
+        margin: 0;
+    }
+
+    .social-links a i {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .social-links {
+        gap: 10px;
+    }
+
+    .social-links a {
+        width: 30px;
+        height: 30px;
+    }
+
+    .social-links a i {
+        font-size: 0.9rem;
+    }
 }
 
 h1, p {
@@ -428,11 +495,6 @@ h1, p {
     .hero-subtitle, .hero-content p {
         font-size: 0.9rem;
     }
-}
-
-.social-links a:hover {
-    color: #000;
-    transform: translateY(-5px) scale(1.1);
 }
 
 h1, p {
@@ -1003,91 +1065,146 @@ h1, p {
 @media (max-width: 768px) {
     .patron-card {
         width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
-        padding: 20px 15px;
+        max-width: 100%;
+        margin: 0 auto 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .patron-image {
-        width: 110px;
-        height: 110px;
+        width: 120px;
+        height: 120px;
         margin-bottom: 15px;
     }
 
-    .patron-card img {
+    .patron-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: inherit;
+    }
+
+    .patrons-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .executive-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .executive-card {
+        margin: 0 auto;
+        max-width: 100%;
     }
 
     .executive-image {
-        height: 160px;
+        height: 200px;
     }
 
-    .executive-image img {
+    .contributor-card {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        max-width: 300px;
+        margin: 10px auto;
+    }
+
+    .contributor-card img {
+        width: 120px;
+        height: 120px;
+    }
+
+    /* Fix social links for mobile */
+    .social-links {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+        padding: 10px 0;
+        margin-top: 15px;
+    }
+
+    .social-links a {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-card {
+        padding: 15px;
+    }
+
+    .patron-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .patrons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .executive-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .executive-image {
+        height: 180px;
+    }
+
+    .contributor-card {
+        max-width: 260px;
+        padding: 15px;
     }
 
     .contributor-card img {
         width: 100px;
         height: 100px;
     }
-}
 
-@media (max-width: 576px) {
-    .patron-card {
-        max-width: 280px;
-        padding: 15px 12px;
-    }
-
-    .patron-image {
-        width: 90px;
-        height: 90px;
-        margin-bottom: 12px;
-    }
-
-    .executive-image {
-        height: 140px;
-    }
-
-    .contributor-card {
-        width: 220px;
-        padding: 1.5rem;
-    }
-
-    .contributor-card img {
-        width: 85px;
-        height: 85px;
-        margin-bottom: 1.5rem;
+    /* Adjust section paddings */
+    .about,
+    .patrons,
+    .patron-category {
+        padding: 60px 15px 80px;
     }
 }
 
 @media (max-width: 400px) {
-    .patron-card {
-        max-width: 260px;
-    }
-
     .patron-image {
-        width: 80px;
-        height: 80px;
-    }
-
-    .executive-image {
-        height: 130px;
+        width: 90px;
+        height: 90px;
     }
 
     .contributor-card {
-        width: 200px;
-        padding: 1.25rem;
+        max-width: 240px;
     }
 
     .contributor-card img {
-        width: 75px;
-        height: 75px;
-        margin-bottom: 1.25rem;
+        width: 90px;
+        height: 90px;
+    }
+
+    .executive-image {
+        height: 160px;
+    }
+
+    /* Further reduce paddings */
+    .about,
+    .patrons,
+    .patron-category {
+        padding: 50px 12px 70px;
     }
 }
 
@@ -1231,6 +1348,25 @@ h1, p {
         height: auto;
         max-height: 400px;
     }
+
+    .sidebar .social-links {
+        display: none !important;
+    }
+
+    .contributor-info .social-links a[href*="linkedin"],
+    .contributor-info .social-links a[href*="instagram"] {
+        display: none !important;
+    }
+
+    .contributor-info .social-links {
+        display: inline-flex !important;
+        flex-direction: row !important;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 0;
+        margin: 1rem auto;
+    }
 }
 
 /* Additional mobile optimizations */
@@ -1260,6 +1396,16 @@ h1, p {
 
     .stick-note {
         margin: 0 10px;
+    }
+
+    .contributor-info .social-links {
+        gap: 8px;
+        padding: 0;
+    }
+
+    .contributor-info .social-links a {
+        width: 28px;
+        height: 28px;
     }
 }
 
@@ -1520,13 +1666,25 @@ h1, p {
 }
 
 .contributor-info .social-links {
-    position: static;
-    display: flex;
-    gap: 0.8rem;
-    margin-top: 1.2rem;
+    display: inline-flex !important;
+    flex-direction: row !important;
     justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 1rem;
     width: auto;
-    padding: 0;
+    padding: 0.5rem;
+    flex-wrap: nowrap;
+}
+
+.contributor-info .social-links a {
+    flex: 0 0 auto;
+    width: 35px;
+    height: 35px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .contributor-info .social-links a {
@@ -1544,6 +1702,9 @@ h1, p {
     position: relative;
     text-decoration: none;
     overflow: hidden;
+    min-width: 32px;
+    min-height: 32px;
+    margin: 0 5px;
 }
 
 .contributor-info .social-links a:hover {
@@ -1628,6 +1789,38 @@ h1, p {
     }
 }
 
+@media (max-width: 768px) {
+    .contributor-card {
+        width: 100%;
+        max-width: 280px;
+        padding: 1.5rem;
+    }
+
+    .contributor-card img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1.25rem;
+    }
+
+    .contributor-info .social-links {
+        gap: 10px;
+        padding: 0.25rem;
+        width: auto;
+        margin: 1rem auto;
+    }
+
+    .contributor-info .social-links a {
+        width: 32px;
+        height: 32px;
+    }
+
+    .contributor-info .social-links a {
+        min-width: 28px;
+        min-height: 28px;
+        font-size: 0.9rem;
+    }
+}
+
 /* Mobile Navigation Styles */
 @media (max-width: 768px) {
     .sidebar {
@@ -1674,7 +1867,14 @@ h1, p {
     }
 
     .social-links {
-        display: none; /* Hide social links on mobile */
+        display: none !important; /* Hide social links on mobile */
+    }
+
+    .contributor-info .social-links {
+        display: inline-flex !important;  /* Keep contributor social links visible */
+        flex-direction: row !important;
+        gap: 10px;
+        padding: 0.25rem;
     }
 
     /* Adjust main content padding for bottom nav */
@@ -1699,5 +1899,71 @@ h1, p {
 
     .sidebar {
         padding: 8px 15px;
+    }
+
+    .patron-card {
+        max-width: 280px;
+        padding: 20px 12px;
+    }
+
+    .patron-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .stick-note {
+        margin: 0 10px;
+    }
+
+    .contributor-info .social-links {
+        gap: 8px;
+    }
+
+    .contributor-info .social-links a {
+        width: 28px;
+        height: 28px;
+    }
+
+    .contributor-card {
+        max-width: 240px;
+        padding: 1.25rem;
+    }
+
+    .contributor-card img {
+        width: 85px;
+        height: 85px;
+        margin-bottom: 1rem;
+    }
+
+    .contributor-info h4 {
+        font-size: 1.1rem;
+    }
+
+    .contributor-info .social-links a {
+        min-width: 26px;
+        min-height: 26px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .contributor-card {
+        max-width: 220px;
+        padding: 1rem;
+    }
+
+    .contributor-card img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .contributor-info .social-links {
+        gap: 6px;
+    }
+
+    .contributor-info .social-links a {
+        min-width: 24px;
+        min-height: 24px;
+        font-size: 0.8rem;
     }
 }
