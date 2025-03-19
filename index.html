@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles/nav-active.css">
-    <link rel="stylesheet" href="styles/chatbot.css">
 </head>
 <body>
     <nav class="sidebar">
@@ -357,7 +355,7 @@
         <div class="chatbot-button">
             <i class="ri-chat-1-line"></i>
         </div>
-        <div class="chatbot-box" style="display: none;">
+        <div class="chatbot-box">
             <div class="chatbot-header">
                 <h3>Orlia Assistant</h3>
                 <button class="close-chat">
@@ -366,6 +364,12 @@
             </div>
             <div class="chatbot-messages">
                 <div class="message bot">
+                    <div class="message-header">
+                        <div class="message-avatar">
+                            <i class="ri-robot-line"></i>
+                        </div>
+                        <span class="message-time">Now</span>
+                    </div>
                     <p>Hello! 👋 Welcome to Orlia'25. How can I help you today?</p>
                 </div>
             </div>
