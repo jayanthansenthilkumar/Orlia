@@ -765,6 +765,7 @@ h1, p {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     padding: 20px;
+    margin-top: 2rem;
 }
 
 .about-card {
@@ -774,6 +775,11 @@ h1, p {
     text-align: center;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(6, 78, 59, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .about-card:hover {
@@ -848,6 +854,75 @@ h1, p {
 
 .about-image:hover img {
     transform: scale(1.02);
+}
+
+@media (max-width: 992px) {
+    .about-split {
+        flex-direction: column;
+        gap: 40px;
+        padding: 10px;
+    }
+
+    .about-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 600px;
+        margin: 2rem auto 0;
+        gap: 20px;
+        padding: 0;
+    }
+
+    .about-card {
+        min-height: 200px;
+        padding: 20px 15px;
+    }
+
+    .about-image {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 15px;
+    }
+
+    .about-text {
+        text-align: center;
+    }
+
+    .about-grid {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 15px;
+    }
+
+    .about-card {
+        min-height: 180px;
+        padding: 15px;
+    }
+
+    .about-card i {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    .about-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .about-image {
+        max-width: 250px;
+        padding: 10px;
+    }
+
+    .about-split {
+        gap: 30px;
+    }
 }
 
 @keyframes pulseFrame {
@@ -2129,7 +2204,7 @@ h1, p {
     margin: 0 auto;
 }
 
-.events-content h2 {
+events-content h2 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 20px;
