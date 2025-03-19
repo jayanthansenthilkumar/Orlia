@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orlia'25</title>
+    <link rel="icon" href="assets/images/agastya.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/nav-active.css">
 </head>
 <body>
     <nav class="sidebar">
         <ul class="nav-links">
-            <li><a href="#"><i class="ri-home-5-line"></i>Home</a></li>
-            <li><a href="#"><i class="ri-information-line"></i>About</a></li>
-            <li><a href="#"><i class="ri-user-star-line"></i>Patrons</a></li>
-            <li><a href="#"><i class="ri-calendar-event-line"></i>Events</a></li>
-            <li><a href="#"><i class="ri-image-2-line"></i>Gallery</a></li>
-            <li><a href="#"><i class="ri-chat-1-line"></i>Contact</a></li>
+            <li><a href="#home"><i class="ri-home-5-line"></i>Home</a></li>
+            <li><a href="#about"><i class="ri-information-line"></i>About</a></li>
+            <li><a href="#patrons"><i class="ri-user-star-line"></i>Patrons</a></li>
+            <li><a href="#events"><i class="ri-calendar-event-line"></i>Events</a></li>
+            <li><a href="#gallery"><i class="ri-image-2-line"></i>Gallery</a></li>
+            <li><a href="#contact"><i class="ri-chat-1-line"></i>Contact</a></li>
         </ul>
     </nav>
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="hero-content">
             <h1>Welcome to Orlia'25</h1>
             <p class="hero-subtitle">Experience the Magic of Culture & Innovation</p>
@@ -73,7 +75,7 @@
     </section>
     <section class="patrons" id="patrons">
         <div class="patrons-content">
-            <h2>Our Leadership</h2>
+            <h2>Our Patrons</h2>
             <p class="section-subtitle">The Pillars of Our Success</p>
             <div class="patron-category">
                 <h3>Chief Patron</h3>
@@ -350,5 +352,29 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <div class="chatbot-container">
+        <div class="chatbot-button">
+            <i class="ri-chat-1-line"></i>
+        </div>
+        <div class="chatbot-box">
+            <div class="chatbot-header">
+                <h3>Orlia Assistant</h3>
+                <button class="close-chat">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages">
+                <div class="message bot">
+                    <p>Hello! 👋 Welcome to Orlia'25. How can I help you today?</p>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" placeholder="Type your message...">
+                <button class="send-message">
+                    <i class="ri-send-plane-fill"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
