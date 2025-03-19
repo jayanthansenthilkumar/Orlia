@@ -38,6 +38,7 @@
         .event-image {
             height: 180px;
             min-height: 180px; /* Prevent image section from shrinking */
+            position: relative;
         }
 
         .event-content {
@@ -224,6 +225,41 @@
                 padding: 10px 20px;
                 font-size: 0.9rem;
             }
+
+            .event-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 1.2rem 1.5rem;
+            }
+            
+            .event-location {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .event-btn {
+                width: 100%;
+                min-width: 100%;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .event-location {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .event-date {
+                font-size: 0.75rem;
+                padding: 5px 12px;
+            }
+            
+            .admin-btn {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
         }
 
         /* Modal Styles */
@@ -342,125 +378,138 @@
             box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
         }
 
-        /* Footer Styles */
-        .footer {
-            background: linear-gradient(145deg, #064e3b, #047857);
+        /* Admin button styles */
+        .admin-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 15px;
+            background: linear-gradient(145deg, #3b0e4e, #59067e);
             color: white;
-            padding: 3rem 2rem 1rem;
-            margin-top: 4rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(89, 6, 126, 0.25);
+            text-align: center;
         }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(89, 6, 126, 0.35);
         }
-
-        .footer-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-section h4 {
-            font-size: 1.2rem;
+        
+        /* Improved event date styling with reduced width */
+        .event-date {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            color: #064e3b;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
+            box-shadow: 0 3px 10px rgba(6, 78, 59, 0.15);
+            z-index: 5;
+            text-align: center;
+            min-width: fit-content;
+            max-width: 80px;
+            white-space: nowrap;
         }
 
-        .footer-section h4::after {
+        @media (max-width: 576px) {
+            .event-date {
+                top: 8px;
+                left: 8px;
+                padding: 3px 8px;
+                font-size: 0.75rem;
+                border-radius: 10px;
+            }
+            
+            .admin-btn {
+                top: 10px;
+                right: 10px;
+                padding: 5px 12px;
+                font-size: 0.75rem;
+                border-radius: 15px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .event-date {
+                top: 5px;
+                left: 5px;
+                padding: 2px 6px;
+                font-size: 0.7rem;
+            }
+            
+            .admin-btn {
+                top: 10px;
+                right: 5px;
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Event Title and Subtitle Styles */
+        .events-content {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .events-content .event-title {
+            font-size: 2.5rem;
+            color: #064e3b;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .events-content .event-title::after {
             content: '';
             position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.4);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #10B981, #064e3b);
+            border-radius: 3px;
         }
 
-        .footer-section p {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.95rem;
-        }
-
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .footer .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer .social-links a {
-            background: rgba(255, 255, 255, 0.1);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .footer .social-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 0.9rem;
-            color: #10B981;  /* Changed to a brighter green */
-            background: rgba(0, 0, 0, 0.1);
-            padding: 1.5rem 1rem;
-            border-radius: 0 0 20px 20px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .footer-bottom p {
-            color: inherit;
-            opacity: 1;
+        .events-content .section-subtitle {
+            font-size: 1.1rem;
+            color: #059669;
+            margin-top: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
         }
 
         @media (max-width: 768px) {
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
+            .events-content .event-title {
+                font-size: 2rem;
             }
-
-            .footer-section h4::after {
-                left: 50%;
-                transform: translateX(-50%);
+            
+            .events-content .section-subtitle {
+                font-size: 1rem;
             }
+        }
 
-            .footer-section p {
-                justify-content: center;
+        @media (max-width: 576px) {
+            .events-content .event-title {
+                font-size: 1.8rem;
             }
-
-            .footer .social-links {
-                justify-content: center;
-            }
-
-            .footer-section a:hover {
-                transform: translateX(0) scale(1.05);
+            
+            .events-content .section-subtitle {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -473,7 +522,7 @@
 
     <section class="day1-events">
         <div class="events-content">
-            <h2>Day 1 Events</h2>
+            <h2 class="event-title">Day 1 Events</h2>
             <p class="section-subtitle">April 3, 2025 - Cultural & Technical Events</p>
             
             <div class="events-container">
@@ -482,6 +531,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Dance Competition">
                         <div class="event-date">9:00 AM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Dance Competition</h3>
@@ -506,6 +556,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Singing Competition">
                         <div class="event-date">10:30 AM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Singing Competition</h3>
@@ -530,6 +581,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Drama Performance">
                         <div class="event-date">11:30 AM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Drama Performance</h3>
@@ -554,6 +606,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Art Exhibition">
                         <div class="event-date">All Day</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Art Exhibition</h3>
@@ -578,6 +631,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Photography Contest">
                         <div class="event-date">All Day</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Photography Contest</h3>
@@ -602,6 +656,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Fashion Show">
                         <div class="event-date">2:00 PM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Fashion Show</h3>
@@ -626,6 +681,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Poetry Recitation">
                         <div class="event-date">3:30 PM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Poetry Recitation</h3>
@@ -650,6 +706,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Quiz Competition">
                         <div class="event-date">11:00 AM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Quiz Competition</h3>
@@ -674,6 +731,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Debate Competition">
                         <div class="event-date">1:00 PM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Debate Competition</h3>
@@ -698,6 +756,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Short Film Festival">
                         <div class="event-date">4:00 PM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Short Film Festival</h3>
@@ -722,6 +781,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Music Band Performance">
                         <div class="event-date">5:30 PM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Music Band Performance</h3>
@@ -746,6 +806,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Stand-up Comedy">
                         <div class="event-date">7:00 PM</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Stand-up Comedy</h3>
@@ -770,6 +831,7 @@
                     <div class="event-image">
                         <img src="assets/images/orlia25mkce.jpg" alt="Traditional Arts">
                         <div class="event-date">All Day</div>
+                        <a href="admin.html" class="admin-btn">Admin</a>
                     </div>
                     <div class="event-content">
                         <h3>Traditional Arts</h3>
@@ -792,111 +854,9 @@
         </div>
     </section>
 
-    <!-- Add footer before modal -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Contact Us</h4>
-                <p><i class="ri-mail-line"></i> orlia25@mkce.ac.in</p>
-                <p><i class="ri-phone-line"></i> +91 9876543210</p>
-                <p><i class="ri-map-pin-line"></i> MKCE Campus, Karur</p>
-            </div>
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <div class="social-links">
-                    <a href="#"><i class="ri-instagram-line"></i></a>
-                    <a href="#"><i class="ri-facebook-circle-line"></i></a>
-                    <a href="#"><i class="ri-twitter-line"></i></a>
-                    <a href="#"><i class="ri-linkedin-box-line"></i></a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="#about">About</a>
-                <a href="#events">Events</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; <span id="currentYear"></span> Technology Innovation Hub. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Registration Modal -->
-    <div class="modal" id="registerModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Event Registration</h3>
-                <button class="close-modal"><i class="ri-close-line"></i></button>
-            </div>
-            <form class="modal-form">
-                <div class="form-group"></div>
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="event">Event Name</label>
-                    <input type="text" id="event" readonly>
-                </div>
-                <button type="submit" class="submit-btn">Register Now</button>
-            </form>
-        </div>
-    </div>
-
     <script>
-        // Get modal elements
-        const modal = document.getElementById('registerModal');
-        const closeBtn = modal.querySelector('.close-modal');
-        const registerBtns = document.querySelectorAll('.register-btn');
-        const eventInput = document.getElementById('event');
-
-        // Open modal with event name
-        registerBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const eventName = e.target.closest('.event-card').querySelector('h3').textContent;
-                eventInput.value = eventName;
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        // Close modal
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close modal when clicking outside
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Handle form submission
-        const form = modal.querySelector('form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Add your form submission logic here
-            alert('Registration successful!');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            form.reset();
-        });
-
-        // Auto update year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // Auto update year in footer - keeping the script but removing footer references
+        let currentYear = new Date().getFullYear();
     </script>
 </body>
 </html>
