@@ -2226,7 +2226,7 @@ h1, p {
     margin: 0 auto;
 }
 
-events-content h2 {
+.events-content h2 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 20px;
