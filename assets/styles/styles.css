@@ -45,7 +45,7 @@ body {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    height: 45vh;
+    height: 50vh;
     width: 75px;
     background: var(--gradient);
     padding: 10px 5px;
