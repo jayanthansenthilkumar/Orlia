@@ -75,6 +75,39 @@
     </div>
 
     <script src="assets/script/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).on('submit', '#registerForm', function(e) {
+            e.preventDefault();
+            var Formdata = new FormData(this);
+            Formdata.append("Add_newuser", true);
+            console.log(Formdata)
+            $.ajax({
+                url: "backend.php",
+                method: "POST",
+                data: Formdata,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    var res = jQuery.parseJSON(response);
+                    console.log(res);
+                    if (res.status == 200) {
+                        $('#registerForm')[0].reset(); //form
+                        alert(res.message);
+                    } else if (res.status == 400) {
+                        $('#registerForm')[0].reset(); //form
+                        console.error("Error:", res.message);
+                        alert(res.message)
+                    } else if (res.status == 500) {
+                        
+                        $('#registerForm')[0].reset(); //form
+                        console.error("Error:", res.message);
+                        alert("Something Went wrong.! try again")
+                    }
+                }
+            })
+        });
+    </script>
 </body>
 
 </html>

@@ -6,7 +6,6 @@
     <title>Orlia Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-light: #5eead4;
@@ -36,26 +35,37 @@
         }
         .sidebar h2 {
             font-weight: 600;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 2rem;
-            text-align: center;
-            padding: 1rem;
+            padding: 0.8rem;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
-            transition: all 0.3s ease;
         }
-        .sidebar h2:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
+        
         .sidebar h2 i {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: transform 0.3s;
         }
+        
+        .sidebar h2:hover i {
+            transform: rotate(15deg);
+        }
+        
+        .version-tag {
+            font-size: 0.7em;
+            opacity: 0.8;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+        
         .sidebar-nav {
             list-style: none;
             margin-top: 2rem;
@@ -255,138 +265,23 @@
         .welcome-card .btn:hover {
             transform: translateY(-2px);
         }
-        
-        /* Updated DataTable Custom Styling */
-        .table-container {
-            padding: 1.5rem 2rem;
-        }
-        
-        .dataTables_wrapper .dataTables_length select {
-            padding: 6px 12px;
-            border: 1px solid var(--primary-mid);
-            border-radius: 6px;
-            color: var(--primary-dark);
-            background-color: white;
-        }
-        
-        .dataTables_wrapper .dataTables_filter input {
-            padding: 8px 16px;
-            border: 1px solid var(--primary-mid);
-            border-radius: 6px;
-            width: 250px;
-            margin-left: 8px;
-        }
-        
-        .dataTables_wrapper .dataTables_filter input:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
-        }
-        
-        .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter {
-            margin-bottom: 1.5rem;
-        }
-        
-        table.dataTable {
-            border-collapse: collapse !important;
-            margin-top: 1rem !important;
-        }
-        
-        table.dataTable thead th {
-            background: var(--primary-dark);
-            color: white;
-            font-weight: 500;
-            border: none;
-            padding: 1rem;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-        
-        table.dataTable tbody td {
-            padding: 1rem;
-            background: white;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.95rem;
-        }
-        
-        table.dataTable tbody tr:hover td {
-            background-color: var(--bg-light);
-        }
-        
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        
-        .status-active {
-            background: #dcfce7;
-            color: #15803d;
-        }
-        
-        .status-inactive {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-        
-        .action-btns {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .action-btn {
-            padding: 0.4rem;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .edit-btn {
-            background: var(--bg-light);
-            color: var(--primary-mid);
-        }
-        
-        .delete-btn {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        
-        .user-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: var(--bg-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-mid);
-        }
     </style>
 </head>
 <body>
     <aside class="sidebar">
-        <h2><i class="ri-theatre-line"></i> Orlia</h2>
+        <h2>Orlia</h2>
         <ul class="sidebar-nav">
-            <li><a href="dashboard.html"><i class="ri-mic-2-line"></i> Dashboard</a></li>
-            <li><a href="#" class="active"><i class="ri-group-2-line"></i> Participants</a></li>
+            <li><a href="#" class="active"><i class="ri-mic-2-line"></i> Dashboard</a></li>
+            <li><a href="users.php"><i class="ri-group-2-line"></i> Participants</a></li>
         </ul>
     </aside>
     
     <div class="main-content">
         <header class="navbar">
-            <h1>Event Participants</h1>
+            <h1>Orlia'25</h1>
             <div class="nav-right">
                 <div class="notification">
-                    <i class="ri-music-2-line"></i>
+                    <i class="ri-notification-3-line"></i>
                 </div>
                 <div class="profile-dropdown">
                     <div class="profile">
@@ -402,72 +297,43 @@
             </div>
         </header>
 
+        <div class="welcome-card">
+            <h2>Welcome back, Admin! 👋</h2>
+            <p>Track your team's progress and manage your projects from one central dashboard.</p>
+            <a href="#" class="btn">View Reports</a>
+        </div>
+
         <main class="dashboard-grid">
-            <div class="table-container">
-                <table id="usersTable" class="display">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Register Number</th>
-                            <th>Phone Number</th>
-                            <th>Year & Department</th>
-                            <th>Event Name</th>
-                            <th>Event Day</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>2021CSE001</td>
-                            <td>+91 9876543210</td>
-                            <td>3rd Year CSE</td>
-                            <td>Web Design</td>
-                            <td>Day 1</td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>2021ECE045</td>
-                            <td>+91 9876543211</td>
-                            <td>2nd Year ECE</td>
-                            <td>Coding Challenge</td>
-                            <td>Day 2</td>
-                        </tr>
-                        <tr>
-                            <td>Alex Johnson</td>
-                            <td>2021IT102</td>
-                            <td>+91 9876543212</td>
-                            <td>4th Year IT</td>
-                            <td>Project Expo</td>
-                            <td>Day 1</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="card">
+                <div class="card-icon">
+                    <i class="ri-team-line"></i>
+                </div>
+                <div>
+                    <h2>Total Users</h2>
+                    <p class="stats">1,234</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <i class="ri-git-branch-line"></i>
+                </div>
+                <div>
+                    <h2>Active Projects</h2>
+                    <p class="stats">23</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <i class="ri-pie-chart-2-line"></i>
+                </div>
+                <div>
+                    <h2>Completion Rate</h2>
+                    <p class="stats">87%</p>
+                </div>
             </div>
         </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#usersTable').DataTable({
-                pageLength: 10,
-                responsive: true,
-                order: [[0, 'asc']],
-                language: {
-                    search: "🔍 Search participants:",
-                    lengthMenu: "Display _MENU_ participants per page",
-                    info: "Showing _START_ to _END_ of _TOTAL_ participants",
-                    paginate: {
-                        first: "First",
-                        last: "Last",
-                        next: "Next →",
-                        previous: "← Previous"
-                    }
-                },
-                dom: '<"top"lf>rt<"bottom"ip><"clear">'
-            });
-        });
-        
         document.querySelector('.profile').addEventListener('click', function() {
             document.querySelector('.dropdown-menu').classList.toggle('show');
         });
