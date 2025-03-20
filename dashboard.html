@@ -37,8 +37,35 @@
             font-weight: 600;
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            padding-left: 0.5rem;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
+        
+        .sidebar h2 i {
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: transform 0.3s;
+        }
+        
+        .sidebar h2:hover i {
+            transform: rotate(15deg);
+        }
+        
+        .version-tag {
+            font-size: 0.7em;
+            opacity: 0.8;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+        
         .sidebar-nav {
             list-style: none;
             margin-top: 2rem;
@@ -242,16 +269,16 @@
 </head>
 <body>
     <aside class="sidebar">
-        <h2><i class="ri-dashboard-3-line"></i> Orlia</h2>
+        <h2>Orlia</h2>
         <ul class="sidebar-nav">
-            <li><a href="#" class="active"><i class="ri-home-4-line"></i> Dashboard</a></li>
-            <li><a href="users.html"><i class="ri-team-line"></i> Participants</a></li>
+            <li><a href="#" class="active"><i class="ri-mic-2-line"></i> Dashboard</a></li>
+            <li><a href="users.html"><i class="ri-group-2-line"></i> Participants</a></li>
         </ul>
     </aside>
     
     <div class="main-content">
         <header class="navbar">
-            <h1>Dashboard Overview</h1>
+            <h1>Orlia'25</h1>
             <div class="nav-right">
                 <div class="notification">
                     <i class="ri-notification-3-line"></i>
