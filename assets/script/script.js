@@ -251,3 +251,49 @@ document.addEventListener('DOMContentLoaded', function() {
         return typingIndicator;
     }
 });
+
+function updateEvents() {
+    const daySelection = document.getElementById('daySelection');
+    const eventsDropdown = document.getElementById('events');
+
+    eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
+
+    eventsDropdown.disabled = false;
+
+    if (daySelection.value === 'day1') {
+        const day1Events = [
+            { value: 'paper_presentation', text: 'Paper Presentation' },
+            { value: 'technical_quiz', text: 'Technical Quiz' },
+            { value: 'coding_competition', text: 'Coding Competition' },
+            { value: 'project_expo', text: 'Project Expo' }
+        ];
+
+        day1Events.forEach(event => {
+            const option = document.createElement('option');
+            option.value = event.value;
+            option.textContent = event.text;
+            eventsDropdown.appendChild(option);
+        });
+    } else if (daySelection.value === 'day2') {
+        const day2Events = [
+            { value: 'hackathon', text: 'Hackathon' },
+            { value: 'debate', text: 'Technical Debate' },
+            { value: 'workshop', text: 'Workshop' },
+            { value: 'gaming', text: 'Gaming Competition' }
+        ];
+
+        day2Events.forEach(event => {
+            const option = document.createElement('option');
+            option.value = event.value;
+            option.textContent = event.text;
+            eventsDropdown.appendChild(option);
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const eventsDropdown = document.getElementById('events');
+    if (eventsDropdown) {
+        eventsDropdown.disabled = true;
+    }
+});

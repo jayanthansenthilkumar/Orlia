@@ -5,384 +5,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Orlia'25</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
+    <link rel="stylesheet" href="assets/styles/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        .registration-container {
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            background: #f0fdf4;
-        }
-
-        .registration-form {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(6, 78, 59, 0.1);
-            width: 100%;
-            max-width: 500px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .registration-form h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            background: linear-gradient(145deg, #064e3b, #047857, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            max-width: 100%;
-            overflow: hidden;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid rgba(6, 78, 59, 0.2);
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #047857;
-            box-shadow: 0 0 0 2px rgba(4, 120, 87, 0.1);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(145deg, #064e3b, #047857, #059669);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
-        }
-
-        .login-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #064e3b;
-        }
-
-        .login-link a {
-            color: #047857;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .login-link a:hover {
-            color: #064e3b;
-        }
-
-        @media (max-width: 768px) {
-            .registration-container {
-                padding: 1rem;
-                padding-bottom: 80px;
-            }
-
-            .registration-form {
-                padding: 2rem;
-                border-radius: 15px;
-            }
-
-            .registration-form h2 {
-                font-size: 1.75rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .registration-form {
-                padding: 1.5rem;
-                max-width: 95%;
-                margin: 0 auto;
-            }
-
-            .form-group {
-                margin-bottom: 1rem;
-            }
-
-            .form-group input {
-                padding: 0.7rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        .event-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 1.5rem;
-            background: rgba(4, 120, 87, 0.05);
-            border-top: 1px solid rgba(6, 78, 59, 0.1);
-            margin-top: 2rem;
-        }
-
-        .event-location {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #064e3b;
-            font-size: 0.9rem;
-        }
-
-        .event-location i {
-            color: #047857;
-        }
-
-        .event-btn {
-            padding: 8px 20px;
-            background: linear-gradient(145deg, #064e3b, #047857);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .event-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
-        }
-
-        /* Enhanced and mobile-optimized dropdown styles */
-        select {
-            width: 100%;
-            max-width: 100%;
-            /* Ensure it doesn't overflow */
-            padding: 0.75rem 1rem;
-            border: 1px solid rgba(6, 78, 59, 0.2);
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: white;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(6, 78, 59, 0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1em;
-            box-shadow: 0 2px 4px rgba(6, 78, 59, 0.05);
-            color: #1e3a29;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            font-weight: 400;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            box-sizing: border-box;
-        }
-
-        select:hover {
-            border-color: #047857;
-            background-color: rgba(4, 120, 87, 0.02);
-            box-shadow: 0 4px 8px rgba(6, 78, 59, 0.08);
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #047857;
-            box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
-            background-color: white;
-        }
-
-        select:disabled {
-            background-color: #f0f0f0;
-            cursor: not-allowed;
-            color: #6b7280;
-            border-color: rgba(6, 78, 59, 0.1);
-            box-shadow: none;
-            opacity: 0.7;
-        }
-
-        select option {
-            padding: 12px;
-            background-color: white;
-            color: #1e3a29;
-            font-weight: 400;
-            white-space: normal;
-            /* Allow wrapping in dropdown items */
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-        }
-
-        /* Styling for dropdown placeholder */
-        select option[disabled]:first-child {
-            color: rgba(30, 58, 41, 0.6);
-            font-style: italic;
-        }
-
-        /* Enhanced mobile styles for dropdowns */
-        @media (max-width: 768px) {
-            select {
-                padding: 0.8rem 1rem;
-                background-position: right 0.8rem center;
-                font-size: 0.95rem;
-            }
-
-            .form-group {
-                margin-bottom: 1.2rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            select {
-                padding: 0.7rem 0.9rem;
-                font-size: 0.85rem;
-                /* Slightly smaller font on mobile */
-                background-position: right 0.7rem center;
-                border-radius: 8px;
-                padding-right: 2rem;
-                /* Ensure space for dropdown arrow */
-            }
-
-            .form-group {
-                margin-bottom: 1rem;
-            }
-        }
-
-        /* Fix for iOS devices which often have issues with custom select styling */
-        @supports (-webkit-touch-callout: none) {
-            select {
-                /* iOS-specific tweaks */
-                padding-right: 2rem;
-                /* Extra space for the dropdown arrow */
-            }
-        }
-
-        /* Improve tap target sizes on mobile */
-        @media (max-width: 576px) {
-
-            select,
-            input[type="text"],
-            input[type="email"],
-            input[type="password"] {
-                min-height: 3rem;
-                /* Larger tap targets on mobile */
-            }
-
-            .submit-btn {
-                min-height: 3.2rem;
-                margin-top: 1.5rem;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="registration-container">
-        <div class="registration-form">
-            <h2>Register for Orlia'25</h2>
-            <form id="registerForm">
-                <div class="form-group">
-                    <input type="text" id="fullName" name="fullName" placeholder="Name" required>
-                </div>
-                <div class="form-group"> 
-                    <input type="text" id="rollNumber" name="rollNumber" placeholder="Roll Number"required>
-                </div>
-                <div class="form-group">
-                    <select id="department" name="department" required>
-                        <option value="" disabled selected>Select Department</option>
-                        <option value="CSE">Computer Science Engineering</option>
-                        <option value="ECE">Electronics & Communication Engineering</option>
-                        <option value="EEE">Electrical & Electronics Engineering</option>
-                        <option value="MECH">Mechanical Engineering</option>
-                        <option value="CIVIL">Civil Engineering</option>
-                        <option value="IT">Information Technology</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select id="daySelection" name="daySelection" required onchange="updateEvents()">
-                        <option value="" disabled selected>Select Day</option>
-                        <option value="day1">Day 1</option>
-                        <option value="day2">Day 2</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select id="events" name="events" required disabled>
-                        <option value="" disabled selected>Select Event</option>
-                        <!-- Events will be populated based on day selection -->
-                    </select>
-                </div>
-                <button type="submit" class="submit-btn">Register</button>
-                <div class="event-footer">
-                    <div class="event-location">
-                        <i class="ri-map-pin-line"></i>
-                        <span>MKCE</span>
+        <div class="brand-section">
+            <div class="floating-circle"></div>
+            <div class="floating-circle"></div>
+            <div class="floating-circle"></div>
+            <h1>ORLIA'25</h1>
+            <p>Join us for an incredible technical symposium experience at MKCE</p>
+        </div>
+        <div class="form-section">
+            <div class="floating-circle"></div>
+            <div class="floating-circle"></div>
+            <div class="registration-form">
+                <h2>ORLIA 2K25</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <input type="text" id="fullName" name="fullName" placeholder="Name" required>
                     </div>
-                    <a href="index.html" class="event-btn">Home</a>
-                </div>
-            </form>
+                    <div class="form-group"> 
+                        <input type="text" id="rollNumber" name="rollNumber" placeholder="Roll Number"required>
+                    </div>
+                    <div class="form-group"> 
+                        <input type="text" id="year" name="year" placeholder="Year" required>
+                    </div>
+                    <div class="form-group"> 
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="department" name="department" required>
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="CSE">Computer Science Engineering</option>
+                            <option value="ECE">Electronics & Communication Engineering</option>
+                            <option value="EEE">Electrical & Electronics Engineering</option>
+                            <option value="MECH">Mechanical Engineering</option>
+                            <option value="CIVIL">Civil Engineering</option>
+                            <option value="IT">Information Technology</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="daySelection" name="daySelection" required onchange="updateEvents()">
+                            <option value="" disabled selected>Select Day</option>
+                            <option value="day1">Day 1</option>
+                            <option value="day2">Day 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="events" name="events" required disabled>
+                            <option value="" disabled selected>Select Event</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Register</button>
+                    <div class="event-footer">
+                        <div class="event-location">
+                            <i class="ri-map-pin-line"></i>
+                            <span>MKCE</span>
+                        </div>
+                        <a href="index.html" class="event-btn">Home</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <script>
-        function updateEvents() {
-            const daySelection = document.getElementById('daySelection');
-            const eventsDropdown = document.getElementById('events');
-
-            // Clear previous options
-            eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
-
-            // Enable events dropdown
-            eventsDropdown.disabled = false;
-
-            if (daySelection.value === 'day1') {
-                // Day 1 events
-                const day1Events = [
-                    { value: 'paper_presentation', text: 'Paper Presentation' },
-                    { value: 'technical_quiz', text: 'Technical Quiz' },
-                    { value: 'coding_competition', text: 'Coding Competition' },
-                    { value: 'project_expo', text: 'Project Expo' }
-                ];
-
-                day1Events.forEach(event => {
-                    const option = document.createElement('option');
-                    option.value = event.value;
-                    option.textContent = event.text;
-                    eventsDropdown.appendChild(option);
-                });
-            } else if (daySelection.value === 'day2') {
-                // Day 2 events
-                const day2Events = [
-                    { value: 'hackathon', text: 'Hackathon' },
-                    { value: 'debate', text: 'Technical Debate' },
-                    { value: 'workshop', text: 'Workshop' },
-                    { value: 'gaming', text: 'Gaming Competition' }
-                ];
-
-                day2Events.forEach(event => {
-                    const option = document.createElement('option');
-                    option.value = event.value;
-                    option.textContent = event.text;
-                    eventsDropdown.appendChild(option);
-                });
-            }
-        }
-    </script>
+    <script src="assets/script/script.js"></script>
 </body>
 
 </html>
