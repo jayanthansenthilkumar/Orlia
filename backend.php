@@ -6,6 +6,7 @@ if (isset($_POST['Add_newuser'])) {
         $name = mysqli_real_escape_string($conn, $_POST['fullName']);
         $rollno = mysqli_real_escape_string($conn, $_POST['rollNumber']);
         $year = mysqli_real_escape_string($conn, $_POST['year']);
+        $mail = mysqli_real_escape_string($conn, $_POST['mailid']);
         $phoneno = mysqli_real_escape_string($conn, $_POST['phoneNumber']);
         $dept = mysqli_real_escape_string($conn, $_POST['department']);
         $day = mysqli_real_escape_string($conn, $_POST['daySelection']);
@@ -23,7 +24,7 @@ if (isset($_POST['Add_newuser'])) {
             ];
             echo json_encode($res);
         } else {
-            $query = "INSERT INTO events (name, regno, year, phoneno, dept, day, events) VALUES ('$name', '$rollno', '$year', '$phoneno', '$dept', '$day', '$events')";
+            $query = "INSERT INTO events (name, regno, year, phoneno, dept, day, events, mail) VALUES ('$name', '$rollno', '$year', '$phoneno', '$dept', '$day', '$events','$mail')";
             if (mysqli_query($conn, $query)) {
                 $res = [
                     'status' => 200,

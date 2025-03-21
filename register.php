@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="assets/styles/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+
 </head>
 
 <body>
@@ -29,13 +31,24 @@
                     <div class="form-group">
                         <input type="text" id="fullName" name="fullName" placeholder="Name" required>
                     </div>
-                    <div class="form-group"> 
-                        <input type="text" id="rollNumber" name="rollNumber" placeholder="Roll Number"required>
+                    <div class="form-group">
+                        <input type="text" id="rollNumber" name="rollNumber" placeholder="Roll Number" required>
                     </div>
-                    <div class="form-group"> 
-                        <input type="text" id="year" name="year" placeholder="Year" required>
+                    <div class="form-group">
+                        <input type="email" id="mailid" name="mailid" placeholder="Mail Id" required>
                     </div>
-                    <div class="form-group"> 
+                    <div class="form-group">
+
+                        <select id="year" name="year" required>
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="I year">I Year</option>
+                            <option value="II year">II year</option>
+                            <option value="III year">III year</option>
+                            <option value="IV year">IV year</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
                     </div>
                     <div class="form-group">
@@ -76,6 +89,10 @@
 
     <script src="assets/script/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+    <script>
+
+    </script>
     <script>
         $(document).on('submit', '#registerForm', function(e) {
             e.preventDefault();
@@ -93,13 +110,19 @@
                     console.log(res);
                     if (res.status == 200) {
                         $('#registerForm')[0].reset(); //form
-                        alert(res.message);
+
+                        iziToast.success({
+                            title: 'OK',
+                            message: ' Event Register Success'
+                        });
                     } else if (res.status == 400) {
                         $('#registerForm')[0].reset(); //form
-                        console.error("Error:", res.message);
-                        alert(res.message)
+                        iziToast.error({
+                            title: '(Max 3 events per day)',
+                            message: 'Registration limit for this day has been reached',
+                        });
                     } else if (res.status == 500) {
-                        
+
                         $('#registerForm')[0].reset(); //form
                         console.error("Error:", res.message);
                         alert("Something Went wrong.! try again")
