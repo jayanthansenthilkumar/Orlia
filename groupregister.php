@@ -98,7 +98,7 @@
             max: 5
         },
         'Firelesscooking': {
-            min: 1,
+            min: 2,
             max: 2
         },
         'Trailertime': {
@@ -130,15 +130,15 @@
             max: 3
         },
         'Freefire': {
-            min: 2,
+            min: 4,
             max: 4
         },
         'Treasurehunt': {
-            min: 2,
+            min: 4,
             max: 4
         },
         'Artfromwaste': {
-            min: 1,
+            min: 2,
             max: 2
         },
         'Twindance': {
