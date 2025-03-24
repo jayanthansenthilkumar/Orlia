@@ -1,5 +1,41 @@
+<?php
+session_start();
+include('db.php'); // Include the database connection file  
+if (!isset($_SESSION['username'])) {
+    header("Location: coordinator.php");
+    exit();
+}
+$userid = $_SESSION['username'];
+$groupEvents = [
+    'Divideconquer',
+    'Firelesscooking',
+    'Trailertime',
+    'Iplauction',
+    'Lyricalhunt',
+    'Dumpcharades',
+    'Groupdance',
+    'Rangoli',
+    'Sherlockholmes',
+    'Freefire',
+    'Treasurehunt',
+    'Artfromwaste',
+    'Twindance',
+    'Mime',
+];
+
+if (in_array($userid, $groupEvents)) {
+    
+    $sql1 = "SELECT * FROM groupevents WHERE events='$userid'";
+} else {
+ 
+    $sql1 = "SELECT * FROM events WHERE events='$userid'";
+}
+
+$result1 = mysqli_query($conn, $sql1);
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +45,7 @@
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/admin.css">
 </head>
+
 <body>
     <aside class="sidebar">
         <h2><i class="ri-theatre-line"></i> Orlia</h2>
@@ -17,7 +54,7 @@
             <li><a href="#" class="active"><i class="ri-group-2-line"></i> Participants</a></li>
         </ul>
     </aside>
-    
+
     <div class="main-content">
         <header class="navbar">
             <h1>Event Participants</h1>
@@ -28,12 +65,10 @@
                 <div class="profile-dropdown">
                     <div class="profile">
                         <i class="ri-user-3-line"></i>
-                        <span>Admin</span>
+                        <span><?php echo $userid ?></span>
                     </div>
                     <div class="dropdown-menu">
-                        <a href="#"><i class="ri-user-line"></i> My Profile</a>
-                        <a href="#"><i class="ri-settings-3-line"></i> Settings</a>
-                        <a href="#"><i class="ri-logout-box-r-line"></i> Logout</a>
+                        <a href="logout.php"><i class="ri-logout-box-r-line"></i> Logout</a>
                     </div>
                 </div>
             </div>
@@ -41,44 +76,98 @@
 
         <main class="dashboard-grid">
             <div class="table-container">
-                <table id="usersTable" class="display">
+                <?php if (!in_array($userid, $groupEvents)) { ?>
+                    <table id="usersTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name</th>
+                                <th>Register Number</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Year</th>
+                                <th>Department</th>
+                                <th>Event Name</th>
+                                <th>Event Day</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $s = 1;
+                            while ($row = mysqli_fetch_array($result1)) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $s; ?></td>
+                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo $row['regno']; ?></td>
+                                    <td><?php echo $row['mail']; ?></td>
+                                    <td><?php echo $row['phoneno']; ?></td>
+                                    <td><?php echo $row['year']; ?></td>
+                                    <td><?php echo $row['dept']; ?></td>
+                                    <td><?php echo $row['events']; ?></td>
+                                    <td><?php echo $row['day']; ?></td>
+                                </tr>
+                            <?php
+                                $s++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                <?php } else { ?>
+                    
+                    <table id="usersTable" class="display">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Register Number</th>
-                            <th>Phone Number</th>
-                            <th>Year & Department</th>
+                            <th>S.No</th>
+                            <th>Team Name</th>
+                            <th>Leader Name/Roll No</th>
+                            <th>LeaderEmail/Phone</th>
+                            <th>Team Members/RollNo</th>
+                           
+                            <th>Year</th>
+                            <th>Department</th>
                             <th>Event Name</th>
                             <th>Event Day</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>2021CSE001</td>
-                            <td>+91 9876543210</td>
-                            <td>3rd Year CSE</td>
-                            <td>Web Design</td>
-                            <td>Day 1</td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>2021ECE045</td>
-                            <td>+91 9876543211</td>
-                            <td>2nd Year ECE</td>
-                            <td>Coding Challenge</td>
-                            <td>Day 2</td>
-                        </tr>
-                        <tr>
-                            <td>Alex Johnson</td>
-                            <td>2021IT102</td>
-                            <td>+91 9876543212</td>
-                            <td>4th Year IT</td>
-                            <td>Project Expo</td>
-                            <td>Day 1</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <tbody>
+                            <?php
+                            $s = 1;
+                            while ($row = mysqli_fetch_array($result1)) {
+                                
+                            ?>
+                                <tr>
+                                <td><?php echo $s ?></td>
+                                <td><?php echo $row['teamname'] ?></td>
+                                <td><?php echo $row['teamleadname'] . ' / ' . $row['tregno'] ?></td>
+                                <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
+                                <td>
+                                    <?php
+                                    $teamMembers = json_decode($row['tmembername'], true); // Decode JSON
+                                    if (!empty($teamMembers)) {
+                                        foreach ($teamMembers as $member) {
+                                            echo $member['name'] . " / " . $member['roll'] . "<br>"; // Format: Name (Roll No)
+                                        }
+                                    } else {
+                                        echo "No team members"; // Fallback if JSON is empty
+                                    }
+                                    ?>
+                                </td>
+
+                  
+                                <td><?php echo $row['year'] ?></td>
+                                <td><?php echo $row['dept'] ?></td>
+                                <td><?php echo $row['events'] ?></td>
+                                <td><?php echo $row['day'] ?></td>
+                            </tr>
+                            <?php
+                                $s++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                <?php } ?>
             </div>
         </main>
     </div>
@@ -89,7 +178,9 @@
             $('#usersTable').DataTable({
                 pageLength: 10,
                 responsive: true,
-                order: [[0, 'asc']],
+                order: [
+                    [0, 'asc']
+                ],
                 language: {
                     search: "🔍 Search participants:",
                     lengthMenu: "Display _MENU_ participants per page",
@@ -104,7 +195,7 @@
                 dom: '<"top"lf>rt<"bottom"ip><"clear">'
             });
         });
-        
+
         document.querySelector('.profile').addEventListener('click', function() {
             document.querySelector('.dropdown-menu').classList.toggle('show');
         });
@@ -117,4 +208,5 @@
         });
     </script>
 </body>
+
 </html>
