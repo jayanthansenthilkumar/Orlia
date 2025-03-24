@@ -148,6 +148,10 @@
         'Mime': {
             min: 1,
             max: 12
+        },
+        'Fruitcarving': {
+            min: 1,
+            max: 2
         }
     };
 
@@ -282,6 +286,10 @@
                 {
                     value: "Mime",
                     text: "Mime"
+                },
+                {
+                    value: "Vegetablefruitart",
+                    text: "Vegetable Fruit Art"
                 },
 
             ];

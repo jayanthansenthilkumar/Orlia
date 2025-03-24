@@ -21,7 +21,8 @@ $groupEvents = [
     'Artfromwaste',
     'Twindance',
     'Mime',
-    'Rj/vj'
+    'Rj/vj',
+    'Vegetablefruitart',
 ];
 
 if (in_array($userid, $groupEvents)) {
