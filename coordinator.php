@@ -61,7 +61,10 @@ include "db.php";
         
         if ($_SESSION['role']  == 1) {
             header("Location: dashboard.php");
-        } else {
+        }else if($_SESSION['role'] == 2) {
+            header("Location: superadmin.php");
+        }
+        else  {
             header("Location: overdashboard.php");
         }
         exit();
