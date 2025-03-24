@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 $userid = $_SESSION['username'];
-$sql="SELECT * FROM login WHERE role = 1";
+$sql="SELECT * FROM login WHERE role = 1 AND role = 0";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -62,7 +62,7 @@ $result = mysqli_query($conn, $sql);
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
 
