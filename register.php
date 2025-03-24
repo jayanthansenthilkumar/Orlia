@@ -108,9 +108,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
     <script>
-
-    </script>
-    <script>
     $(document).on('submit', '#registerForm', function(e) {
         e.preventDefault();
         var Formdata = new FormData(this);
@@ -126,107 +123,26 @@
                 var res = jQuery.parseJSON(response);
                 console.log(res);
                 if (res.status == 200) {
-                    $('#registerForm')[0].reset(); //form
-
+                    $('#registerForm')[0].reset();
                     iziToast.success({
                         title: 'OK',
                         message: ' Event Register Success'
                     });
                 } else if (res.status == 500) {
-
-                    $('#registerForm')[0].reset(); //form
+                    $('#registerForm')[0].reset();
                     console.error("Error:", res.message);
                     alert("Something Went wrong.! try again")
                 }
-<<<<<<< HEAD
-            })
-        });
-
-        function updateEvents() {
-            const daySelection = document.getElementById("daySelection");
-            const eventsDropdown = document.getElementById("events");
-
-            // Clear previous options and enable the dropdown
-            eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
-            eventsDropdown.disabled = false; // Enable the dropdown
-
-            let eventList = [];
-
-            if (daySelection.value === "day1") {
-                eventList = [{
-                        value: "Tamilspeech",
-                        text: "Tamil Speech"
-                    },
-                    {
-                        value: "Englishspeech",
-                        text: "English Speech"
-                    },
-                    {
-                        value: "Singing",
-                        text: "Singing"
-                    },
-                    
-                    
-                    {
-                        value: "Drawing",
-                        text: "Drawing"
-                    },
-                    {
-                        value: "Mehandi",
-                        text: "Mehandi"
-                    },
-                    
-                    {
-                        value: "Memecreation",
-                        text: "Meme Creation"
-                    },
-                    
-                    
-                    {
-                        value: "Solodance",
-                        text: "Solo Dance"
-                    },
-                    
-                ];
-            } else if (daySelection.value === "day2") {
-                eventList = [
-                    {
-                        value: "Photography",
-                        text: "Photography"
-                    },
-                    {
-                        value: "Shortflim",
-                        text: "Shortflim"
-                    },
-                    
-                    {
-                        value: "Bestmanager",
-                        text: "Best Manager"
-                    },
-                    
-                    {
-                        value: "Instrumentalplaying",
-                        text: "Instrumental Playing"
-                    },
-                    {
-                        value: "Rj/vj",
-                        text: "Rj/vj Hunt"
-                    },
-                    
-                ];
-=======
->>>>>>> d1b8662397a176977561eb7fd63174636df2d5a1
             }
-        })
+        });
     });
 
     function updateEvents() {
         const daySelection = document.getElementById("daySelection");
         const eventsDropdown = document.getElementById("events");
 
-        // Clear previous options and enable the dropdown
         eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
-        eventsDropdown.disabled = false; // Enable the dropdown
+        eventsDropdown.disabled = false;
 
         let eventList = [];
 
@@ -243,8 +159,6 @@
                     value: "Singing",
                     text: "Singing"
                 },
-
-
                 {
                     value: "Drawing",
                     text: "Drawing"
@@ -253,18 +167,14 @@
                     value: "Mehandi",
                     text: "Mehandi"
                 },
-
                 {
                     value: "Memecreation",
                     text: "Meme Creation"
                 },
-
-
                 {
                     value: "Solodance",
                     text: "Solo Dance"
-                },
-
+                }
             ];
         } else if (daySelection.value === "day2") {
             eventList = [{
@@ -272,15 +182,13 @@
                     text: "Photography"
                 },
                 {
-                    // value: "Shortflim",
-                    // text: "Shortflim"
+                    value: "Shortflim",
+                    text: "Shortflim"
                 },
-
                 {
                     value: "Bestmanager",
                     text: "Best Manager"
                 },
-
                 {
                     value: "Instrumentalplaying",
                     text: "Instrumental Playing"
@@ -288,8 +196,7 @@
                 {
                     value: "Rjvj",
                     text: "Rj/vj Hunt"
-                },
-
+                }
             ];
         }
 

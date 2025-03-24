@@ -164,8 +164,8 @@
             min: 2,
             max: 12
         },
-        'Fruitcarving': {
-            min: 1,
+        'Vegetablefruitart': {
+            min: 2,
             max: 2
         }
     };
