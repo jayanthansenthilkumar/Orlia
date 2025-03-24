@@ -21,7 +21,6 @@ $groupEvents = [
     'Artfromwaste',
     'Twindance',
     'Mime',
-    'Rj/vj',
     'Vegetablefruitart',
 ];
 
