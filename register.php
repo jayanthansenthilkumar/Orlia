@@ -67,20 +67,30 @@
                         </select>
                     </div>
 
+                    <?php
+                    $selectedDay = isset($_GET['day']) ? $_GET['day'] : '';
+                    $selectedEvent = isset($_GET['event']) ? $_GET['event'] : '';
+                    ?>
+
                     <div class="form-group">
-                        <select id="daySelection" name="daySelection" required onchange="updateEvents()">
-                            <option value="" disabled selected>Select Day</option>
-                            <option value="day1">Day 1</option>
-                            <option value="day2">Day 2</option>
+                        <select id="daySelection" name="daySelection" required onchange="updateEvents()"
+                            <?php echo $selectedDay ? 'disabled' : ''; ?>>
+                            <option value="" disabled>Select Day</option>
+                            <option value="day1" <?php echo ($selectedDay == 'day1') ? 'selected' : ''; ?>>Day 1
+                            </option>
+                            <option value="day2" <?php echo ($selectedDay == 'day2') ? 'selected' : ''; ?>>Day 2
+                            </option>
                         </select>
+                        <?php if($selectedDay) echo "<input type='hidden' name='daySelection' value='$selectedDay'>"; ?>
                     </div>
 
                     <div class="form-group">
-                        <select id="events" name="events" required disabled>
+                        <select id="events" name="events" required <?php echo $selectedEvent ? 'disabled' : ''; ?>>
                             <option value="" disabled selected>Select Event</option>
                         </select>
+                        <?php if($selectedEvent) echo "<input type='hidden' name='events' value='$selectedEvent'>"; ?>
                     </div>
-                    
+
                     <button type="submit" class="submit-btn">Register</button>
                     <div class="event-footer">
                         <div class="event-location">
@@ -101,34 +111,34 @@
 
     </script>
     <script>
-        $(document).on('submit', '#registerForm', function(e) {
-            e.preventDefault();
-            var Formdata = new FormData(this);
-            Formdata.append("Add_newuser", true);
-            console.log(Formdata)
-            $.ajax({
-                url: "backend.php",
-                method: "POST",
-                data: Formdata,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    var res = jQuery.parseJSON(response);
-                    console.log(res);
-                    if (res.status == 200) {
-                        $('#registerForm')[0].reset(); //form
+    $(document).on('submit', '#registerForm', function(e) {
+        e.preventDefault();
+        var Formdata = new FormData(this);
+        Formdata.append("Add_newuser", true);
+        console.log(Formdata)
+        $.ajax({
+            url: "backend.php",
+            method: "POST",
+            data: Formdata,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                var res = jQuery.parseJSON(response);
+                console.log(res);
+                if (res.status == 200) {
+                    $('#registerForm')[0].reset(); //form
 
-                        iziToast.success({
-                            title: 'OK',
-                            message: ' Event Register Success'
-                        });
-                    } else if (res.status == 500) {
+                    iziToast.success({
+                        title: 'OK',
+                        message: ' Event Register Success'
+                    });
+                } else if (res.status == 500) {
 
-                        $('#registerForm')[0].reset(); //form
-                        console.error("Error:", res.message);
-                        alert("Something Went wrong.! try again")
-                    }
+                    $('#registerForm')[0].reset(); //form
+                    console.error("Error:", res.message);
+                    alert("Something Went wrong.! try again")
                 }
+<<<<<<< HEAD
             })
         });
 
@@ -204,15 +214,118 @@
                     },
                     
                 ];
+=======
+>>>>>>> d1b8662397a176977561eb7fd63174636df2d5a1
             }
+        })
+    });
 
-            eventList.forEach(event => {
-                const option = document.createElement("option");
-                option.value = event.value;
-                option.textContent = event.text;
-                eventsDropdown.appendChild(option);
-            });
+    function updateEvents() {
+        const daySelection = document.getElementById("daySelection");
+        const eventsDropdown = document.getElementById("events");
+
+        // Clear previous options and enable the dropdown
+        eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
+        eventsDropdown.disabled = false; // Enable the dropdown
+
+        let eventList = [];
+
+        if (daySelection.value === "day1") {
+            eventList = [{
+                    value: "Tamilspeech",
+                    text: "Tamil Speech"
+                },
+                {
+                    value: "Englishspeech",
+                    text: "English Speech"
+                },
+                {
+                    value: "Singing",
+                    text: "Singing"
+                },
+
+
+                {
+                    value: "Drawing",
+                    text: "Drawing"
+                },
+                {
+                    value: "Mehandi",
+                    text: "Mehandi"
+                },
+
+                {
+                    value: "Memecreation",
+                    text: "Meme Creation"
+                },
+
+
+                {
+                    value: "Solodance",
+                    text: "Solo Dance"
+                },
+
+            ];
+        } else if (daySelection.value === "day2") {
+            eventList = [{
+                    value: "Photography",
+                    text: "Photography"
+                },
+                {
+                    // value: "Shortflim",
+                    // text: "Shortflim"
+                },
+
+                {
+                    value: "Bestmanager",
+                    text: "Best Manager"
+                },
+
+                {
+                    value: "Instrumentalplaying",
+                    text: "Instrumental Playing"
+                },
+                {
+                    value: "Rjvj",
+                    text: "Rj/vj Hunt"
+                },
+
+            ];
         }
+
+        eventList.forEach(event => {
+            const option = document.createElement("option");
+            option.value = event.value;
+            option.textContent = event.text;
+            eventsDropdown.appendChild(option);
+        });
+    }
+
+    window.onload = function() {
+        const selectedDay = '<?php echo $selectedDay; ?>';
+        const selectedEvent = '<?php echo $selectedEvent; ?>';
+
+        if (selectedDay) {
+            const daySelect = document.getElementById('daySelection');
+            daySelect.value = selectedDay;
+            daySelect.disabled = true;
+
+            updateEvents();
+
+            if (selectedEvent) {
+                setTimeout(() => {
+                    const eventsDropdown = document.getElementById('events');
+                    for (let i = 0; i < eventsDropdown.options.length; i++) {
+                        if (eventsDropdown.options[i].value === selectedEvent) {
+                            eventsDropdown.selectedIndex = i;
+                            eventsDropdown.disabled = true;
+                            break;
+                        }
+                    }
+                }, 100);
+            }
+        }
+    };
     </script>
 </body>
 

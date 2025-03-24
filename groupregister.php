@@ -63,19 +63,34 @@
                         </select>
                     </div>
 
+                    <?php
+                    $selectedDay = isset($_GET['day']) ? $_GET['day'] : '';
+                    $selectedEvent = isset($_GET['event']) ? $_GET['event'] : '';
+                    ?>
+
                     <div class="form-group">
-                        <select id="daySelection" name="daySelection" required onchange="updateEvents()">
-                            <option value="" disabled selected>Select Day</option>
-                            <option value="day1">Day 1</option>
-                            <option value="day2">Day 2</option>
+                        <select id="daySelection" name="daySelection" required onchange="updateEvents()"
+                            <?php echo $selectedDay ? 'disabled' : ''; ?>>
+                            <option value="" disabled>Select Day</option>
+                            <option value="day1" <?php echo ($selectedDay == 'day1') ? 'selected' : ''; ?>>Day 1
+                            </option>
+                            <option value="day2" <?php echo ($selectedDay == 'day2') ? 'selected' : ''; ?>>Day 2
+                            </option>
                         </select>
+                        <?php if ($selectedDay)
+                            echo "<input type='hidden' name='daySelection' value='$selectedDay'>"; ?>
                     </div>
 
                     <div class="form-group">
-                        <select id="events" name="events" required disabled>
-                            <option value="" disabled selected>Select Event</option>
+                        <select id="events" name="events" required <?php echo $selectedEvent ? 'disabled' : ''; ?>>
+                            <option value="" disabled>Select Event</option>
+                            <option value="<?php echo $selectedEvent; ?>"
+                                <?php echo $selectedEvent ? 'selected' : ''; ?>><?php echo $selectedEvent; ?></option>
                         </select>
+                        <?php if ($selectedEvent)
+                            echo "<input type='hidden' name='events' value='$selectedEvent'>"; ?>
                     </div>
+
                     <div class="form-group">
                         <input type="number" id="teamMembersCount" name="teamMembersCount"
                             placeholder="Number of Team Members" min="1" max="15" required onchange="addTeamMembers()">
@@ -102,7 +117,7 @@
             max: 2
         },
         'Trailertime': {
-            min: 1,
+            min: 2,
             max: 2
         },
         'Iplauction': {
@@ -134,7 +149,7 @@
             max: 4
         },
         'Treasurehunt': {
-            min: 4,
+            min: 2,
             max: 4
         },
         'Artfromwaste': {
@@ -146,12 +161,54 @@
             max: 2
         },
         'Mime': {
-            min: 1,
+            min: 2,
             max: 12
         },
         'Fruitcarving': {
             min: 1,
             max: 2
+        }
+    };
+
+    window.onload = function() {
+        const selectedDay = '<?php echo $selectedDay; ?>';
+        const selectedEvent = '<?php echo $selectedEvent; ?>';
+
+        if (selectedDay && selectedEvent) {
+            // Set day selection
+            const daySelect = document.getElementById('daySelection');
+            daySelect.value = selectedDay;
+            daySelect.disabled = true;
+
+            // Update events list
+            updateEvents();
+
+            // Set event and handle team members
+            setTimeout(() => {
+                const eventsDropdown = document.getElementById('events');
+                for (let i = 0; i < eventsDropdown.options.length; i++) {
+                    if (eventsDropdown.options[i].value === selectedEvent) {
+                        eventsDropdown.selectedIndex = i;
+                        eventsDropdown.disabled = true;
+
+                        // Handle team size limits
+                        if (eventTeamSizes[selectedEvent]) {
+                            const teamMembersInput = document.getElementById('teamMembersCount');
+                            const {
+                                min,
+                                max
+                            } = eventTeamSizes[selectedEvent];
+                            teamMembersInput.min = min - 1;
+                            teamMembersInput.max = max - 1;
+                            teamMembersInput.disabled = false;
+                            teamMembersInput.placeholder = `Enter additional members (${min-1}-${max-1})`;
+                            teamMembersInput.value = min - 1;
+                            addTeamMembers();
+                        }
+                        break;
+                    }
+                }
+            }, 100);
         }
     };
 
@@ -168,7 +225,7 @@
             teamMembersInput.min = min - 1;
             teamMembersInput.max = max - 1;
             teamMembersInput.disabled = false;
-            teamMembersInput.placeholder = `Enter additional members (${min - 1}-${max - 1})`;
+            teamMembersInput.placeholder = `Enter additional members (${min-1}-${max-1})`;
 
             if (teamMembersInput.value < min - 1 || teamMembersInput.value > max - 1) {
                 teamMembersInput.value = min - 1;
@@ -200,13 +257,13 @@
             // Generate fields for additional members
             for (let i = 1; i <= count; i++) {
                 container.innerHTML += `
-                    <div class="form-group">
-                        <input type="text" name="memberName${i}" placeholder="Team Member ${i} Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="memberRoll${i}" placeholder="Team Member ${i} Roll Number" required>
-                    </div>
-                `;
+                        <div class="form-group">
+                            <input type="text" name="memberName${i}" placeholder="Team Member ${i} Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="memberRoll${i}" placeholder="Team Member ${i} Roll Number" required>
+                        </div>
+                    `;
             }
         }
     }
@@ -303,13 +360,13 @@
         });
     }
 
-
     $(document).on('submit', '#Groupform', function(e) {
         console.log("Form submitted");
         e.preventDefault();
         var Formdata = new FormData(this);
 
         Formdata.append("groupnewuser", true);
+
 
         $.ajax({
             url: "backend.php",
@@ -321,29 +378,16 @@
                 var res = jQuery.parseJSON(response);
                 console.log(res);
                 if (res.status == 200) {
-                    // Reset the form
-                    $('#Groupform')[0].reset();
-
-                    // Reset event selection
-                    $('#events').html('<option value="" disabled selected>Select Event</option>')
-                        .prop('disabled', true);
-
-                    // Reset team members container
-                    $('#teamMembersContainer').empty();
-
-                    // Reset team members count
-                    $('#teamMembersCount').prop('disabled', true);
+                    $('#Groupform')[0].reset(); // Corrected form reset
 
                     iziToast.success({
                         title: 'OK',
                         message: 'Event Register Success'
                     });
                 } else if (res.status == 500) {
+                    $('#Groupform')[0].reset(); // Corrected form reset
                     console.error("Error:", res.message);
-                    iziToast.error({
-                        title: 'Error',
-                        message: 'Something went wrong! Try again.'
-                    });
+                    alert("Something went wrong! Try again.");
                 }
             }
         });
