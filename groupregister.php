@@ -77,7 +77,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="number" id="teamMembersCount" name="teamMembersCount" placeholder="Number of Team Members" min="1" max="15" required onchange="addTeamMembers()">
+                        <input type="number" id="teamMembersCount" name="teamMembersCount"
+                            placeholder="Number of Team Members" min="1" max="15" required onchange="addTeamMembers()">
                     </div>
                     <div id="teamMembersContainer"></div>
                     <button type="submit" class="submit-btn">Register</button>
@@ -88,15 +89,111 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
 
     <script>
+    const eventTeamSizes = {
+        'Divideconquer': {
+            min: 4,
+            max: 5
+        },
+        'Firelesscooking': {
+            min: 1,
+            max: 2
+        },
+        'Trailertime': {
+            min: 1,
+            max: 2
+        },
+        'Iplauction': {
+            min: 3,
+            max: 3
+        },
+        'Lyricalhunt': {
+            min: 2,
+            max: 3
+        },
+        'Dumpcharades': {
+            min: 2,
+            max: 3
+        },
+        'Groupdance': {
+            min: 6,
+            max: 15
+        },
+        'Rangoli': {
+            min: 2,
+            max: 4
+        },
+        'Sherlockholmes': {
+            min: 2,
+            max: 3
+        },
+        'Freefire': {
+            min: 2,
+            max: 4
+        },
+        'Treasurehunt': {
+            min: 2,
+            max: 4
+        },
+        'Artfromwaste': {
+            min: 1,
+            max: 2
+        },
+        'Twindance': {
+            min: 2,
+            max: 2
+        },
+        'Mime': {
+            min: 1,
+            max: 12
+        }
+    };
 
+    document.getElementById('events').addEventListener('change', function() {
+        const selectedEvent = this.value;
+        const teamMembersInput = document.getElementById('teamMembersCount');
 
-        function addTeamMembers() {
-            const count = document.getElementById("teamMembersCount").value;
-            const container = document.getElementById("teamMembersContainer");
-            container.innerHTML = "";
+        if (eventTeamSizes[selectedEvent]) {
+            const {
+                min,
+                max
+            } = eventTeamSizes[selectedEvent];
+            // Subtract 1 from min and max since leader is counted separately
+            teamMembersInput.min = min - 1;
+            teamMembersInput.max = max - 1;
+            teamMembersInput.disabled = false;
+            teamMembersInput.placeholder = `Enter additional members (${min - 1}-${max - 1})`;
+
+            if (teamMembersInput.value < min - 1 || teamMembersInput.value > max - 1) {
+                teamMembersInput.value = min - 1;
+            }
+            addTeamMembers();
+        } else {
+            teamMembersInput.disabled = true;
+            teamMembersInput.placeholder = 'Select an event first';
+            document.getElementById('teamMembersContainer').innerHTML = '';
+        }
+    });
+
+    function addTeamMembers() {
+        const count = parseInt(document.getElementById("teamMembersCount").value);
+        const container = document.getElementById("teamMembersContainer");
+        container.innerHTML = "";
+
+        const selectedEvent = document.getElementById('events').value;
+        const limits = eventTeamSizes[selectedEvent];
+
+        // Add 1 to count to include the leader
+        const totalCount = count + 1;
+
+        if (limits && totalCount >= limits.min && totalCount <= limits.max) {
+            // Display total team size including leader
+            container.innerHTML =
+                `<div class="form-group"><p>Total team size (including leader): ${totalCount}</p></div>`;
+
+            // Generate fields for additional members
             for (let i = 1; i <= count; i++) {
                 container.innerHTML += `
                     <div class="form-group">
@@ -108,130 +205,141 @@
                 `;
             }
         }
+    }
 
-        function updateEvents() {
-            const daySelection = document.getElementById("daySelection");
-            const eventsDropdown = document.getElementById("events");
+    function updateEvents() {
+        const daySelection = document.getElementById("daySelection");
+        const eventsDropdown = document.getElementById("events");
 
-            // Clear previous options and enable the dropdown
-            eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
-            eventsDropdown.disabled = false; // Enable the dropdown
+        eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
+        eventsDropdown.disabled = false;
 
-            let eventList = [];
+        let eventList = [];
 
-            if (daySelection.value === "day1") {
-                eventList = [
-                    {
-                        value: "Divideconquer",
-                        text: "Divide conquer"
-                    },
-                    {
-                        value: "Firelesscooking",
-                        text: "Fireless cooking"
-                    },
-                    
-                    
-                    {
-                        value: "Trailertime",
-                        text: "Trailer Time"
-                    },
-                    
-                    {
-                        value: "Iplauction",
-                        text: "Ipl Auction"
-                    },
-                    {
-                        value: "Lyricalhunt",
-                        text: "Lyrical Hunt"
-                    },
-                    {
-                        value: "Dumpcharades",
-                        text: "Dump Charades"
-                    },
-                    
-                    {
-                        value: "Groupdance",
-                        text: "Group Dance"
-                    },
-                ];
-            } else if (daySelection.value === "day2") {
-                eventList = [{
-                        value: "Rangoli",
-                        text: "Rangoli"
-                    },
-                    
-                   
-                    {
-                        value: "Sherlockholmes",
-                        text: "Sherlock Holmes"
-                    },
-                    
-                    {
-                        value: "Freefire",
-                        text: "Free Fire"
-                    },
-                    {
-                        value: "Treasurehunt",
-                        text: "Treasure Hunt"
-                    },
-                   
-                    {
-                        value: "Artfromwaste",
-                        text: "Art From Waste"
-                    },
-                    {
-                        value: "Twindance",
-                        text: "Twin Dance"
-                    },
-                    {
-                        value: "Mime",
-                        text: "Mime"
-                    },
-                    
-                ];
-            }
+        if (daySelection.value === "day1") {
+            eventList = [{
+                    value: "Divideconquer",
+                    text: "Divide conquer"
+                },
+                {
+                    value: "Firelesscooking",
+                    text: "Fireless cooking"
+                },
 
-            eventList.forEach(event => {
-                const option = document.createElement("option");
-                option.value = event.value;
-                option.textContent = event.text;
-                eventsDropdown.appendChild(option);
-            });
+
+                {
+                    value: "Trailertime",
+                    text: "Trailer Time"
+                },
+
+                {
+                    value: "Iplauction",
+                    text: "Ipl Auction"
+                },
+                {
+                    value: "Lyricalhunt",
+                    text: "Lyrical Hunt"
+                },
+                {
+                    value: "Dumpcharades",
+                    text: "Dump Charades"
+                },
+
+                {
+                    value: "Groupdance",
+                    text: "Group Dance"
+                },
+            ];
+        } else if (daySelection.value === "day2") {
+            eventList = [{
+                    value: "Rangoli",
+                    text: "Rangoli"
+                },
+
+
+                {
+                    value: "Sherlockholmes",
+                    text: "Sherlock Holmes"
+                },
+
+                {
+                    value: "Freefire",
+                    text: "Free Fire"
+                },
+                {
+                    value: "Treasurehunt",
+                    text: "Treasure Hunt"
+                },
+
+                {
+                    value: "Artfromwaste",
+                    text: "Art From Waste"
+                },
+                {
+                    value: "Twindance",
+                    text: "Twin Dance"
+                },
+                {
+                    value: "Mime",
+                    text: "Mime"
+                },
+
+            ];
         }
 
-
-        $(document).on('submit', '#Groupform', function(e) {
-            console.log("Form submitted");
-            e.preventDefault();
-            var Formdata = new FormData(this);
-        
-            Formdata.append("groupnewuser", true);
-
-            
-            $.ajax({
-                url: "backend.php",
-                method: "POST",
-                data: Formdata,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    var res = jQuery.parseJSON(response);
-                    console.log(res);
-                    if (res.status == 200) {
-                        $('#Groupform')[0].reset(); // Corrected form reset
-
-                        iziToast.success({
-                            title: 'OK',
-                            message: 'Event Register Success'
-                        });
-                    } else if (res.status == 500) {
-                        $('#Groupform')[0].reset(); // Corrected form reset
-                        console.error("Error:", res.message);
-                        alert("Something went wrong! Try again.");
-                    }
-                }
-            });
+        eventList.forEach(event => {
+            const option = document.createElement("option");
+            option.value = event.value;
+            option.textContent = event.text;
+            eventsDropdown.appendChild(option);
         });
+    }
+
+
+    $(document).on('submit', '#Groupform', function(e) {
+        console.log("Form submitted");
+        e.preventDefault();
+        var Formdata = new FormData(this);
+
+        Formdata.append("groupnewuser", true);
+
+        $.ajax({
+            url: "backend.php",
+            method: "POST",
+            data: Formdata,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                var res = jQuery.parseJSON(response);
+                console.log(res);
+                if (res.status == 200) {
+                    // Reset the form
+                    $('#Groupform')[0].reset();
+
+                    // Reset event selection
+                    $('#events').html('<option value="" disabled selected>Select Event</option>')
+                        .prop('disabled', true);
+
+                    // Reset team members container
+                    $('#teamMembersContainer').empty();
+
+                    // Reset team members count
+                    $('#teamMembersCount').prop('disabled', true);
+
+                    iziToast.success({
+                        title: 'OK',
+                        message: 'Event Register Success'
+                    });
+                } else if (res.status == 500) {
+                    console.error("Error:", res.message);
+                    iziToast.error({
+                        title: 'Error',
+                        message: 'Something went wrong! Try again.'
+                    });
+                }
+            }
+        });
+    });
     </script>
 </body>
 
