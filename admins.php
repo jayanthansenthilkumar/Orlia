@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 $userid = $_SESSION['username'];
-$sql = "SELECT * FROM login WHERE role = 1";
+$sql = "SELECT * FROM login WHERE role IN (0, 1)";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -97,6 +97,7 @@ $result = mysqli_query($conn, $sql);
                     <th>S.No</th>
                     <th>userid</th>
                     <th>password</th>
+                    
 
                 </tr>
             </thead>
@@ -109,6 +110,7 @@ $result = mysqli_query($conn, $sql);
                     <td><?php echo $s ?></td>
                     <td><?php echo $row['userid'] ?></td>
                     <td><?php echo $row['password'] ?></td>
+
                 </tr>
                 <?php
                     $s++;
