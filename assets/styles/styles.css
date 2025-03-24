@@ -1085,14 +1085,45 @@ h1, p {
 }
 
 .patron-grid.chief-patrons {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 600px;
+    display: flex;
+    justify-content: center;
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: nowrap;
 }
 
 .patron-grid.chief-patrons .patron-card.prominent {
-    grid-column: auto;
-    max-width: 280px;
+    flex: 0 1 280px;
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .patron-grid.chief-patrons {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        flex: 0 1 calc(50% - 1.5rem);
+        max-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .patron-grid.chief-patrons .patron-card.prominent {
+        flex: 0 1 100%;
+        max-width: 280px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        max-width: 600px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -1106,26 +1137,276 @@ h1, p {
     }
 }
 
-@media (max-width: 992px) {
-    .patron-grid {
-        grid-template-columns: repeat(2, 1fr);
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
     
-    .patron-card.prominent {
-        grid-column: auto;
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
     }
 }
 
 @media (max-width: 576px) {
-    .patron-grid {
+    .patron-grid.chief-patrons {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .patron-grid.chief-patrons .patron-card.prominent {
+        margin: 0 auto;
     }
 }
 
 .executive-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .executive-card {
