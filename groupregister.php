@@ -59,7 +59,9 @@
                             <option value="MECH">Mechanical Engineering</option>
                             <option value="CIVIL">Civil Engineering</option>
                             <option value="IT">Information Technology</option>
-                            <option value="FE">Freshman Engineering</option>
+                            <option value="VLSI">Electronics Engineering (VLSI Design)</option>
+                            <option value="MCA">Master Of Computer Applications</option>
+                            <option value="MBA">Master of Business Administration</option>
                         </select>
                     </div>
 
