@@ -20,7 +20,6 @@ $groupEvents = [
     'Treasurehunt',
     'Artfromwaste',
     'Twindance',
-    'Mime',
     'Vegetablefruitart',
 ];
 

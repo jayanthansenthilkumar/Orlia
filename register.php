@@ -193,6 +193,10 @@
                     value: "Instrumentalplaying",
                     text: "Instrumental Playing"
                 },
+              {
+                    value: "Mime",
+                    text: "Mime"
+                },
                 {
                     value: "Rjvj",
                     text: "Rj/vj Hunt"

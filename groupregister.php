@@ -137,7 +137,7 @@
             max: 15
         },
         'Rangoli': {
-            min: 2,
+            min: 3,
             max: 4
         },
         'Sherlockholmes': {
@@ -149,7 +149,7 @@
             max: 4
         },
         'Treasurehunt': {
-            min: 2,
+            min: 3,
             max: 4
         },
         'Artfromwaste': {
@@ -160,10 +160,7 @@
             min: 2,
             max: 2
         },
-        'Mime': {
-            min: 2,
-            max: 12
-        },
+        
         'Vegetablefruitart': {
             min: 2,
             max: 2
