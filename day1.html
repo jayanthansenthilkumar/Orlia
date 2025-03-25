@@ -58,6 +58,9 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;  /* Added to maintain consistent height */
       }
 
       .event-card:hover {
@@ -68,6 +71,7 @@
         position: relative;
         height: 200px;
         overflow: hidden;
+        flex-shrink: 0;  /* Prevent image from shrinking */
       }
 
       .event-image img {
@@ -87,41 +91,10 @@
         font-size: 0.9rem;
       }
 
-      .admin-btn {
+      .register-btn {
         position: absolute;
         top: 10px;
         right: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #333;
-        padding: 5px 10px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-size: 0.9rem;
-      }
-
-      .event-header {
-        padding: 1rem;
-        background: #f8f8f8;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .event-time {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #666;
-        font-size: 0.9rem;
-      }
-
-      .event-time i {
-        color: #4caf50;
-        font-size: 1.1rem;
-      }
-
-      .register-btn {
         background: #4caf50;
         color: #fff;
         padding: 0.5rem 1rem;
@@ -130,28 +103,67 @@
         font-weight: 500;
         text-decoration: none;
         transition: all 0.3s ease;
+        z-index: 10;
       }
 
       .register-btn:hover {
         background: #388e3c;
         transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      }
+
+      .event-header {
+        padding: 0.75rem 1rem;
+        background: #f8f8f8;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        min-height: 50px;
+      }
+
+      .event-header-row {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+      }
+
+      .event-time, .event-venue {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #666;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+
+      .event-time i, .event-venue i {
+        color: #4caf50;
+        font-size: 1.1rem;
       }
 
       .event-content {
-        padding: 1.5rem;
+        flex: 1;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        text-align: center;  /* Center all text content */
       }
 
       .event-content h3 {
         color: #333;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.8rem;
+        font-size: 1.3rem;
       }
 
       .event-content p {
         color: #666;
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        font-size: 0.95rem;
       }
 
       .rules-list {
+        text-align: left;  /* Keep rules list left-aligned */
         list-style: none;
         padding: 0;
       }
@@ -215,32 +227,33 @@
 
         .events-container {
           grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
-      }
 
-      .event-content .event-header {
-        padding: 0;
-        background: none;
-        border: none;
-      }
+        .event-card {
+          width: 100%;
+          margin: 0 auto;
+        }
 
-      .event-content .venue {
-        color: #2196f3;
-        font-size: 0.9rem;
-      }
+        .event-image {
+          height: 180px;
+        }
 
-      .performance-details {
-        border-radius: 5px;
-        margin-bottom: 1rem;
-      }
+        .event-header {
+          padding: 0.5rem 1rem;
+        }
 
-      .performance-details p {
-        margin: 0;
-      }
+        .event-header-row {
+          gap: 1rem;
+        }
 
-      .venue-right {
-        color: #2196f3;
-        font-size: 0.9rem;
+        .event-time, .event-venue {
+          font-size: 0.85rem;
+        }
+
+        .event-content {
+          padding: 1rem;
+        }
       }
     </style>
   </head>
@@ -251,464 +264,427 @@
     </a>
 
     <section class="day1-events">
-      <div class="events-content">
-        <h2 class="event-title">Day 1 Events</h2>
-        <p class="section-subtitle">
-          April 3, 2025 - Cultural & Technical Events
-        </p>
+      <h2 class="event-title">Day 1 Events</h2>
+      <p class="section-subtitle">
+        April 3, 2025 - Cultural & Technical Events
+      </p>
 
-        <div class="events-container">
-          <!-- tamil speech -->
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/tamilspeech.jpg" alt="" />
-            </div>
-            <div class="event-header">
+      <div class="events-container">
+        <!-- tamil speech -->
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/tamilspeech.jpg" alt="" />
+            <a
+              href="register.php?day=day1&event=Tamilspeech"
+              class="register-btn"
+              >Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>9.30 AM - 11.00 AM</span>
               </div>
-              <a
-                href="register.php?day=day1&event=Tamilspeech"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <div class="event-header">
-                <h3 class="event-name">Tamil Speech</h3>
-                <span class="venue">Solo </span>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
               </div>
-              <div class="performance-details">
-                <p>Venue</p>
-                <span class="venue-right">CH-2</span>
-              </div>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Time limit: 5 minutes
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>All dance forms allowed
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Bring your own music
-                </li>
-              </ul>
             </div>
           </div>
-
-          <!-- english speech -->
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/engspeech.jpg" alt="" />
-            </div>
-            <div class="event-header">
+          <div class="event-content">
+            <h3 class="event-name">Tamil Speech</h3>
+            <p>Solo Performance</p>
+            <ul class="rules-list">
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Time limit: 5 minutes
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line"></i>All dance forms allowed
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Bring your own music
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- english speech -->
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/engspeech.jpg" alt="" />
+            <a href="register.php?day=day1&event=Englishspeech" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>9.30 AM - 11.00 AM</span>
               </div>
-              <a
-                href="register.php?day=day1&event=Englishspeech"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>English Speech</h3>
-              <p>Solo Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Time limit: 4 minutes
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Any language allowed
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Karaoke permitted
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
-
-          <!-- Drama Performance -->
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/sing.jpg" alt="Drama Performance" />
-            </div>
-            <div class="event-header">
+          <div class="event-content">
+            <h3>English Speech</h3>
+            <p>Solo Performance</p>
+            <ul class="rules-list">
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Time limit: 4 minutes
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Any language allowed
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Karaoke permitted
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Drama Performance -->
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/sing.jpg" alt="Drama Performance" />
+            <a href="register.php?day=day1&event=Singing" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>9.30 AM - 11.00 AM</span>
               </div>
-              <a href="register.php?day=day1&event=Singing" class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Singing</h3>
-              <p>Solo Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Time limit: 20 minutes
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Any genre allowed
-                </li>
-                <li><i class="ri-checkbox-circle-line"></i>Props permitted</li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Singing</h3>
+            <p>Solo Performance</p>
+            <ul class="rules-list">
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Time limit: 20 minutes
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Any genre allowed
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line"></i>Props permitted
+              </li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/solo.jpg" alt="Traditional Arts" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/solo.jpg" alt="Traditional Arts" />
+            <a href="register.php?day=day1&event=Solodance" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>9.30 AM - 11.00 AM</span>
               </div>
-              <a
-                href="register.php?day=day1&event=Solodance"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Solo Dance</h3>
-              <p>Solo Performance</p>
-              <ul class="rules-list">
-                <li><i class="ri-checkbox-circle-line"></i>Any form allowed</li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 3 pieces per
-                  participant
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Original works only
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Solo Dance</h3>
+            <p>Solo Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Any form allowed</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 3 pieces per participant</li>
+              <li><i class="ri-checkbox-circle-line"></i>Original works only</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/draw.jpg" alt="Fashion Show" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/draw.jpg" alt="Fashion Show" />
+            <a href="register.php?day=day1&event=Drawing" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>10.30 AM - 11.30 AM</span>
               </div>
-              <a href="register.php?day=day1&event=Drawing" class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Drawing</h3>
-              <p>Solo Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 10 outfits per
-                  designer
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Any style allowed
-                </li>
-                <li><i class="ri-checkbox-circle-line"></i>Models provided</li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Drawing</h3>
+            <p>Solo Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 10 outfits per designer</li>
+              <li><i class="ri-checkbox-circle-line"></i>Any style allowed</li>
+              <li><i class="ri-checkbox-circle-line"></i>Models provided</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/trailertime.jpg" alt="Quiz Competition" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/trailertime.jpg" alt="Quiz Competition" />
+            <a href="groupregister.php?day=day1&event=Trailertime" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>10.30 AM - 12.00 PM</span>
               </div>
-              <a
-                href="groupregister.php?day=day1&event=Trailertime"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Trailer Time</h3>
-              <p>Group Performance</p>
-              <ul class="rules-list">
-                <li><i class="ri-checkbox-circle-line"></i>Teams of 3</li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 1-2 Members
-                </li>
-                <li><i class="ri-checkbox-circle-line"></i>Multiple rounds</li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Trailer Time</h3>
+            <p>Group Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Teams of 3</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 1-2 Members</li>
+              <li><i class="ri-checkbox-circle-line"></i>Multiple rounds</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img
-                src="assets/images/firelesscook.jpg"
-                alt="Photography Contest"
-              />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/firelesscook.jpg" alt="Photography Contest" />
+            <a href="groupregister.php?day=day1&event=Firelesscooking" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>11.00 AM - 12.30 PM</span>
               </div>
-              <a
-                href="groupregister.php?day=day1&event=Firelesscooking"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Fireless Cooking</h3>
-              <p>Group Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 5 photos per
-                  participant
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 2 Members
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Digital submissions
-                  only
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Fireless Cooking</h3>
+            <p>Group Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 5 photos per participant</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 2 Members</li>
+              <li><i class="ri-checkbox-circle-line"></i>Digital submissions only</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/dumb.jpeg" alt="Stand-up Comedy" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/dumb.jpeg" alt="Stand-up Comedy" />
+            <a href="groupregister.php?day=day1&event=Dumpcharades" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>12.30 PM - 2.00 pm</span>
               </div>
-              <a
-                href="groupregister.php?day=day1&event=Dumpcharades"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Dumb Charades</h3>
-              <p>Group Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Time limit: 10 minutes
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 2-3 Members
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Original works only
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Dumb Charades</h3>
+            <p>Group Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Time limit: 10 minutes</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 2-3 Members</li>
+              <li><i class="ri-checkbox-circle-line"></i>Original works only</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/ipl.jpg" alt="Short Film Festival" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/ipl.jpg" alt="Short Film Festival" />
+            <a href="groupregister.php?day=day1&event=Iplauction" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>1.00 pm - 3.00 pm</span>
               </div>
-              <a
-                href="groupregister.php?day=day1&event=Iplauction"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>IPL Auction</h3>
-              <p>Group Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 15 minutes per
-                  film
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 3 Members
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Original works only
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>IPL Auction</h3>
+            <p>Group Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 15 minutes per film</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 3 Members</li>
+              <li><i class="ri-checkbox-circle-line"></i>Original works only</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/mehandi.jpg" alt="Poetry Recitation" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/mehandi.jpg" alt="Poetry Recitation" />
+            <a href="register.php?day=day1&event=Mehandi" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>1.30 PM - 3.00 PM</span>
               </div>
-              <a href="register.php?day=day1&event=Mehandi" class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Mehandi</h3>
-              <p>Solo Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Time limit: 3 minutes
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Any language allowed
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Original works only
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Mehandi</h3>
+            <p>Solo Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Time limit: 3 minutes</li>
+              <li><i class="ri-checkbox-circle-line"></i>Any language allowed</li>
+              <li><i class="ri-checkbox-circle-line"></i>Original works only</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img
-                src="assets/images/lyrical.jpg"
-                alt="Music Band Performance"
-              />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/lyrical.jpg" alt="Music Band Performance" />
+            <a href="groupregister.php?day=day1&event=Lyricalhunt" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>1.30 pm - 3.30 pm</span>
               </div>
-              <a
-                href="groupregister.php?day=day1&event=Lyricalhunt"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Lyrical Hunt</h3>
-              <p>Group Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Time limit: 30 minutes
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 2-3 Members
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Original & cover songs
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Lyrical Hunt</h3>
+            <p>Group Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Time limit: 30 minutes</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 2-3 Members</li>
+              <li><i class="ri-checkbox-circle-line"></i>Original & cover songs</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/divideconquer.jpg" alt="Art Exhibition" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/divideconquer.jpg" alt="Art Exhibition" />
+            <a href="groupregister.php?day=day1&event=Divideconquer" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>2.00 PM - 3.30 PM</span>
               </div>
-              <a
-                href="groupregister.php?day=day1&event=Divideconquer"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Divide and Conquer</h3>
-              <p>Group Performance</p>
-              <ul class="rules-list">
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Any medium allowed
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 4-5 Members
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Original works only
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Divide and Conquer</h3>
+            <p>Group Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Any medium allowed</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 4-5 Members</li>
+              <li><i class="ri-checkbox-circle-line"></i>Original works only</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/meme.jpg" alt="Debate Competition" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/meme.jpg" alt="Debate Competition" />
+            <a href="register.php?day=day1&event=Memecreation" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>2.00 PM 3.30 PM</span>
               </div>
-              <a
-                href="register.php?day=day1&event=Memecreation"
-                class="register-btn"
-                >Register Now</a
-              >
-            </div>
-            <div class="event-content">
-              <h3>Meme/Reels Creation</h3>
-              <p>Solo Performance</p>
-              <ul class="rules-list">
-                <li><i class="ri-checkbox-circle-line"></i>Teams of 2</li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Any topic allowed
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Time limit: 15 minutes
-                </li>
-              </ul>
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
           </div>
+          <div class="event-content">
+            <h3>Meme/Reels Creation</h3>
+            <p>Solo Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Teams of 2</li>
+              <li><i class="ri-checkbox-circle-line"></i>Any topic allowed</li>
+              <li><i class="ri-checkbox-circle-line"></i>Time limit: 15 minutes</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="event-card">
-            <div class="event-image">
-              <img src="assets/images/group.jpg" alt="Traditional Arts" />
-            </div>
-            <div class="event-header">
+        <div class="event-card">
+          <div class="event-image">
+            <img src="assets/images/group.jpg" alt="Traditional Arts" />
+            <a href="groupregister.php?day=day1&event=Groupdance" class="register-btn">Register Now</a>
+          </div>
+          <div class="event-header">
+            <div class="event-header-row">
               <div class="event-time">
                 <i class="ri-time-line"></i>
                 <span>4.00 PM</span>
               </div>
-              <a
-                href="groupregister.php?day=day1&event=Groupdance"
-                class="register-btn"
-                >Register Now</a
-              >
+              <div class="event-venue">
+                <i class="ri-map-pin-line"></i>
+                <span>CH-2</span>
+              </div>
             </div>
-            <div class="event-content">
-              <h3>Group Dance</h3>
-              <p>Group Performance</p>
-              <ul class="rules-list">
-                <li><i class="ri-checkbox-circle-line"></i>Any form allowed</li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Maximum 6-15 Members
-                </li>
-                <li>
-                  <i class="ri-checkbox-circle-line"></i>Original works only
-                </li>
-              </ul>
-            </div>
+          </div>
+          <div class="event-content">
+            <h3>Group Dance</h3>
+            <p>Group Performance</p>
+            <ul class="rules-list">
+              <li><i class="ri-checkbox-circle-line"></i>Any form allowed</li>
+              <li><i class="ri-checkbox-circle-line"></i>Maximum 6-15 Members</li>
+              <li><i class="ri-checkbox-circle-line"></i>Original works only</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
-
     <script>
       // Auto update year in footer - keeping the script but removing footer references
       let currentYear = new Date().getFullYear();
