@@ -1,10 +1,20 @@
 /* Add theme variables */
+/* :root {
+    --primary-light: #5eead4;
+    --primary-mid: #14b8a6;
+    --primary-dark: #134e4a;
+    --bg-light: #f0fdfa;
+    --gradient: linear-gradient(145deg, #134e4a, #14b8a6, #5eead4);
+} */
 :root {
-    --primary-light: #ffd700;  /* Golden yellow */
-    --primary-mid: #ff6b6b;    /* Coral pink */
-    --primary-dark: #4a4e69;   /* Dark slate */
-    --bg-light: #faf9f9;       /* Off white */
-    --gradient: linear-gradient(145deg, #4a4e69, #ff6b6b, #ffd700);
+    --primary-light: #ff9f43;  /* Bright Orange */
+    --primary-mid: #ff5c8a;    /* Vivid Pink */
+    --primary-dark: #2d6a4f;   /* Rich Green */
+    --bg-light: #fffaf0;       /* Soft Creamy White */
+    --accent: #66cc99;         /* Pastel Green for contrast */
+    --gradient: linear-gradient(145deg, #ff9f43, #ff5c8a, #2d6a4f);
+    --shadow: 0px 4px 8px rgba(45, 106, 79, 0.2);
+    --border: #e0e0e0;         /* Light Gray Borders */
 }
 
 /* Add scrollbar styles at the top */
@@ -254,7 +264,7 @@ h1, p {
     padding: 12px 30px;
     border: none;
     border-radius: 25px;
-    background: linear-gradient(145deg, #ff6b6b, #ffd700);
+    background: var(--gradient);
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -265,7 +275,7 @@ h1, p {
 
 .hero-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 3px 10px rgba(6, 78, 59, 0.3);
 }
 
 .hero-desc {
@@ -587,7 +597,7 @@ h1, p {
     padding: 12px 30px;
     border: none;
     border-radius: 25px;
-    background: linear-gradient(145deg, #ff6b6b, #ffd700);
+    background: var(--gradient);
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -598,7 +608,7 @@ h1, p {
 
 .hero-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 3px 10px rgba(6, 78, 59, 0.3);
 }
 
 .stick-note {
@@ -951,14 +961,14 @@ h1, p {
 }
 
 .patron-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.9);
     padding: 40px 20px;
     border-radius: 20px;
     text-align: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(74, 78, 105, 0.1);
+    border: 1px solid rgba(6, 78, 59, 0.1);
     overflow: hidden;
 }
 
@@ -2170,7 +2180,7 @@ h1, p {
 }
 
 .event-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(6, 78, 59, 0.1);
@@ -2267,7 +2277,7 @@ h1, p {
 
 .event-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
 }
 
 .view-all-events {
@@ -2636,13 +2646,12 @@ h1, p {
 }
 
 .contact-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(6, 78, 59, 0.1);
     transition: all 0.4s ease;
     text-align: center;
-    border: 1px solid rgba(74, 78, 105, 0.1);
 }
 
 .contact-card:hover {
@@ -2709,7 +2718,7 @@ h1, p {
     padding: 12px 30px;
     border: none;
     border-radius: 25px;
-    background: linear-gradient(145deg, #ff6b6b, #ffd700);
+    background: linear-gradient(145deg, var(--primary-dark), var(--primary-mid));
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -2720,7 +2729,7 @@ h1, p {
 
 .contact-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 5px 15px rgba(6, 78, 59, 0.2);
 }
 
 @media (max-width: 992px) {
@@ -2794,13 +2803,12 @@ h1, p {
 }
 
 .contact-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(6, 78, 59, 0.1);
     transition: all 0.4s ease;
     text-align: center;
-    border: 1px solid rgba(74, 78, 105, 0.1);
 }
 
 .contact-card:hover {
@@ -3221,13 +3229,13 @@ h1, p {
 }
 
 .message.bot .message-avatar {
-    background: linear-gradient(145deg, #4a4e69, #ff6b6b);
+    background: linear-gradient(145deg, var(--primary-dark), var(--primary-mid));
     margin-right: 8px;
     margin-left: 0;
 }
 
 .message.user .message-avatar {
-    background: linear-gradient(145deg, #ff6b6b, #ffd700);
+    background: linear-gradient(145deg, #1e3a8a, #2563eb);
     margin-left: 8px;
     margin-right: 0;
 }
@@ -3307,7 +3315,7 @@ h1, p {
 }
 
 .send-message {
-    background: linear-gradient(145deg, #ff6b6b, #ffd700);
+    background: var(--gradient);
     border: none;
     width: 40px;
     height: 40px;
@@ -3764,7 +3772,7 @@ h1, p {
 }
 
 .single-line-footer {
-    background: linear-gradient(90deg, #4a4e69, #ff6b6b);
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary-mid));
     color: white;
     text-align: center;
     padding: 15px;
@@ -3867,7 +3875,7 @@ h1, p {
 
 .contributor-info .social-links a:hover {
     transform: translateY(-3px);
-    background: linear-gradient(145deg, #ff6b6b, #ffd700);
+    background: var(--primary-dark);
 }
 
 .contributor-info .social-links a:hover i {
