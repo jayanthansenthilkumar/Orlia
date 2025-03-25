@@ -25,10 +25,10 @@ $groupEvents = [
 ];
 
 if (in_array($userid, $groupEvents)) {
-    
+
     $sql1 = "SELECT * FROM groupevents WHERE events='$userid'";
 } else {
- 
+
     $sql1 = "SELECT * FROM events WHERE events='$userid'";
 }
 
@@ -45,6 +45,32 @@ $result1 = mysqli_query($conn, $sql1);
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/admin.css">
+    <style>
+        .download-btn {
+            float: right;
+            margin: 20px;
+            padding: 10px 20px;
+            background: #134e4a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #0d3d3b;
+        }
+
+        .btn-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -77,6 +103,13 @@ $result1 = mysqli_query($conn, $sql1);
 
         <main class="dashboard-grid">
             <div class="table-container">
+                <div class="btn-container">
+                    <button id="downloadExcel" class="download-btn">
+                        <i class="ri-file-excel-2-line"></i>
+                        Download Excel Reports
+                    </button>
+                </div>
+
                 <?php if (!in_array($userid, $groupEvents)) { ?>
                     <table id="usersTable" class="display">
                         <thead>
@@ -116,52 +149,52 @@ $result1 = mysqli_query($conn, $sql1);
                     </table>
 
                 <?php } else { ?>
-                    
+
                     <table id="usersTable" class="display">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Team Name</th>
-                            <th>Leader Name/Roll No</th>
-                            <th>LeaderEmail/Phone</th>
-                            <th>Team Members/RollNo</th>
-                           
-                            <th>Year</th>
-                            <th>Department</th>
-                            <th>Event Name</th>
-                            <th>Event Day</th>
-                        </tr>
-                    </thead>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Team Name</th>
+                                <th>Leader Name/Roll No</th>
+                                <th>LeaderEmail/Phone</th>
+                                <th>Team Members/RollNo</th>
+
+                                <th>Year</th>
+                                <th>Department</th>
+                                <th>Event Name</th>
+                                <th>Event Day</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <?php
                             $s = 1;
                             while ($row = mysqli_fetch_array($result1)) {
-                                
+
                             ?>
                                 <tr>
-                                <td><?php echo $s ?></td>
-                                <td><?php echo $row['teamname'] ?></td>
-                                <td><?php echo $row['teamleadname'] . ' / ' . $row['tregno'] ?></td>
-                                <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
-                                <td>
-                                    <?php
-                                    $teamMembers = json_decode($row['tmembername'], true); // Decode JSON
-                                    if (!empty($teamMembers)) {
-                                        foreach ($teamMembers as $member) {
-                                            echo $member['name'] . " / " . $member['roll'] . "<br>"; // Format: Name (Roll No)
+                                    <td><?php echo $s ?></td>
+                                    <td><?php echo $row['teamname'] ?></td>
+                                    <td><?php echo $row['teamleadname'] . ' / ' . $row['tregno'] ?></td>
+                                    <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
+                                    <td>
+                                        <?php
+                                        $teamMembers = json_decode($row['tmembername'], true); // Decode JSON
+                                        if (!empty($teamMembers)) {
+                                            foreach ($teamMembers as $member) {
+                                                echo $member['name'] . " / " . $member['roll'] . "<br>"; // Format: Name (Roll No)
+                                            }
+                                        } else {
+                                            echo "No team members"; // Fallback if JSON is empty
                                         }
-                                    } else {
-                                        echo "No team members"; // Fallback if JSON is empty
-                                    }
-                                    ?>
-                                </td>
+                                        ?>
+                                    </td>
 
-                  
-                                <td><?php echo $row['year'] ?></td>
-                                <td><?php echo $row['dept'] ?></td>
-                                <td><?php echo $row['events'] ?></td>
-                                <td><?php echo $row['day'] ?></td>
-                            </tr>
+
+                                    <td><?php echo $row['year'] ?></td>
+                                    <td><?php echo $row['dept'] ?></td>
+                                    <td><?php echo $row['events'] ?></td>
+                                    <td><?php echo $row['day'] ?></td>
+                                </tr>
                             <?php
                                 $s++;
                             }
@@ -174,6 +207,8 @@ $result1 = mysqli_query($conn, $sql1);
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('#usersTable').DataTable({
@@ -208,6 +243,16 @@ $result1 = mysqli_query($conn, $sql1);
             }
         });
     </script>
+    <script>
+        document.getElementById('downloadExcel').addEventListener('click', function() {
+            let table = document.getElementById("usersTable"); // Select the table
+            let workbook = XLSX.utils.table_to_book(table, {
+                sheet: "Participants"
+            }); // Convert to Excel
+            XLSX.writeFile(workbook, "Event_Participants.xlsx"); // Download the file
+        });
+    </script>
+
 </body>
 
 </html>
