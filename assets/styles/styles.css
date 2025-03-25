@@ -914,7 +914,7 @@ h1, p {
 }
 
 .patrons {
-    min-height: 100vh;
+    min-height: 60vh;
     padding: 100px 20px 100px 120px;
     background: var(--bg-light);
 }
@@ -1061,7 +1061,7 @@ h1, p {
 }
 
 .patron-category {
-    margin-bottom: 3.5rem;
+    margin-bottom: 2rem; /* Reduced from 3.5rem */
 }
 
 .patron-category h3 {
@@ -1199,6 +1199,44 @@ h1, p {
     
     .patron-grid.chief-patrons .patron-card.prominent {
         margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Fix chief patrons grid specifically */
+    .patron-grid.chief-patrons {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1rem;
+        margin: 0 auto;
+        max-width: 280px;
+        overflow: visible;
+        flex-wrap: wrap;
+    }
+
+    .patron-grid.chief-patrons .patron-card.prominent {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        padding: 2rem;
+        transform: none !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .patron-grid.chief-patrons .patron-image {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .patron-grid.chief-patrons .patron-image {
+        width: 120px;
+        height: 120px;
     }
 }
 
@@ -2090,8 +2128,8 @@ h1, p {
 }
 
 .events {
-    min-height: 100vh;
-    padding: 100px 20px 100px 120px;
+    min-height: 60vh; /* Reduced from 100vh */
+    padding: 60px 20px 100px 120px; /* Reduced top padding */
     background: var(--bg-light);
 }
 
@@ -2296,18 +2334,17 @@ h1, p {
         height: 180px;
     }
 
-    .patron-image {
-        width: 180px;
-        height: 180px;
-        margin-bottom: 25px;
+    .events-content h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        text-align: center;
+        display: block; /* Ensure block display */
     }
-    
-    .contributor-card img {
-        width: 200px;
-        height: 200px;
-        border-radius: 25px;
-    }
+}
 
+@media (max-width: 768px) {
     .events-content h2 {
         font-size: 2.8rem;
         font-weight: 700;
@@ -3616,4 +3653,276 @@ h1, p {
     background: linear-gradient(90deg, var(--bg-light) 0%, transparent 100%);
     z-index: 2;
     pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    /* Fix card grid layout for mobile */
+    .patron-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 1rem;
+        padding: 1rem;
+        margin: 0 auto;
+        width: 100%;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+    }
+
+    /* Center all cards */
+    .patron-card {
+        flex: 0 0 280px;
+        margin: 0;
+        scroll-snap-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Enable horizontal scroll for chief patrons */
+    .patron-grid.chief-patrons {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        grid-template-columns: unset;
+        max-width: none;
+        padding: 1rem 20px;
+        justify-content: flex-start;
+        margin: 0 -20px;
+        width: calc(100% + 40px);
+    }
+
+    .patron-grid.chief-patrons .patron-card.prominent {
+        flex: 0 0 280px;
+        margin: 0;
+        scroll-snap-align: center;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .patron-grid::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .patron-grid {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Fix section spacing */
+    section {
+        padding: 40px 20px !important;
+    }
+
+    /* Reduce patron category gaps */
+    .patron-category {
+        margin-bottom: 2rem;
+    }
+
+    .patron-category h3 {
+        margin-bottom: 1rem;
+    }
+
+    /* Adjust content spacing */
+    .section-subtitle {
+        margin: -5px 0 20px;
+    }
+
+    /* Fix patron grid gaps */
+    .patron-grid {
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    .patron-grid.chief-patrons {
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    .patron-grid:not(.chief-patrons) {
+        gap: 1rem;
+        padding: 1rem 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    section {
+        padding: 30px 15px !important;
+    }
+
+    .patron-category {
+        margin-bottom: 1.5rem;
+    }
+
+    .section-subtitle {
+        margin: -5px 0 15px;
+    }
+}
+
+.single-line-footer {
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary-mid));
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: relative; /* Changed from fixed to relative */
+    width: 100%;
+    z-index: 99;
+}
+
+@media (max-width: 768px) {
+    .single-line-footer {
+        padding: 12px;
+        margin-bottom: 60px; /* Space for mobile navigation */
+    }
+    
+    .single-line-footer p {
+        font-size: 0.8rem;
+    }
+}
+
+.single-line-footer p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin: 0;
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .single-line-footer {
+        padding: 12px;
+        margin-bottom: 60px;  /* Space for mobile navigation */
+    }
+    
+    .single-line-footer p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .contributor-info .social-links {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 8px 0;
+        margin-top: 10px;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .contributor-info .social-links a {
+        width: 32px;
+        height: 32px;
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: flex !important;
+        background: rgba(20, 184, 166, 0.08);
+    }
+
+    .contributor-info .social-links a i {
+        font-size: 1rem;
+        color: var(--primary-dark);
+    }
+
+    /* Override any display:none that might be affecting social links */
+    .social-links, 
+    .social-links a,
+    .contributor-info .social-links,
+    .contributor-info .social-links a {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Fix social icons */
+.contributor-info .social-links a {
+    width: 35px;
+    height: 35px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--primary-dark);
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.contributor-info .social-links a i {
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: inline-block !important;
+}
+
+.contributor-info .social-links a:hover {
+    transform: translateY(-3px);
+    background: var(--primary-dark);
+}
+
+.contributor-info .social-links a:hover i {
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .contributor-info .social-links {
+        display: flex !important;
+        margin: 1rem 0;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Updated Technical Team social links */
+.patron-grid .patron-card .patron-info .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.patron-grid .patron-card .patron-info .social-links a {
+    width: 35px;
+    height: 35px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient);
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.patron-grid .patron-card .patron-info .social-links a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(6, 78, 59, 0.2);
+}
+
+.patron-grid .patron-card .patron-info .social-links a i {
+    font-size: 16px;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .patron-grid .patron-card .patron-info .social-links {
+        margin-top: 12px;
+        gap: 10px;
+    }
+
+    .patron-grid .patron-card .patron-info .social-links a {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
 }
