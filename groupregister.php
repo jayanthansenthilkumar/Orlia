@@ -160,7 +160,7 @@
             min: 2,
             max: 2
         },
-        
+
         'Vegetablefruitart': {
             min: 2,
             max: 2
