@@ -35,6 +35,24 @@
                     <span>MKCE Campus</span>
                 </div>
             </div>
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <span id="days">00</span>
+                    <span class="label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours">00</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes">00</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds">00</span>
+                    <span class="label">Seconds</span>
+                </div>
+            </div>
             <a href="#events" class="hero-btn">Explore Events</a>
         </div>
         <div class="stick-note mobile-visible">
@@ -437,5 +455,14 @@
         <p>&copy; 2025 TECHNOLOGY INNOVATION HUB. All Rights Reserved.</p>
     </footer>
     <script src="assets/script/script.js"></script>
+    <script>
+        // Check if countdown is working, if not reinitialize
+        setTimeout(() => {
+            const daysElement = document.getElementById('days');
+            if (daysElement && daysElement.textContent === '00') {
+                updateCountdown();
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
