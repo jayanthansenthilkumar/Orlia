@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2025 at 05:53 AM
+-- Generation Time: Mar 25, 2025 at 07:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -78,8 +78,8 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`id`, `userid`, `password`, `role`) VALUES
-(1, 'admin', '123', '0'),
-(2, 'admin123', '123', '0'),
+(1, 'admin', '123456@', '0'),
+(2, 'admin123', '123456@', '0'),
 (3, 'Iplauction', '123', '1'),
 (4, 'Groupdance', '123', '1\r\n'),
 (5, 'Divideconquer', '123', '1'),
@@ -104,8 +104,10 @@ INSERT INTO `login` (`id`, `userid`, `password`, `role`) VALUES
 (24, 'Photography', '123', '1'),
 (25, 'Bestmanager', '123', '1'),
 (26, 'Instrumentalplaying', '123', '1'),
-(27, 'Rj/vj', '123', '1'),
-(28, 'Shortflim', '123', '1');
+(27, 'Rjvj', '123', '1'),
+(28, 'Shortflim', '123', '1'),
+(29, 'superadmin', '12345.#', '2\r\n'),
+(30, 'Vegetablefruitart', '123', '1');
 
 --
 -- Indexes for dumped tables
@@ -137,19 +139,19 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `groupevents`
 --
 ALTER TABLE `groupevents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
