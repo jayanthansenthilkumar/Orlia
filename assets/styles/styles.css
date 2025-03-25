@@ -1,12 +1,12 @@
 /* Add theme variables */
-:root {
+/* :root {
     --primary-light: #5eead4;
     --primary-mid: #14b8a6;
     --primary-dark: #134e4a;
     --bg-light: #f0fdfa;
     --gradient: linear-gradient(145deg, #134e4a, #14b8a6, #5eead4);
-}
-/* :root {
+} */
+:root {
     --primary-light: #ff9f43;
     --primary-mid: #ff5c8a;  
     --primary-dark: #2d6a4f; 
@@ -15,7 +15,7 @@
     --gradient: linear-gradient(145deg, #ff9f43, #ff5c8a, #2d6a4f);
     --shadow: 0px 4px 8px rgba(45, 106, 79, 0.2);
     --border: #e0e0e0;  
-} */
+}
 
 /* Add scrollbar styles at the top */
 ::-webkit-scrollbar {
