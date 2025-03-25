@@ -45,30 +45,30 @@ $result1 = mysqli_query($conn, $sql1);
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
-        .download-btn {
-            float: right;
-            margin: 20px;
-            padding: 10px 20px;
-            background: #134e4a;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.3s;
-        }
+    .download-btn {
+        float: right;
+        margin: 20px;
+        padding: 10px 20px;
+        background: #134e4a;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.3s;
+    }
 
-        .download-btn:hover {
-            background: #0d3d3b;
-        }
+    .download-btn:hover {
+        background: #0d3d3b;
+    }
 
-        .btn-container {
-            width: 100%;
-            overflow: hidden;
-            padding: 10px;
-        }
+    .btn-container {
+        width: 100%;
+        overflow: hidden;
+        padding: 10px;
+    }
     </style>
 </head>
 
@@ -110,73 +110,72 @@ $result1 = mysqli_query($conn, $sql1);
                 </div>
 
                 <?php if (!in_array($userid, $groupEvents)) { ?>
-                    <table id="usersTable" class="display">
-                        <thead>
-                            <tr>
-                                <th>S.No</th>
-                                <th>Name</th>
-                                <th>Register Number</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Year</th>
-                                <th>Department</th>
-                                <th>Event Name</th>
-                                <th>Event Day</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                <table id="usersTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Register Number</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Year</th>
+                            <th>Department</th>
+                            <th>Event Name</th>
+                            <th>Event Day</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
                             $s = 1;
                             while ($row = mysqli_fetch_array($result1)) {
-                            ?>
-                                <tr>
-                                    <td><?php echo $s; ?></td>
-                                    <td><?php echo $row['name']; ?></td>
-                                    <td><?php echo $row['regno']; ?></td>
-                                    <td><?php echo $row['mail']; ?></td>
-                                    <td><?php echo $row['phoneno']; ?></td>
-                                    <td><?php echo $row['year']; ?></td>
-                                    <td><?php echo $row['dept']; ?></td>
-                                    <td><?php echo $row['events']; ?></td>
-                                    <td><?php echo $row['day']; ?></td>
-                                </tr>
-                            <?php
+                                ?>
+                        <tr>
+                            <td><?php echo $s; ?></td>
+                            <td><?php echo $row['name']; ?></td>
+                            <td><?php echo $row['regno']; ?></td>
+                            <td><?php echo $row['mail']; ?></td>
+                            <td><?php echo $row['phoneno']; ?></td>
+                            <td><?php echo $row['year']; ?></td>
+                            <td><?php echo $row['dept']; ?></td>
+                            <td><?php echo $row['events']; ?></td>
+                            <td><?php echo $row['day']; ?></td>
+                        </tr>
+                        <?php
                                 $s++;
                             }
                             ?>
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
 
                 <?php } else { ?>
 
-                    <table id="usersTable" class="display">
-                        <thead>
-                            <tr>
-                                <th>S.No</th>
-                                <th>Team Name</th>
-                                <th>Leader Name/Roll No</th>
-                                <th>LeaderEmail/Phone</th>
-                                <th>Team Members/RollNo</th>
-
-                                <th>Year</th>
-                                <th>Department</th>
-                                <th>Event Name</th>
-                                <th>Event Day</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                <table id="usersTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Team Name</th>
+                            <th>Leader Name/Roll No</th>
+                            <th>LeaderEmail/Phone</th>
+                            <th>Team Members/RollNo</th>
+                            <th>Year</th>
+                            <th>Department</th>
+                            <th>Event Name</th>
+                            <th>Event Day</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
                             $s = 1;
                             while ($row = mysqli_fetch_array($result1)) {
 
-                            ?>
-                                <tr>
-                                    <td><?php echo $s ?></td>
-                                    <td><?php echo $row['teamname'] ?></td>
-                                    <td><?php echo $row['teamleadname'] . ' / ' . $row['tregno'] ?></td>
-                                    <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
-                                    <td>
-                                        <?php
+                                ?>
+                        <tr>
+                            <td><?php echo $s ?></td>
+                            <td><?php echo $row['teamname'] ?></td>
+                            <td><?php echo $row['teamleadname'] . ' / ' . $row['tregno'] ?></td>
+                            <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
+                            <td>
+                                <?php
                                         $teamMembers = json_decode($row['tmembername'], true); // Decode JSON
                                         if (!empty($teamMembers)) {
                                             foreach ($teamMembers as $member) {
@@ -186,20 +185,20 @@ $result1 = mysqli_query($conn, $sql1);
                                             echo "No team members"; // Fallback if JSON is empty
                                         }
                                         ?>
-                                    </td>
+                            </td>
 
 
-                                    <td><?php echo $row['year'] ?></td>
-                                    <td><?php echo $row['dept'] ?></td>
-                                    <td><?php echo $row['events'] ?></td>
-                                    <td><?php echo $row['day'] ?></td>
-                                </tr>
-                            <?php
+                            <td><?php echo $row['year'] ?></td>
+                            <td><?php echo $row['dept'] ?></td>
+                            <td><?php echo $row['events'] ?></td>
+                            <td><?php echo $row['day'] ?></td>
+                        </tr>
+                        <?php
                                 $s++;
                             }
                             ?>
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
                 <?php } ?>
             </div>
         </main>
@@ -209,47 +208,69 @@ $result1 = mysqli_query($conn, $sql1);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#usersTable').DataTable({
-                pageLength: 10,
-                responsive: true,
-                order: [
-                    [0, 'asc']
-                ],
-                language: {
-                    search: "🔍 Search participants:",
-                    lengthMenu: "Display _MENU_ participants per page",
-                    info: "Showing _START_ to _END_ of _TOTAL_ participants",
-                    paginate: {
-                        first: "First",
-                        last: "Last",
-                        next: "Next →",
-                        previous: "← Previous"
-                    }
-                },
-                dom: '<"top"lf>rt<"bottom"ip><"clear">'
-            });
+    $(document).ready(function() {
+        $('#usersTable').DataTable({
+            pageLength: 10,
+            responsive: true,
+            order: [
+                [0, 'asc']
+            ],
+            language: {
+                search: "🔍 Search participants:",
+                lengthMenu: "Display _MENU_ participants per page",
+                info: "Showing _START_ to _END_ of _TOTAL_ participants",
+                paginate: {
+                    first: "First",
+                    last: "Last",
+                    next: "Next →",
+                    previous: "← Previous"
+                }
+            },
+            dom: '<"top"lf>rt<"bottom"ip><"clear">'
         });
+    });
 
-        document.querySelector('.profile').addEventListener('click', function() {
-            document.querySelector('.dropdown-menu').classList.toggle('show');
-        });
+    document.querySelector('.profile').addEventListener('click', function() {
+        document.querySelector('.dropdown-menu').classList.toggle('show');
+    });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.profile-dropdown')) {
-                document.querySelector('.dropdown-menu').classList.remove('show');
-            }
-        });
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.profile-dropdown')) {
+            document.querySelector('.dropdown-menu').classList.remove('show');
+        }
+    });
     </script>
     <script>
-        document.getElementById('downloadExcel').addEventListener('click', function() {
-            let table = document.getElementById("usersTable"); // Select the table
-            let workbook = XLSX.utils.table_to_book(table, {
-                sheet: "Participants"
-            }); // Convert to Excel
-            XLSX.writeFile(workbook, "Event_Participants.xlsx"); // Download the file
-        });
+    document.getElementById('downloadExcel').addEventListener('click', function() {
+        let table = document.getElementById("usersTable");
+        let eventName = <?php echo json_encode($userid); ?>;
+
+        // Convert table data to worksheet with custom formatting
+        let ws = XLSX.utils.table_to_sheet(table);
+
+        // Get the range of the worksheet
+        const range = XLSX.utils.decode_range(ws['!ref']);
+
+        // Find the phone number column index (4 for individual events, 3 for group events)
+        const phoneColIndex = <?php echo !in_array($userid, $groupEvents) ? '4' : '3' ?>;
+
+        // Format phone numbers as text for each row
+        for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+            const cellRef = XLSX.utils.encode_cell({
+                r: R,
+                c: phoneColIndex
+            });
+            if (ws[cellRef]) {
+                ws[cellRef].t = 's'; // Set cell type as string
+                ws[cellRef].z = '@'; // Format as text
+            }
+        }
+
+        let workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, ws, "Participants");
+        XLSX.writeFile(workbook, eventName + ".xlsx");
+    });
     </script>
 
 </body>

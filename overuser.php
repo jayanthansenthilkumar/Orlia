@@ -83,6 +83,30 @@ $result2 = mysqli_query($conn, $sql2);
         .dropdown-menu a:hover {
             background: #f5f5f5;
         }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0;
+            padding-right: 20px;
+        }
+
+        .download-btn {
+            padding: 10px 20px;
+            background: #134e4a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #0d3d3b;
+        }
     </style>
 </head>
 
@@ -105,7 +129,7 @@ $result2 = mysqli_query($conn, $sql2);
                 <div class="profile-dropdown">
                     <div class="profile">
                         <i class="ri-user-3-line"></i>
-                        <span><?php echo $userid?></span>
+                        <span><?php echo $userid ?></span>
                     </div>
                     <div class="dropdown-menu">
                         <a href="logout.php"><i class="ri-logout-box-r-line"></i> Logout</a>
@@ -114,15 +138,21 @@ $result2 = mysqli_query($conn, $sql2);
             </div>
         </header>
 
-        
+
         <nav class="event-tabs" style="margin-top: 50px;">
             <button class="tab-button active" data-target="soloTable">Solo Events</button>
             <button class="tab-button" data-target="groupTable">Group Events</button>
         </nav>
 
         <div class="table-container">
-         
+
             <div id="soloTableDiv">
+                <div class="button-container">
+                    <button id="downloadSoloExcel" class="download-btn">
+                        <i class="ri-file-excel-2-line"></i>
+                        Download Solo Events
+                    </button>
+                </div>
                 <table id="soloTable" class="display event-table">
                     <thead>
                         <tr>
@@ -162,8 +192,14 @@ $result2 = mysqli_query($conn, $sql2);
                 </table>
             </div>
 
-           
+
             <div id="groupTableDiv" style="display: none;">
+                <div class="button-container">
+                    <button id="downloadGroupExcel" class="download-btn">
+                        <i class="ri-file-excel-2-line"></i>
+                        Download Group Events
+                    </button>
+                </div>
                 <table id="groupTable" class="display event-table">
                     <thead>
                         <tr>
@@ -172,7 +208,7 @@ $result2 = mysqli_query($conn, $sql2);
                             <th>Leader Name/Roll No</th>
                             <th>LeaderEmail/Phone</th>
                             <th>Team Members/RollNo</th>
-                           
+
                             <th>Year</th>
                             <th>Department</th>
                             <th>Event Name</th>
@@ -198,12 +234,12 @@ $result2 = mysqli_query($conn, $sql2);
                                             echo $member['name'] . " / " . $member['roll'] . "<br>"; // Format: Name (Roll No)
                                         }
                                     } else {
-                                        echo "No team members"; 
+                                        echo "No team members";
                                     }
                                     ?>
                                 </td>
 
-                  
+
                                 <td><?php echo $row['year'] ?></td>
                                 <td><?php echo $row['dept'] ?></td>
                                 <td><?php echo $row['events'] ?></td>
@@ -221,6 +257,7 @@ $result2 = mysqli_query($conn, $sql2);
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -265,6 +302,54 @@ $result2 = mysqli_query($conn, $sql2);
                     $('.dropdown-menu').removeClass('show');
                 }
             });
+
+            // Excel download handlers
+            $('#downloadSoloExcel').click(function() {
+                let table = document.getElementById("soloTable");
+                let ws = XLSX.utils.table_to_sheet(table);
+                let wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Solo Events");
+                XLSX.writeFile(wb, "Solo_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
+            });
+
+            $('#downloadGroupExcel').click(function() {
+                let table = document.getElementById("groupTable");
+                let ws = XLSX.utils.table_to_sheet(table);
+                let wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Group Events");
+                XLSX.writeFile(wb, "Group_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('downloadExcel').addEventListener('click', function() {
+            let table = document.getElementById("usersTable");
+            let eventName = <?php echo json_encode($userid); ?>;
+
+            // Convert table data to worksheet with custom formatting
+            let ws = XLSX.utils.table_to_sheet(table);
+
+            // Get the range of the worksheet
+            const range = XLSX.utils.decode_range(ws['!ref']);
+
+            // Find the phone number column index (4 for individual events, 3 for group events)
+            const phoneColIndex = <?php echo !in_array($userid, $groupEvents) ? '4' : '3' ?>;
+
+            // Format phone numbers as text for each row
+            for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+                const cellRef = XLSX.utils.encode_cell({
+                    r: R,
+                    c: phoneColIndex
+                });
+                if (ws[cellRef]) {
+                    ws[cellRef].t = 's'; // Set cell type as string
+                    ws[cellRef].z = '@'; // Format as text
+                }
+            }
+
+            let workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, ws, "Participants");
+            XLSX.writeFile(workbook, eventName + ".xlsx");
         });
     </script>
 </body>
