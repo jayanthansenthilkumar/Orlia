@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="assets/styles/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
 
 </head>
 
@@ -108,7 +107,7 @@
 
     <script src="assets/script/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     $(document).on('submit', '#registerForm', function(e) {
         e.preventDefault();
@@ -126,9 +125,10 @@
                 console.log(res);
                 if (res.status == 200) {
                     $('#registerForm')[0].reset();
-                    iziToast.success({
-                        title: 'OK',
-                        message: ' Event Register Success'
+                    Swal.fire({
+                            title: "Good job!",
+                            text: "You Register for the Events",
+                            icon: "success"
                     });
                 } else if (res.status == 500) {
                     $('#registerForm')[0].reset();
