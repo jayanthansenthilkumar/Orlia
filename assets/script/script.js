@@ -37,41 +37,89 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function updateCountdown() {
-    const countdownDate = new Date("April 2, 2025 09:00:00").getTime();
-    
-    function update() {
-        const now = Date.now();
-        const distance = countdownDate - now;
+    try {
+        const targetDate = new Date('April 3, 2025 00:00:00').getTime();
         
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        // Update countdown elements
-        const elements = document.querySelectorAll('.countdown-item span:first-child');
-        const values = [days, hours, minutes, seconds];
-        
-        elements.forEach((element, index) => {
-            if (element) {
-                element.textContent = values[index].toString().padStart(2, '0');
+        // Update every second
+        const timer = setInterval(() => {
+            try {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                // Calculate time units
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Update DOM elements with leading zeros
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+
+                // Check if countdown is over
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById('days').innerText = '00';
+                    document.getElementById('hours').innerText = '00';
+                    document.getElementById('minutes').innerText = '00';
+                    document.getElementById('seconds').innerText = '00';
+                }
+            } catch (error) {
+                console.error('Error updating countdown:', error);
             }
-        });
+        }, 1000);
+
+        // Initial update
+        updateCountdownDisplay();
+    } catch (error) {
+        console.error('Error initializing countdown:', error);
+        // Fallback display
+        setFallbackCountdown();
     }
-    
-    // Run immediately
-    update();
-    
-    // Update every second
-    return setInterval(update, 1000);
 }
 
-// Initialize countdown
-document.addEventListener('DOMContentLoaded', () => {
-    const interval = updateCountdown();
-    
-    // Cleanup
-    window.addEventListener('beforeunload', () => {
-        clearInterval(interval);
+function updateCountdownDisplay() {
+    const now = new Date().getTime();
+    const targetDate = new Date('April 3, 2025 00:00:00').getTime();
+    const distance = targetDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').innerText = days.toString().padStart(2, '0');
+    document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+    document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+    document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+}
+
+function setFallbackCountdown() {
+    const elements = ['days', 'hours', 'minutes', 'seconds'];
+    elements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.innerText = '00';
     });
+}
+
+// Initialize countdown when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    updateCountdown();
+    
+    // Backup check for mobile Chrome
+    setTimeout(() => {
+        const daysElement = document.getElementById('days');
+        if (daysElement && daysElement.innerText === '00') {
+            updateCountdown();
+        }
+    }, 1000);
+});
+
+// Add visibility change handler for mobile browsers
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        updateCountdownDisplay();
+    }
 });
