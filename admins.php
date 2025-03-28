@@ -61,6 +61,25 @@ $result = mysqli_query($conn, $sql);
         table.dataTable tbody tr:hover {
             background-color: #f5f5f5;
         }
+
+        .download-btn {
+            float: right;
+            margin: 20px;
+            padding: 10px 20px;
+            background: #134e4a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #0d3d3b;
+        }
     </style>
 </head>
 
@@ -95,6 +114,10 @@ $result = mysqli_query($conn, $sql);
             </div>
         </header>
         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addmodal">Add new user</button>
+        <button id="downloadExcel" class="download-btn">
+            <i class="ri-file-excel-2-line"></i>
+            Download Excel Reports
+        </button>
         <table id="usersTable" class="display">
             <thead>
                 <tr>
@@ -161,7 +184,7 @@ $result = mysqli_query($conn, $sql);
                     </div>
                     <form id="Editnewuser">
                         <div class="modal-body">
-                        <input type="hidden" name="id" id="id" required>
+                            <input type="hidden" name="id" id="id" required>
                             <label for="Userid">Userid</label><br>
                             <input type="text" id="Userid" name="userid" class="form-control" placeholder="Enter your Userid" required><br>
 
@@ -184,6 +207,7 @@ $result = mysqli_query($conn, $sql);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -296,35 +320,35 @@ $result = mysqli_query($conn, $sql);
             });
 
             $(document).on('submit', '#Editnewuser', function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
+                e.preventDefault();
+                var formData = new FormData(this);
 
-            formData.append("save_edituser", true);
-            console.log(formData);
-            $.ajax({
-                type: "POST",
-                url: "backend.php",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    var res = jQuery.parseJSON(response);
-                    console.log(res);
-                    if (res.status == 200) {
-                        $('#Editusers').modal('hide');
-                        $('#Editnewuser')[0].reset();
-                        location.reload();
-                        alert(res.message)
+                formData.append("save_edituser", true);
+                console.log(formData);
+                $.ajax({
+                    type: "POST",
+                    url: "backend.php",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        var res = jQuery.parseJSON(response);
+                        console.log(res);
+                        if (res.status == 200) {
+                            $('#Editusers').modal('hide');
+                            $('#Editnewuser')[0].reset();
+                            location.reload();
+                            alert(res.message)
 
-                    } else if (res.status == 500) {
-                        $('#Editusers').modal('hide');
-                        $('#Editnewuser')[0].reset();
-                        console.error("Error:", res.message);
-                        alert("Something Went wrong.! try again")
+                        } else if (res.status == 500) {
+                            $('#Editusers').modal('hide');
+                            $('#Editnewuser')[0].reset();
+                            console.error("Error:", res.message);
+                            alert("Something Went wrong.! try again")
+                        }
                     }
-                }
+                });
             });
-        });
 
             document.querySelector('.profile').addEventListener('click', function() {
                 document.querySelector('.dropdown-menu').classList.toggle('show');
@@ -335,6 +359,29 @@ $result = mysqli_query($conn, $sql);
                 if (!event.target.closest('.profile-dropdown')) {
                     document.querySelector('.dropdown-menu').classList.remove('show');
                 }
+            });
+
+            // Excel download handler
+            $('#downloadExcel').click(function() {
+                let table = document.getElementById("usersTable");
+                let ws = XLSX.utils.table_to_sheet(table);
+                let wb = XLSX.utils.book_new();
+
+                // Format phone numbers as text
+                const range = XLSX.utils.decode_range(ws['!ref']);
+                for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+                    const cellRef = XLSX.utils.encode_cell({
+                        r: R,
+                        c: 2
+                    }); // password column
+                    if (ws[cellRef]) {
+                        ws[cellRef].t = 's';
+                        ws[cellRef].z = '@';
+                    }
+                }
+
+                XLSX.utils.book_append_sheet(wb, ws, "Admin Users");
+                XLSX.writeFile(wb, "Admin_Users_" + new Date().toISOString().slice(0, 10) + ".xlsx");
             });
         });
     </script>
