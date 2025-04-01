@@ -13,8 +13,30 @@ $sql2 = "SELECT * FROM groupevents";
 // echo $sql2;
 $result2 = mysqli_query($conn, $sql2);
 
+function getSoloEventsData($conn)
+{
+    $sql = "SELECT name, regno, mail, phoneno, year, dept, events, day FROM events ORDER BY id";
+    $result = mysqli_query($conn, $sql);
+    $data = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    return json_encode($data);
+}
 
+function getGroupEventsData($conn)
+{
+    $sql = "SELECT teamname, teamleadname, tregno, temail, phoneno, tmembername, year, dept, events, day FROM groupevents ORDER BY id";
+    $result = mysqli_query($conn, $sql);
+    $data = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    return json_encode($data);
+}
 
+echo "<script>const soloEventsData = " . getSoloEventsData($conn) . ";</script>";
+echo "<script>const groupEventsData = " . getGroupEventsData($conn) . ";</script>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -305,17 +327,61 @@ $result2 = mysqli_query($conn, $sql2);
 
             // Excel download handlers
             $('#downloadSoloExcel').click(function() {
-                let table = document.getElementById("soloTable");
-                let ws = XLSX.utils.table_to_sheet(table);
+                // Create worksheet from database data
+                let ws = XLSX.utils.json_to_sheet(soloEventsData);
                 let wb = XLSX.utils.book_new();
+
+                // Format phone numbers
+                const range = XLSX.utils.decode_range(ws['!ref']);
+                const phoneColIndex = 3; // Index of phone number column in data
+
+                for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+                    const cellRef = XLSX.utils.encode_cell({
+                        r: R,
+                        c: phoneColIndex
+                    });
+                    if (ws[cellRef]) {
+                        ws[cellRef].t = 's';
+                        ws[cellRef].z = '@';
+                    }
+                }
+
                 XLSX.utils.book_append_sheet(wb, ws, "Solo Events");
                 XLSX.writeFile(wb, "Solo_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
             });
 
             $('#downloadGroupExcel').click(function() {
-                let table = document.getElementById("groupTable");
-                let ws = XLSX.utils.table_to_sheet(table);
+                // Process team members data
+                const processedData = groupEventsData.map(row => {
+                    let teamMembers = '';
+                    if (row.tmembername) {
+                        const members = JSON.parse(row.tmembername);
+                        teamMembers = members.map(m => `${m.name} / ${m.roll}`).join(', ');
+                    }
+                    return {
+                        ...row,
+                        tmembername: teamMembers
+                    };
+                });
+
+                let ws = XLSX.utils.json_to_sheet(processedData);
                 let wb = XLSX.utils.book_new();
+
+                // Format phone numbers
+                const range = XLSX.utils.decode_range(ws['!ref']);
+                const phoneColIndex = 4; // Index of phone number column in data
+
+                for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+                    const cellRef = XLSX.utils.encode_cell({
+                        r: R,
+                        c: phoneColIndex
+                    });
+                    if (ws[cellRef]) {
+                        ws[cellRef].t = 's';
+                        ws[cellRef].z = '@';
+                    }
+                }
+
                 XLSX.utils.book_append_sheet(wb, ws, "Group Events");
                 XLSX.writeFile(wb, "Group_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
             });
