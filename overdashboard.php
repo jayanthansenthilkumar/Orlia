@@ -6,6 +6,14 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 $userid = $_SESSION['username'];
+$sql1 = "SELECT * FROM events" ;
+$result1 = mysqli_query($conn, $sql1);
+$sql2 = "SELECT * FROM groupevents" ;
+$result2 = mysqli_query($conn, $sql2);
+$count1 = mysqli_num_rows($result1);
+$count2 = mysqli_num_rows($result2);
+$count2+=$count1;
+
 
 
 ?>
@@ -60,7 +68,7 @@ $userid = $_SESSION['username'];
                 </div>
                 <div>
                     <h2>Total Event Register Users</h2>
-                    <p class="stats"></p>
+                    <p class="stats"><?php echo $count2?></p>
                 </div>
             </div>
             <div class="card">
