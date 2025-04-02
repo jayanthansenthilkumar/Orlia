@@ -1,3 +1,20 @@
+<?php
+// Add this at the top of the file, before HTML
+$closedEvents = [
+    'Drawing',
+    'Mehandi',
+    'Photography'
+    // Add more closed events here
+];
+
+if (isset($_GET['event']) && in_array($_GET['event'], $closedEvents)) {
+    echo "<script>
+        alert('Registration for this event is closed. Please try other events.');
+        window.location.href = 'index.html';
+    </script>";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,14 +99,14 @@
                             <option value="day2" <?php echo ($selectedDay == 'day2') ? 'selected' : ''; ?>>Day 2
                             </option>
                         </select>
-                        <?php if($selectedDay) echo "<input type='hidden' name='daySelection' value='$selectedDay'>"; ?>
+                        <?php if ($selectedDay) echo "<input type='hidden' name='daySelection' value='$selectedDay'>"; ?>
                     </div>
 
                     <div class="form-group">
                         <select id="events" name="events" required <?php echo $selectedEvent ? 'disabled' : ''; ?>>
                             <option value="" disabled selected>Select Event</option>
                         </select>
-                        <?php if($selectedEvent) echo "<input type='hidden' name='events' value='$selectedEvent'>"; ?>
+                        <?php if ($selectedEvent) echo "<input type='hidden' name='events' value='$selectedEvent'>"; ?>
                     </div>
 
                     <button type="submit" class="submit-btn">Register</button>
@@ -109,136 +126,137 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    $(document).on('submit', '#registerForm', function(e) {
-        e.preventDefault();
-        var Formdata = new FormData(this);
-        Formdata.append("Add_newuser", true);
-        console.log(Formdata)
-        $.ajax({
-            url: "backend.php",
-            method: "POST",
-            data: Formdata,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                var res = jQuery.parseJSON(response);
-                console.log(res);
-                if (res.status == 200) {
-                    $('#registerForm')[0].reset();
-                    Swal.fire({
+        $(document).on('submit', '#registerForm', function(e) {
+            e.preventDefault();
+            var Formdata = new FormData(this);
+            Formdata.append("Add_newuser", true);
+            console.log(Formdata)
+            $.ajax({
+                url: "backend.php",
+                method: "POST",
+                data: Formdata,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    var res = jQuery.parseJSON(response);
+                    console.log(res);
+                    if (res.status == 200) {
+                        $('#registerForm')[0].reset();
+                        Swal.fire({
                             title: "Good job!",
                             text: "You Register for the Events",
                             icon: "success"
-                    });
-                } else if (res.status == 500) {
-                    $('#registerForm')[0].reset();
-                    console.error("Error:", res.message);
-                    alert("Something Went wrong.! try again")
-                }
-            }
-        });
-    });
-
-    function updateEvents() {
-        const daySelection = document.getElementById("daySelection");
-        const eventsDropdown = document.getElementById("events");
-
-        eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
-        eventsDropdown.disabled = false;
-
-        let eventList = [];
-
-        if (daySelection.value === "day1") {
-            eventList = [{
-                    value: "Tamilspeech",
-                    text: "Tamil Speech"
-                },
-                {
-                    value: "Englishspeech",
-                    text: "English Speech"
-                },
-                {
-                    value: "Singing",
-                    text: "Singing"
-                },
-                {
-                    value: "Drawing",
-                    text: "Drawing"
-                },
-                {
-                    value: "Mehandi",
-                    text: "Mehandi"
-                },
-                {
-                    value: "Memecreation",
-                    text: "Meme Creation"
-                },
-                {
-                    value: "Solodance",
-                    text: "Solo Dance"
-                }
-            ];
-        } else if (daySelection.value === "day2") {
-            eventList = [{
-                    value: "Photography",
-                    text: "Photography"
-                },
-                {
-                    value: "Shortflim",
-                    text: "Shortflim"
-                },
-                {
-                    value: "Bestmanager",
-                    text: "Best Manager"
-                },
-                {
-                    value: "Instrumentalplaying",
-                    text: "Instrumental Playing"
-                },
-              {
-                    value: "Mime",
-                    text: "Mime"
-                },
-                {
-                    value: "Rjvj",
-                    text: "Rj/vj Hunt"
-                }
-            ];
-        }
-
-        eventList.forEach(event => {
-            const option = document.createElement("option");
-            option.value = event.value;
-            option.textContent = event.text;
-            eventsDropdown.appendChild(option);
-        });
-    }
-
-    window.onload = function() {
-        const selectedDay = '<?php echo $selectedDay; ?>';
-        const selectedEvent = '<?php echo $selectedEvent; ?>';
-
-        if (selectedDay) {
-            const daySelect = document.getElementById('daySelection');
-            daySelect.value = selectedDay;
-            daySelect.disabled = true;
-
-            updateEvents();
-
-            if (selectedEvent) {
-                setTimeout(() => {
-                    const eventsDropdown = document.getElementById('events');
-                    for (let i = 0; i < eventsDropdown.options.length; i++) {
-                        if (eventsDropdown.options[i].value === selectedEvent) {
-                            eventsDropdown.selectedIndex = i;
-                            eventsDropdown.disabled = true;
-                            break;
-                        }
+                        });
+                    } else if (res.status == 500) {
+                        $('#registerForm')[0].reset();
+                        console.error("Error:", res.message);
+                        alert("Something Went wrong.! try again")
                     }
-                }, 100);
+                }
+            });
+        });
+
+        function updateEvents() {
+            const daySelection = document.getElementById("daySelection");
+            const eventsDropdown = document.getElementById("events");
+
+            eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
+            eventsDropdown.disabled = false;
+
+            let eventList = [];
+
+            if (daySelection.value === "day1") {
+                eventList = [{
+                        value: "Tamilspeech",
+                        text: "Tamil Speech"
+                    },
+                    {
+                        value: "Englishspeech",
+                        text: "English Speech"
+                    },
+                    {
+                        value: "Singing",
+                        text: "Singing"
+                    },
+                    // {
+                    //     value: "Drawing",
+                    //     text: "Drawing"
+                    // },
+                    // {
+                    //     value: "Mehandi",
+                    //     text: "Mehandi"
+                    // },
+                    {
+                        value: "Memecreation",
+                        text: "Meme Creation"
+                    },
+                    {
+                        value: "Solodance",
+                        text: "Solo Dance"
+                    }
+                ];
+            } else if (daySelection.value === "day2") {
+                eventList = [
+                    // {
+                    //     value: "Photography",
+                    //     text: "Photography"
+                    // },
+                    {
+                        value: "Shortflim",
+                        text: "Shortflim"
+                    },
+                    {
+                        value: "Bestmanager",
+                        text: "Best Manager"
+                    },
+                    {
+                        value: "Instrumentalplaying",
+                        text: "Instrumental Playing"
+                    },
+                    {
+                        value: "Mime",
+                        text: "Mime"
+                    },
+                    {
+                        value: "Rjvj",
+                        text: "Rj/vj Hunt"
+                    }
+                ];
             }
+
+            eventList.forEach(event => {
+                const option = document.createElement("option");
+                option.value = event.value;
+                option.textContent = event.text;
+                eventsDropdown.appendChild(option);
+            });
         }
-    };
+
+        window.onload = function() {
+            const selectedDay = '<?php echo $selectedDay; ?>';
+            const selectedEvent = '<?php echo $selectedEvent; ?>';
+
+            if (selectedDay) {
+                const daySelect = document.getElementById('daySelection');
+                daySelect.value = selectedDay;
+                daySelect.disabled = true;
+
+                updateEvents();
+
+                if (selectedEvent) {
+                    setTimeout(() => {
+                        const eventsDropdown = document.getElementById('events');
+                        for (let i = 0; i < eventsDropdown.options.length; i++) {
+                            if (eventsDropdown.options[i].value === selectedEvent) {
+                                eventsDropdown.selectedIndex = i;
+                                eventsDropdown.disabled = true;
+                                break;
+                            }
+                        }
+                    }, 100);
+                }
+            }
+        };
     </script>
 </body>
 

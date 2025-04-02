@@ -1,3 +1,25 @@
+<?php
+// Add this at the top of the file, before HTML
+$closedGroupEvents = [
+    'Firelesscooking',
+    'Iplauction',
+    'Lyricalhunt',
+    'Dumpcharades',
+    'Rangoli',
+    'Sherlockholmes',
+    'Freefire',
+    'Treasurehunt'
+    // Add more closed group events here
+];
+
+if (isset($_GET['event']) && in_array($_GET['event'], $closedGroupEvents)) {
+    echo "<script>
+        alert('Registration for this event is closed. Please try other events.');
+        window.location.href = 'index.html';
+    </script>";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -281,10 +303,10 @@
                         value: "Divideconquer",
                         text: "Divide conquer"
                     },
-                    {
-                        value: "Firelesscooking",
-                        text: "Fireless cooking"
-                    },
+                    // {
+                    //     value: "Firelesscooking",
+                    //     text: "Fireless cooking"
+                    // },
 
 
                     {
@@ -292,18 +314,18 @@
                         text: "Trailer Time"
                     },
 
-                    {
-                        value: "Iplauction",
-                        text: "Ipl Auction"
-                    },
-                    {
-                        value: "Lyricalhunt",
-                        text: "Lyrical Hunt"
-                    },
-                    {
-                        value: "Dumpcharades",
-                        text: "Dump Charades"
-                    },
+                    // {
+                    //     value: "Iplauction",
+                    //     text: "Ipl Auction"
+                    // },
+                    // {
+                    //     value: "Lyricalhunt",
+                    //     text: "Lyrical Hunt"
+                    // },
+                    // {
+                    //     value: "Dumpcharades",
+                    //     text: "Dump Charades"
+                    // },
 
                     {
                         value: "Groupdance",
@@ -311,25 +333,26 @@
                     },
                 ];
             } else if (daySelection.value === "day2") {
-                eventList = [{
-                        value: "Rangoli",
-                        text: "Rangoli"
-                    },
+                eventList = [
+                    // {
+                    //         value: "Rangoli",
+                    //         text: "Rangoli"
+                    //     },
 
 
-                    {
-                        value: "Sherlockholmes",
-                        text: "Sherlock Holmes"
-                    },
+                    //     {
+                    //         value: "Sherlockholmes",
+                    //         text: "Sherlock Holmes"
+                    //     },
 
-                    {
-                        value: "Freefire",
-                        text: "Free Fire"
-                    },
-                    {
-                        value: "Treasurehunt",
-                        text: "Treasure Hunt"
-                    },
+                    //     {
+                    //         value: "Freefire",
+                    //         text: "Free Fire"
+                    //     },
+                    // {
+                    //     value: "Treasurehunt",
+                    //     text: "Treasure Hunt"
+                    // },
 
                     {
                         value: "Artfromwaste",
