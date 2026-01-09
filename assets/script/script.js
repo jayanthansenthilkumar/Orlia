@@ -1,3 +1,37 @@
+// Theme Handling
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = themeToggle?.querySelector('i');
+const html = document.documentElement;
+
+// Initialize Theme
+const savedTheme = localStorage.getItem('theme') || 
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+setTheme(savedTheme);
+
+function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    
+    // Update Icon
+    if (themeIcon) {
+        if (theme === 'dark') {
+            themeIcon.className = 'ri-sun-line';
+        } else {
+            themeIcon.className = 'ri-moon-clear-line';
+        }
+    }
+}
+
+// Toggle Event
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+    });
+}
+
 // Add smooth scrolling for all anchor links and buttons
 document.querySelectorAll('a[href^="#"], .hero-btn').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
