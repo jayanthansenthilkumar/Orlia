@@ -51,7 +51,7 @@
         font-size: 0.75rem;
         border-radius: 10px;
     }
-    
+
     .admin-btn {
         top: 10px;
         right: 10px;
@@ -68,7 +68,7 @@
         padding: 2px 6px;
         font-size: 0.7rem;
     }
-    
+
     .admin-btn {
         top: 10px;
         right: 5px;
@@ -117,7 +117,7 @@
     .events-content .event-title {
         font-size: 2rem;
     }
-    
+
     .events-content .section-subtitle {
         font-size: 1rem;
     }
@@ -127,7 +127,7 @@
     .events-content .event-title {
         font-size: 1.8rem;
     }
-    
+
     .events-content .section-subtitle {
         font-size: 0.9rem;
     }
@@ -136,20 +136,23 @@
 .registration-container {
     min-height: 100vh;
     display: flex;
-    background: var(--bg-light, #f0fdf4);  /* Light green background */
+    background: var(--bg-light, #f0fdf4);
+    /* Light green background */
     position: relative;
     overflow: hidden;
 }
 
 .brand-section {
     flex: 1;
-    background: var(--gradient);  /* Light green gradient */
+    background: var(--gradient);
+    /* Light green gradient */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    color: white;  /* Dark green text */
+    color: white;
+    /* Dark green text */
     position: relative;
     overflow: hidden;
 }
@@ -168,13 +171,14 @@
 @keyframes glow {
     from {
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-                     0 0 20px rgba(255, 255, 255, 0.3),
-                     0 0 30px rgba(255, 255, 255, 0.2);
+            0 0 20px rgba(255, 255, 255, 0.3),
+            0 0 30px rgba(255, 255, 255, 0.2);
     }
+
     to {
         text-shadow: 0 0 20px rgba(255, 255, 255, 0.6),
-                     0 0 30px rgba(255, 255, 255, 0.4),
-                     0 0 40px rgba(255, 255, 255, 0.2);
+            0 0 30px rgba(255, 255, 255, 0.4),
+            0 0 40px rgba(255, 255, 255, 0.2);
     }
 }
 
@@ -258,9 +262,11 @@
     0% {
         transform: translate(0, 0) rotate(0deg);
     }
+
     50% {
         transform: translate(30px, 20px) rotate(180deg);
     }
+
     100% {
         transform: translate(0, 0) rotate(360deg);
     }
@@ -311,7 +317,7 @@
         font-size: 1.5rem;
         margin-bottom: 1.25rem;
     }
-    
+
     .registration-form h2::after {
         width: 40px;
         height: 2px;
@@ -322,7 +328,8 @@
     margin-bottom: 0.875rem;
 }
 
-.form-group input, select {
+.form-group input,
+select {
     width: 100%;
     padding: 0.6rem 0.75rem;
     height: 2.75rem;
@@ -537,6 +544,7 @@ select option[disabled]:first-child {
 }
 
 @media (max-width: 576px) {
+
     select,
     input[type="text"],
     input[type="email"],
@@ -565,7 +573,7 @@ select option[disabled]:first-child {
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
@@ -606,10 +614,21 @@ select option[disabled]:first-child {
 }
 
 @keyframes floatCircle {
-    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    33% { transform: translate(30px, -20px) rotate(120deg) scale(1.1); }
-    66% { transform: translate(-20px, 30px) rotate(240deg) scale(0.9); }
-    100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -20px) rotate(120deg) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 30px) rotate(240deg) scale(0.9);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+    }
 }
 
 .floating-circle {
@@ -667,11 +686,11 @@ select option[disabled]:first-child {
 }
 
 :root {
-    --primary-light: #5eead4;
-    --primary-mid: #14b8a6;
-    --primary-dark: #134e4a;
-    --bg-light: #f0fdfa;
-    --gradient: linear-gradient(145deg, #134e4a, #14b8a6, #5eead4);
+    --primary-light: #8ab4f8;
+    --primary-mid: #4285F4;
+    --primary-dark: #1967d2;
+    --bg-light: #f8f9fa;
+    --gradient: linear-gradient(135deg, #4285F4, #34A853);
 }
 
 @media (max-width: 768px) {
@@ -827,6 +846,7 @@ select option[disabled]:first-child {
 }
 
 @media (max-width: 576px) {
+
     select,
     input[type="text"],
     input[type="email"],
@@ -1006,11 +1026,12 @@ select option[disabled]:first-child {
 @keyframes glow {
     from {
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
-                     0 0 20px rgba(255, 255, 255, 0.3);
+            0 0 20px rgba(255, 255, 255, 0.3);
     }
+
     to {
         text-shadow: 0 0 20px rgba(255, 255, 255, 0.6),
-                     0 0 30px rgba(255, 255, 255, 0.4);
+            0 0 30px rgba(255, 255, 255, 0.4);
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db.php'); // Include the database connection file  
+include('db.php');
 if (!isset($_SESSION['username'])) {
     header("Location: coordinator.php");
     exit();
@@ -8,239 +8,235 @@ if (!isset($_SESSION['username'])) {
 $userid = $_SESSION['username'];
 $sql1 = "SELECT * FROM events";
 $result1 = mysqli_query($conn, $sql1);
-
 $sql2 = "SELECT * FROM groupevents";
-// echo $sql2;
 $result2 = mysqli_query($conn, $sql2);
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orlia Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>All Events - Orlia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
-        .event-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
+        .event-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
         .tab-button {
-            padding: 10px 20px;
+            padding: 12px 16px;
+            background: none;
             border: none;
+            border-bottom: 2px solid transparent;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
             cursor: pointer;
-            background: #ddd;
-            font-weight: bold;
+            transition: all 0.2s;
         }
-
-        .tab-button.active {
-            background: #007bff;
-            color: white;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Add these dropdown styles */
-        .profile-dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            min-width: 150px;
-            z-index: 1000;
-        }
-
-        .dropdown-menu.show {
-            display: block;
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 10px 15px;
-            color: #333;
-            text-decoration: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: #f5f5f5;
-        }
+        .tab-button:hover { color: var(--google-blue); }
+        .tab-button.active { color: var(--google-blue); border-bottom-color: var(--google-blue); }
+        div.dataTables_wrapper div.dataTables_filter input { border: 1px solid var(--border-subtle); border-radius: 4px; padding: 6px 12px; }
+        @media (max-width: 992px) { #menuToggle { display: block !important; } }
     </style>
 </head>
-
 <body>
-    <aside class="sidebar">
-        <h2><i class="ri-theatre-line"></i> Orlia</h2>
-        <ul class="sidebar-nav">
-            <li><a href="superadmin.php"><i class="ri-dashboard-line"></i> Super Dashboard</a></li>
-            <li><a href="admins.php"><i class="ri-admin-line"></i> Manage Admins</a></li>
-            <li><a href="events.php" class="active"><i class="ri-calendar-event-line"></i> Events</a></li>
-        </ul>
-    </aside>
-
-    <div class="main-content">
-        <header class="navbar">
-            <h1>Event Participants</h1>
-            <div class="nav-right">
-                <div class="notification">
-                    <i class="ri-music-2-line"></i>
-                </div>
-                <div class="profile-dropdown">
-                    <div class="profile">
-                        <i class="ri-user-3-line"></i>
-                        <span><?php echo $userid?></span>
-                    </div>
-                    <div class="dropdown-menu">
-                        <a href="logout.php"><i class="ri-logout-box-r-line"></i> Logout</a>
-                    </div>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <i class="ri-google-fill"></i> Orlia Admin
                 </div>
             </div>
-        </header>
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="superadmin.php" class="nav-link">
+                            <i class="ri-dashboard-line"></i>
+                            <span>Super Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admins.php" class="nav-link">
+                            <i class="ri-admin-line"></i>
+                            <span>Manage Admins</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="events.php" class="nav-link active">
+                            <i class="ri-calendar-event-line"></i>
+                            <span>Events</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
-        
-        <nav class="event-tabs" style="margin-top: 50px;">
-            <button class="tab-button active" data-target="soloTable">Solo Events</button>
-            <button class="tab-button" data-target="groupTable">Group Events</button>
-        </nav>
+        <!-- Main Content -->
+        <main class="main-content">
+             <header class="navbar">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="icon-btn" id="menuToggle" style="display: none;">
+                        <i class="ri-menu-line"></i>
+                    </button>
+                    <div class="page-title">Global Event List</div>
+                </div>
+                <div class="nav-actions">
+                    <div class="profile-dropdown">
+                        <div class="profile-trigger" id="profileTrigger">
+                            <div class="avatar" style="background: var(--google-red);">
+                                <?php echo strtoupper(substr($userid, 0, 1)); ?>
+                            </div>
+                            <span class="d-none d-md-block"><?php echo $userid; ?></span>
+                            <i class="ri-arrow-down-s-line"></i>
+                        </div>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a href="logout.php" class="dropdown-item">
+                                <i class="ri-logout-box-r-line"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-        <div class="table-container">
-         
-            <div id="soloTableDiv">
-                <table id="soloTable" class="display event-table">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Name</th>
-                            <th>Register Number</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Year</th>
-                            <th>Department</th>
-                            <th>Event Name</th>
-                            <th>Event Day</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $s = 1;
-                        while ($row = mysqli_fetch_array($result1)) {
-                        ?>
-                            <tr>
-                                <td><?php echo $s ?></td>
-                                <td><?php echo $row['name'] ?></td>
-                                <td><?php echo $row['regno'] ?></td>
-                                <td><?php echo $row['mail'] ?></td>
-                                <td><?php echo $row['phoneno'] ?></td>
-                                <td><?php echo $row['year'] ?></td>
-                                <td><?php echo $row['dept'] ?></td>
-                                <td><?php echo $row['events'] ?></td>
-                                <td><?php echo $row['day'] ?></td>
+            <div class="content-wrapper">
+                <div class="card table-card">
+                    <div style="padding: 24px 24px 0 24px;">
+                        <nav class="event-tabs">
+                            <button class="tab-button active" data-target="soloTable">Solo Events</button>
+                            <button class="tab-button" data-target="groupTable">Group Events</button>
+                        </nav>
+                    </div>
 
-                            </tr>
-                        <?php
-                            $s++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                    <div style="padding: 0 24px 24px 24px;">
+                        <div id="soloTableDiv">
+                            <table id="soloTable" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Name</th>
+                                        <th>Reg. No</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Year</th>
+                                        <th>Dept</th>
+                                        <th>Event</th>
+                                        <th>Day</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $s = 1; while ($row = mysqli_fetch_array($result1)) { ?>
+                                        <tr>
+                                            <td><?php echo $s++; ?></td>
+                                            <td><?php echo $row['name'] ?></td>
+                                            <td><?php echo $row['regno'] ?></td>
+                                            <td><?php echo $row['mail'] ?></td>
+                                            <td><?php echo $row['phoneno'] ?></td>
+                                            <td><?php echo $row['year'] ?></td>
+                                            <td><?php echo $row['dept'] ?></td>
+                                            <td><?php echo $row['events'] ?></td>
+                                            <td><?php echo $row['day'] ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="groupTableDiv" style="display: none;">
+                            <table id="groupTable" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Team Name</th>
+                                        <th>Leader (Name/Reg)</th>
+                                        <th>Contact (Email/Ph)</th>
+                                        <th>Members</th>
+                                        <th>Year</th>
+                                        <th>Dept</th>
+                                        <th>Event</th>
+                                        <th>Day</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $s = 1; while ($row = mysqli_fetch_array($result2)) { ?>
+                                        <tr>
+                                            <td><?php echo $s++; ?></td>
+                                            <td><?php echo $row['teamname'] ?></td>
+                                            <td><?php echo $row['teamleadname'] . ' / ' . $row['tregno'] ?></td>
+                                            <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
+                                            <td>
+                                                <div style="max-height: 100px; overflow-y: auto;">
+                                                <?php
+                                                $teamMembers = json_decode($row['tmembername'], true);
+                                                if (!empty($teamMembers)) {
+                                                    echo '<ul style="padding-left: 15px; margin: 0; font-size: 0.85rem;">';
+                                                    foreach ($teamMembers as $member) {
+                                                        echo "<li>" . $member['name'] . " (" . $member['roll'] . ")</li>";
+                                                    }
+                                                    echo '</ul>';
+                                                } else { echo "<span style='color: #999;'>No members</span>"; }
+                                                ?>
+                                                </div>
+                                            </td>
+                                            <td><?php echo $row['year'] ?></td>
+                                            <td><?php echo $row['dept'] ?></td>
+                                            <td><?php echo $row['events'] ?></td>
+                                            <td><?php echo $row['day'] ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-           
-            <div id="groupTableDiv" style="display: none;">
-                <table id="groupTable" class="display event-table">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Team Name</th>
-                            <th>Leader Name/Roll No</th>
-                            <th>LeaderEmail/Phone</th>
-                            <th>Team Members/RollNo</th>
-                           
-                            <th>Year</th>
-                            <th>Department</th>
-                            <th>Event Name</th>
-                            <th>Event Day</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $s = 1;
-                        while ($row = mysqli_fetch_array($result2)) {
-
-                        ?>
-                            <tr>
-                                <td><?php echo $s ?></td>
-                                <td><?php echo $row['teamname'] ?></td>
-                                <td><?php echo $row['teamleadname'] . ' / ' . $row['tregno'] ?></td>
-                                <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
-                                <td>
-                                    <?php
-                                    $teamMembers = json_decode($row['tmembername'], true); // Decode JSON
-                                    if (!empty($teamMembers)) {
-                                        foreach ($teamMembers as $member) {
-                                            echo $member['name'] . " / " . $member['roll'] . "<br>"; // Format: Name (Roll No)
-                                        }
-                                    } else {
-                                        echo "No team members"; 
-                                    }
-                                    ?>
-                                </td>
-
-                  
-                                <td><?php echo $row['year'] ?></td>
-                                <td><?php echo $row['dept'] ?></td>
-                                <td><?php echo $row['events'] ?></td>
-                                <td><?php echo $row['day'] ?></td>
-                            </tr>
-                        <?php
-                            $s++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </main>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
     <script>
-        $(document).ready(function() {
-            // Initialize DataTables for both tables
-            const soloTable = $('#soloTable').DataTable();
-            const groupTable = $('#groupTable').DataTable();
+        const profileTrigger = document.getElementById('profileTrigger');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.querySelector('.sidebar');
 
-            // Tab switching logic
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992 && !sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        }
+
+        profileTrigger.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if (!profileTrigger.contains(e.target)) dropdownMenu.classList.remove('show'); });
+
+        $(document).ready(function() {
+            const soloTable = $('#soloTable').DataTable({
+                pageLength: 10,
+                responsive: true,
+                language: { search: "", searchPlaceholder: "Search solo events..." },
+                dom: '<"p-4"f>rt<"p-4"ip>'
+            });
+            const groupTable = $('#groupTable').DataTable({
+                pageLength: 10,
+                responsive: true,
+                language: { search: "", searchPlaceholder: "Search group events..." },
+                dom: '<"p-4"f>rt<"p-4"ip>'
+            });
+
             $('.tab-button').click(function() {
                 var targetTable = $(this).data('target');
-
-                // Update button states
                 $('.tab-button').removeClass('active');
                 $(this).addClass('active');
-
-                // Hide all table divs
                 $('#soloTableDiv, #groupTableDiv').hide();
-
-                // Show selected table div
+                
                 if (targetTable === 'soloTable') {
                     $('#soloTableDiv').show();
                     soloTable.columns.adjust();
@@ -249,25 +245,7 @@ $result2 = mysqli_query($conn, $sql2);
                     groupTable.columns.adjust();
                 }
             });
-
-            // Show solo table by default
-            $('#soloTableDiv').show();
-            $('#groupTableDiv').hide();
-
-            // Add this dropdown toggle code
-            $('.profile').on('click', function(e) {
-                e.stopPropagation();
-                $('.dropdown-menu').toggleClass('show');
-            });
-
-            // Close dropdown when clicking outside
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.profile-dropdown').length) {
-                    $('.dropdown-menu').removeClass('show');
-                }
-            });
         });
     </script>
 </body>
-
 </html>

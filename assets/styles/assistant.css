@@ -26,17 +26,17 @@
 @keyframes pulseButton {
     0% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.7);
     }
 
     70% {
         transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+        box-shadow: 0 0 0 10px rgba(66, 133, 244, 0);
     }
 
     100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
     }
 }
 
@@ -201,7 +201,6 @@
     border-left: 3px solid var(--gemini-accent);
 }
 
-/* Dark mode adjustment for assistant bubble */
 [data-theme="dark"] .ai-message.assistant .message-content {
     background: rgba(255, 255, 255, 0.9);
     color: #000;
@@ -213,11 +212,11 @@
 }
 
 .ai-message.user .message-avatar {
-    background: var(--gemini-purple);
+    background: var(--google-blue);
 }
 
 .ai-message.user .message-content {
-    background: var(--gemini-purple);
+    background: var(--google-blue);
     color: white;
     border-radius: 15px 0 15px 15px;
 }
@@ -339,7 +338,7 @@
 
 .ai-input input:focus {
     border-color: var(--gemini-accent);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
     background: white;
 }
 
@@ -355,7 +354,7 @@
 
 .ai-input button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -408,10 +407,9 @@
 
 .quick-link:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
 }
 
-/* Typing animation styles */
 .typing-animation span {
     opacity: 0;
     display: inline-block;
@@ -421,7 +419,7 @@
 
 @keyframes colorPulse {
     0% {
-        color: var(--gemini-purple);
+        color: var(--google-blue);
     }
 
     50% {
@@ -429,7 +427,7 @@
     }
 
     100% {
-        color: var(--gemini-purple);
+        color: var(--google-blue);
     }
 }
 
