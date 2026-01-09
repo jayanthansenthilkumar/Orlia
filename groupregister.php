@@ -13,10 +13,31 @@ $closedGroupEvents = [
 ];
 
 if (isset($_GET['event']) && in_array($_GET['event'], $closedGroupEvents)) {
-    echo "<script>
-        alert('Registration for this event is closed. Please try other events.');
-        window.location.href = 'index.html';
-    </script>";
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <style>body { font-family: sans-serif; background: #121212; color: white; }</style>
+    </head>
+    <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Event Closed',
+                text: 'Registration for this event is closed. Please try other events.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Go Home',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            }).then(() => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+    </body>
+    </html>";
     exit();
 }
 ?>
@@ -31,10 +52,15 @@ if (isset($_GET['event']) && in_array($_GET['event'], $closedGroupEvents)) {
     <link rel="stylesheet" href="assets/styles/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+    <!-- SweetAlert is loaded in body -->
 </head>
 
 <body>
+    <div class="theme-switch-wrapper">
+        <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
+            <i class="ri-moon-clear-line"></i>
+        </div>
+    </div>
     <div class="registration-container">
         <div class="brand-section">
             <h1>ORLIA'25</h1>
@@ -127,6 +153,7 @@ if (isset($_GET['event']) && in_array($_GET['event'], $closedGroupEvents)) {
     </div>
 
 
+    <script src="assets/script/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

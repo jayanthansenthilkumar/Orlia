@@ -8,10 +8,31 @@ $closedEvents = [
 ];
 
 if (isset($_GET['event']) && in_array($_GET['event'], $closedEvents)) {
-    echo "<script>
-        alert('Registration for this event is closed. Please try other events.');
-        window.location.href = 'index.html';
-    </script>";
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <style>body { font-family: sans-serif; background: #121212; color: white; }</style>
+    </head>
+    <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Event Closed',
+                text: 'Registration for this event is closed. Please try other events.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Go Home',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            }).then(() => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+    </body>
+    </html>";
     exit();
 }
 ?>
@@ -30,6 +51,11 @@ if (isset($_GET['event']) && in_array($_GET['event'], $closedEvents)) {
 </head>
 
 <body>
+    <div class="theme-switch-wrapper">
+        <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
+            <i class="ri-moon-clear-line"></i>
+        </div>
+    </div>
     <div class="registration-container">
         <div class="brand-section">
             <div class="floating-circle"></div>
@@ -147,10 +173,15 @@ if (isset($_GET['event']) && in_array($_GET['event'], $closedEvents)) {
                             text: "You Register for the Events",
                             icon: "success"
                         });
-                    } else if (res.status == 500) {
+                    } else {
                         $('#registerForm')[0].reset();
                         console.error("Error:", res.message);
-                        alert("Something Went wrong.! try again")
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Submission Failed',
+                            text: res.message || 'Something went wrong! Please try again.',
+                            confirmButtonColor: '#d33'
+                        });
                     }
                 }
             });

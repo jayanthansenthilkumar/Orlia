@@ -1,15 +1,24 @@
-/* GOOGLE ANTIGRAVITY ADMIN THEME */
 :root {
     /* Brand Colors */
-    --google-blue: #1a73e8;
-    --google-red: #ea4335;
-    --google-yellow: #fbbc04;
-    --google-green: #34a853;
+    --google-blue: #4285F4;
+    --google-red: #EA4335;
+    --google-yellow: #FBBC05;
+    --google-green: #34A853;
+
+    /* Semantic Colors */
+    --primary-main: var(--google-blue);
+    --primary-hover: #1a73e8;
+    --primary-light-bg: rgba(66, 133, 244, 0.1);
 
     /* Surfaces */
-    --bg-body: #f8f9fa;
-    --bg-surface: #ffffff;
+    --bg-body: #ffffff;
+    --bg-surface: #f8f9fa;
     --bg-sidebar: #ffffff;
+    --bg-hover: #f1f3f4;
+    --bg-active: #e8f0fe;
+    --bg-danger: #fce8e6;
+    --bg-warning: #fef7e0;
+    --bg-success: #e6f4ea;
 
     /* Text */
     --text-primary: #202124;
@@ -17,9 +26,10 @@
     --text-hint: #9aa0a6;
 
     /* Borders & Shadows */
-    --border-subtle: #dadce0;
+    --border-subtle: rgba(0, 0, 0, 0.05);
     --shadow-card: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
     --shadow-hover: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+    --shadow-primary: rgba(66, 133, 244, 0.3);
 
     /* Measurements */
     --sidebar-width: 260px;
@@ -27,6 +37,29 @@
 
     /* Transitions */
     --transition-std: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    --primary-hover: #8ab4f8;
+    --primary-light-bg: rgba(138, 180, 248, 0.15);
+
+    --bg-body: #202124;
+    --bg-surface: #303134;
+    --bg-sidebar: #303134;
+    --bg-hover: #3c4043;
+    --bg-active: rgba(138, 180, 248, 0.15);
+    --bg-danger: rgba(234, 67, 53, 0.15);
+    --bg-warning: rgba(251, 188, 5, 0.15);
+    --bg-success: rgba(52, 168, 83, 0.15);
+
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa0a6;
+    --text-hint: #80868b;
+
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --shadow-card: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+    --shadow-hover: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-primary: rgba(138, 180, 248, 0.2);
 }
 
 /* Reset & Base */
@@ -130,12 +163,12 @@ ul {
 }
 
 .nav-link:hover {
-    background-color: #f1f3f4;
+    background-color: var(--bg-hover);
     color: var(--google-blue);
 }
 
 .nav-link.active {
-    background-color: #e8f0fe;
+    background-color: var(--bg-active);
     color: var(--google-blue);
 }
 
@@ -226,7 +259,7 @@ ul {
 }
 
 .profile-trigger:hover {
-    background-color: #f1f3f4;
+    background-color: var(--bg-hover);
     border-color: var(--border-subtle);
 }
 
@@ -284,7 +317,7 @@ ul {
 }
 
 .dropdown-item:hover {
-    background-color: #f1f3f4;
+    background-color: var(--bg-hover);
 }
 
 .dropdown-item i {
@@ -373,7 +406,7 @@ table.dataTable {
 }
 
 table.dataTable thead th {
-    background-color: #f8f9fa;
+    background-color: var(--bg-surface);
     color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.85rem;
@@ -391,7 +424,7 @@ table.dataTable tbody td {
 }
 
 table.dataTable tbody tr:hover {
-    background-color: #f8f9fa !important;
+    background-color: var(--bg-hover) !important;
 }
 
 /* Buttons */
@@ -415,8 +448,8 @@ table.dataTable tbody tr:hover {
 }
 
 .btn-primary:hover {
-    background-color: #1967d2;
-    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.4);
+    background-color: var(--primary-hover);
+    box-shadow: 0 2px 4px var(--shadow-primary);
 }
 
 .btn-outline {
@@ -426,7 +459,7 @@ table.dataTable tbody tr:hover {
 }
 
 .btn-outline:hover {
-    background-color: #f1f3f4;
+    background-color: var(--bg-hover);
 }
 
 .btn-sm {
@@ -435,21 +468,32 @@ table.dataTable tbody tr:hover {
 }
 
 .btn-danger {
-    background-color: #fce8e6;
+    background-color: var(--bg-danger);
     color: var(--google-red);
 }
 
 .btn-danger:hover {
-    background-color: #fad2cf;
+    background-color: var(--bg-danger);
+    opacity: 0.8;
 }
 
 .btn-success {
-    background-color: #e6f4ea;
+    background-color: var(--bg-success);
     color: var(--google-green);
 }
 
 .btn-success:hover {
-    background-color: #ceead6;
+    background-color: var(--bg-success);
+    opacity: 0.8;
+}
+
+.btn-warning {
+    background-color: var(--bg-warning);
+    color: #b06000;
+}
+
+[data-theme="dark"] .btn-warning {
+    color: var(--google-yellow);
 }
 
 /* Modals (Bootstrap Override) */

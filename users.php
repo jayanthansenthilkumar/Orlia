@@ -1,6 +1,19 @@
 <?php
 session_start();
-include('db.php');  
+include('db.php');
+// Session Security
+if (!isset($_SESSION['last_regen'])) {
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+} elseif (time() - $_SESSION['last_regen'] > 300) {
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+}
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+    session_unset(); session_destroy(); header("Location: coordinator.php"); exit();
+}
+$_SESSION['last_activity'] = time();
+
 if (!isset($_SESSION['username'])) {
     header("Location: coordinator.php");
     exit();
@@ -59,6 +72,7 @@ echo "<script>const eventData = " . json_encode($eventData) . ";</script>";
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
         div.dataTables_wrapper div.dataTables_filter input { border: 1px solid var(--border-subtle); border-radius: 4px; padding: 6px 12px; }
@@ -147,9 +161,9 @@ echo "<script>const eventData = " . json_encode($eventData) . ";</script>";
                                     <tr>
                                         <td><?php echo $s++; ?></td>
                                         <td><div style="font-weight: 500;"><?php echo $row['name']; ?></div><div style="font-size: 0.85rem; color: var(--text-secondary);"><?php echo $row['mail']; ?></div></td>
-                                        <td><span style="font-family: monospace; background: #f1f3f4; padding: 2px 6px; border-radius: 4px;"><?php echo $row['regno']; ?></span></td>
+                                        <td><span style="font-family: monospace; background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;"><?php echo $row['regno']; ?></span></td>
                                         <td><?php echo $row['phoneno']; ?></td>
-                                        <td><span class="badge" style="background: #e8f0fe; color: var(--google-blue); border: none; font-size: 0.8rem; position: relative; top: 0; right: 0; min-width: auto; height: auto; padding: 4px 8px;"><?php echo $row['dept']; ?></span></td>
+                                        <td><span class="badge" style="background: var(--bg-active); color: var(--google-blue); border: none; font-size: 0.8rem; position: relative; top: 0; right: 0; min-width: auto; height: auto; padding: 4px 8px;"><?php echo $row['dept']; ?></span></td>
                                         <td><?php echo $row['year']; ?></td>
                                     </tr>
                                 <?php } ?>
@@ -193,7 +207,7 @@ echo "<script>const eventData = " . json_encode($eventData) . ";</script>";
                                             ?>
                                             </div>
                                         </td>
-                                        <td><span class="badge" style="background: #e8f0fe; color: var(--google-blue); border: none; font-size: 0.8rem; position: relative; top: 0; right: 0; min-width: auto; height: auto; padding: 4px 8px;"><?php echo $row['dept']; ?></span></td>
+                                        <td><span class="badge" style="background: var(--bg-active); color: var(--google-blue); border: none; font-size: 0.8rem; position: relative; top: 0; right: 0; min-width: auto; height: auto; padding: 4px 8px;"><?php echo $row['dept']; ?></span></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -240,13 +254,19 @@ echo "<script>const eventData = " . json_encode($eventData) . ";</script>";
 
             // Excel Download (Preserved logic)
             $('#downloadExcel').click(function() {
-                if (!eventData || eventData.length === 0) { alert('No data to download'); return; }
+                if (!eventData || eventData.length === 0) { 
+                    Swal.fire({ title: 'Info', text: 'No data to download', icon: 'info' });
+                    return; 
+                }
                 try {
                     let ws = XLSX.utils.json_to_sheet(eventData);
                     let wb = XLSX.utils.book_new();
                     XLSX.utils.book_append_sheet(wb, ws, "Participants");
                     XLSX.writeFile(wb, "<?php echo $userid ?>_Participants.xlsx");
-                } catch (error) { console.error('Error:', error); alert('Download failed.'); }
+                } catch (error) { 
+                    console.error('Error:', error); 
+                    Swal.fire('Error', 'Download failed.', 'error');
+                }
             });
         });
     </script>

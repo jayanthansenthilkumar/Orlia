@@ -1,6 +1,24 @@
 <?php
 session_start();
 include('db.php');  
+// Session Security: Prevent Session Fixation and enforce Timeout
+if (!isset($_SESSION['last_regen'])) {
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+} elseif (time() - $_SESSION['last_regen'] > 300) { // Regenerate every 5 mins
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+}
+
+// Session Timeout (30 minutes)
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+    session_unset();
+    session_destroy();
+    header("Location: coordinator.php");
+    exit();
+}
+$_SESSION['last_activity'] = time();
+
 if (!isset($_SESSION['username'])) {
     header("Location: coordinator.php");
     exit();
@@ -19,13 +37,10 @@ $result = mysqli_query($conn, $sql);
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
         /* Bootstrap Overlay Fixes for Google Theme */
-        .btn-primary { background-color: var(--google-blue); border-color: var(--google-blue); }
-        .btn-primary:hover { background-color: #1967d2; border-color: #1967d2; }
-        .btn-danger { background-color: #fce8e6; color: var(--google-red); border: none; }
-        .btn-warning { background-color: #fef7e0; color: #b06000; border: none; }
         div.dataTables_wrapper div.dataTables_filter input { border: 1px solid var(--border-subtle); border-radius: 4px; padding: 6px 12px; }
         /* Mobile Toggle Visibility handled via JS/admin.css */
         @media (max-width: 992px) {
@@ -131,7 +146,7 @@ $result = mysqli_query($conn, $sql);
                                             <?php echo $row['userid'] ?>
                                         </div>
                                     </td>
-                                    <td><span style="font-family: monospace; background: #f1f3f4; padding: 2px 6px; border-radius: 4px;"><?php echo $row['password'] ?></span></td>
+                                    <td><span style="font-family: monospace; background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;"><?php echo $row['password'] ?></span></td>
                                     <td>
                                         <div class="action-btns">
                                             <button type="button" class="btn btn-sm btn-warning btnedit" value="<?php echo $row['id']; ?>">
@@ -265,20 +280,46 @@ $result = mysqli_query($conn, $sql);
                 $.ajax({
                     url: "backend.php", method: "POST", data: Formdata, processData: false, contentType: false,
                     success: function(response) {
-                        var res = jQuery.parseJSON(response);
-                        if (res.status == 200) { location.reload(); } else { alert("Error: " + res.message); }
+                        try {
+                            var res = typeof response === 'object' ? response : jQuery.parseJSON(response);
+                        } catch(e) { console.error("JSON Error", e); return; }
+                        
+                        if (res.status == 200) { 
+                             Swal.fire({
+                                title: 'Success!',
+                                text: res.message,
+                                icon: 'success'
+                            }).then(() => { location.reload(); });
+                        } else { 
+                            Swal.fire('Error!', res.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error!', 'Something went wrong', 'error');
                     }
                 });
             });
 
             $(document).on('click', '.btndelete', function(e) {
                 e.preventDefault();
-                if (confirm('Delete this user?')) {
-                    $.ajax({
-                        url: "backend.php", method: "POST", data: { 'delete_user': true, 'userid': $(this).val() },
-                        success: function(response) { location.reload(); }
-                    })
-                }
+                var id = $(this).val();
+                
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "backend.php", method: "POST", data: { 'delete_user': true, 'userid': id },
+                            success: function(response) { location.reload(); }
+                        });
+                    }
+                });
             });
 
             $(document).on('click', '.btnedit', function(e) {
@@ -304,7 +345,13 @@ $result = mysqli_query($conn, $sql);
                 formData.append("save_edituser", true);
                 $.ajax({
                     type: "POST", url: "backend.php", data: formData, processData: false, contentType: false,
-                    success: function(response) { location.reload(); }
+                    success: function(response) { 
+                        Swal.fire({
+                            title: 'Updated!',
+                            text: 'User details updated successfully.',
+                            icon: 'success'
+                        }).then(() => { location.reload(); });
+                    }
                 });
             });
 

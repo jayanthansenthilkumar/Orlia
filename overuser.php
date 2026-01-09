@@ -5,6 +5,19 @@ if (!isset($_SESSION['username'])) {
     header("Location: coordinator.php");
     exit();
 }
+
+// Session Security
+if (!isset($_SESSION['last_regen'])) {
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+} elseif (time() - $_SESSION['last_regen'] > 300) {
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+}
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+    session_unset(); session_destroy(); header("Location: coordinator.php"); exit();
+}
+$_SESSION['last_activity'] = time();
 $userid = $_SESSION['username'];
 $sql1 = "SELECT * FROM events";
 $result1 = mysqli_query($conn, $sql1);
@@ -37,6 +50,7 @@ echo "<script>const groupEventsData = " . getGroupEventsData($conn) . ";</script
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
         .event-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
@@ -273,25 +287,35 @@ echo "<script>const groupEventsData = " . getGroupEventsData($conn) . ";</script
 
             // Excel download handlers - Preserved Logic
             $('#downloadSoloExcel').click(function() {
-                let ws = XLSX.utils.json_to_sheet(soloEventsData);
-                let wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Solo Events");
-                XLSX.writeFile(wb, "Solo_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
+                try {
+                    let ws = XLSX.utils.json_to_sheet(soloEventsData);
+                    let wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, "Solo Events");
+                    XLSX.writeFile(wb, "Solo_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
+                } catch (e) {
+                     Swal.fire('Error', 'Download failed', 'error');
+                }
             });
 
             $('#downloadGroupExcel').click(function() {
-                const processedData = groupEventsData.map(row => {
-                    let teamMembers = '';
-                    if (row.tmembername) {
-                        const members = JSON.parse(row.tmembername);
-                        teamMembers = members.map(m => `${m.name} / ${m.roll}`).join(', ');
-                    }
-                    return { ...row, tmembername: teamMembers };
-                });
-                let ws = XLSX.utils.json_to_sheet(processedData);
-                let wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Group Events");
-                XLSX.writeFile(wb, "Group_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
+                try {
+                    const processedData = groupEventsData.map(row => {
+                        let teamMembers = '';
+                        if (row.tmembername) {
+                            try {
+                                const members = JSON.parse(row.tmembername);
+                                teamMembers = members.map(m => `${m.name} / ${m.roll}`).join(', ');
+                            } catch (e) { teamMembers = row.tmembername; }
+                        }
+                        return { ...row, tmembername: teamMembers };
+                    });
+                    let ws = XLSX.utils.json_to_sheet(processedData);
+                    let wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, "Group Events");
+                    XLSX.writeFile(wb, "Group_Events_" + new Date().toISOString().slice(0, 10) + ".xlsx");
+                } catch (e) {
+                     Swal.fire('Error', 'Download failed', 'error');
+                }
             });
         });
     </script>

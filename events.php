@@ -5,6 +5,20 @@ if (!isset($_SESSION['username'])) {
     header("Location: coordinator.php");
     exit();
 }
+
+// Session Security
+if (!isset($_SESSION['last_regen'])) {
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+} elseif (time() - $_SESSION['last_regen'] > 300) {
+    session_regenerate_id(true);
+    $_SESSION['last_regen'] = time();
+}
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+    session_unset(); session_destroy(); header("Location: coordinator.php"); exit();
+}
+$_SESSION['last_activity'] = time();
+
 $userid = $_SESSION['username'];
 $sql1 = "SELECT * FROM events";
 $result1 = mysqli_query($conn, $sql1);
@@ -175,7 +189,7 @@ $result2 = mysqli_query($conn, $sql2);
                                                         echo "<li>" . $member['name'] . " (" . $member['roll'] . ")</li>";
                                                     }
                                                     echo '</ul>';
-                                                } else { echo "<span style='color: #999;'>No members</span>"; }
+                                                } else { echo "<span style='color: var(--text-hint);'>No members</span>"; }
                                                 ?>
                                                 </div>
                                             </td>
