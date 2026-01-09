@@ -365,15 +365,24 @@ section {
     padding: 100px 5% 100px 120px;
 }
 
+.about-content,
+.patrons-content,
+.contact-content,
+.events-content,
+.gallery-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
 .about-split {
     display: flex;
     align-items: center;
     /* Vertically center */
     justify-content: space-between;
-    gap: 4rem;
-    /* Increased gap clearly separates sections */
+    gap: 5rem;
+    /* Large gap for clear separation */
     flex-direction: row;
-    /* Explicitly row for desktop */
 }
 
 .about-text {
@@ -518,6 +527,33 @@ section {
 
 .patron-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Technical Team & Others - Horizontal Scroll */
+.technical-scroll-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 24px;
+    padding: 20px 4px 30px 4px;
+    /* Increased padding avoids clipping hover effects */
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* Hide in Firefox */
+    /* Ensure items start from left */
+    justify-content: flex-start;
+}
+
+.technical-scroll-grid .patron-card {
+    flex: 0 0 auto;
+    /* Don't shrink or grow */
+    width: 280px;
+    scroll-snap-align: start;
+}
+
+.technical-scroll-grid::-webkit-scrollbar {
+    display: none;
+    /* Hide in WebKit */
 }
 
 .patron-card {
@@ -691,7 +727,7 @@ section {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.reverse .gallery-track {
+.gallery-track.reverse {
     animation-direction: reverse;
 }
 
@@ -837,5 +873,11 @@ section {
 
     .nav-links li a span {
         display: none;
+    }
+}
+
+@media (min-width: 950px) {
+    .safe-center-grid {
+        justify-content: center;
     }
 }
