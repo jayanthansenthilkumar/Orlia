@@ -54,7 +54,8 @@
                 <h1 class="glitch-text" data-text="ORLIA'26">ORLIA'26</h1>
             </div>
             <p class="hero-subtitle">CULTURE & INNOVATION REIMAGINED</p>
-            <p class="hero-desc">Step into a realm where tradition meets the digital frontier. Two days of electrifying performances, art, and tech.</p>
+            <p class="hero-desc">Step into a realm where tradition meets the digital frontier. Two days of electrifying
+                performances, art, and tech.</p>
             <div class="hero-details">
                 <div class="hero-detail">
                     <i class="ri-map-pin-2-line"></i>
@@ -375,12 +376,28 @@
             </div>
         </div>
     </section>
+    <?php
+    include 'db.php';
+
+    // Fetch event status
+    $statuses = [];
+    $status_sql = "SELECT event_name, status FROM event_status";
+    $status_result = mysqli_query($conn, $status_sql);
+    if ($status_result) {
+        while ($row = mysqli_fetch_assoc($status_result)) {
+            $statuses[$row['event_name']] = $row['status'];
+        }
+    }
+    ?>
     <section class="events" id="events">
         <div class="events-content">
             <h2>Our Events</h2>
             <p class="section-subtitle">Mark Your Calendar for These Exciting Events</p>
             <div class="events-grid">
                 <div class="event-card">
+                    <?php if (isset($statuses['Day 1: Grand Inception']) && $statuses['Day 1: Grand Inception'] === 'closed'): ?>
+                        <div class="closed-badge">Registration<br>Closed</div>
+                    <?php endif; ?>
                     <div class="event-image">
                         <img src="assets/images/day1.jpg" alt="Day 1 Events">
                         <div class="event-date">Day 1</div>
@@ -400,6 +417,9 @@
                 </div>
 
                 <div class="event-card">
+                    <?php if (isset($statuses['Day 2: Cultural Extravaganza']) && $statuses['Day 2: Cultural Extravaganza'] === 'closed'): ?>
+                        <div class="closed-badge">Registration<br>Closed</div>
+                    <?php endif; ?>
                     <div class="event-image">
                         <img src="assets/images/day2.webp" alt="Day 2 Events">
                         <div class="event-date">Day 2</div>

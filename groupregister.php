@@ -1,16 +1,14 @@
 <?php
 // Add this at the top of the file, before HTML
-$closedGroupEvents = [
-    'Firelesscooking',
-    'Iplauction',
-    'Lyricalhunt',
-    'Dumpcharades',
-    'Rangoli',
-    'Sherlockholmes',
-    'Freefire',
-    'Treasurehunt'
-    // Add more closed group events here
-];
+include 'db.php';
+$closedGroupEvents = [];
+$status_sql = "SELECT event_name FROM event_status WHERE status = 'closed'";
+$status_result = mysqli_query($conn, $status_sql);
+if ($status_result) {
+    while ($row = mysqli_fetch_assoc($status_result)) {
+        $closedGroupEvents[] = $row['event_name'];
+    }
+}
 
 if (isset($_GET['event']) && in_array($_GET['event'], $closedGroupEvents)) {
     echo "<!DOCTYPE html>
@@ -58,7 +56,7 @@ if (isset($_GET['event']) && in_array($_GET['event'], $closedGroupEvents)) {
 <body>
     <div class="theme-switch-wrapper">
         <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
-            <i class="ri-moon-clear-line"></i>
+            <i class="ri-moon-line"></i>
         </div>
     </div>
     <div class="registration-container">

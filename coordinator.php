@@ -4,19 +4,23 @@ include "db.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Orlia'25</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
     <link rel="stylesheet" href="assets/styles/login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="theme-switch-wrapper">
         <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
-            <i class="ri-moon-clear-line"></i>
+            <i class="ri-moon-line"></i>
         </div>
     </div>
     <div class="registration-container">
@@ -42,7 +46,7 @@ include "db.php";
                     <button type="submit" class="submit-btn">
                         <i class="ri-login-circle-line"></i> Login Access
                     </button>
-                    
+
                     <div class="event-footer">
                         <div class="event-location" style="opacity: 0;"></div> <!-- Spacer -->
                         <a href="index.html" class="event-btn">
@@ -59,7 +63,7 @@ include "db.php";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password']; // Note: Password hashing skipped as per requirement
-
+    
         $stmt = $conn->prepare("SELECT role FROM login WHERE userid = ? AND password = ?");
         $stmt->bind_param("ss", $username, $password);
         $stmt->execute();
@@ -67,17 +71,21 @@ include "db.php";
 
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
-            
+
             // Security: Regenerate session ID to prevent session fixation
             session_regenerate_id(true);
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $row['role'];
             $_SESSION['last_regen'] = time();
             $_SESSION['last_activity'] = time();
-            
-            if ($_SESSION['role'] == 1) { header("Location: dashboard.php"); }
-            else if ($_SESSION['role'] == 2) { header("Location: superadmin.php"); }
-            else { header("Location: overdashboard.php"); }
+
+            if ($_SESSION['role'] == 1) {
+                header("Location: dashboard.php");
+            } else if ($_SESSION['role'] == 2) {
+                header("Location: superadmin.php");
+            } else {
+                header("Location: overdashboard.php");
+            }
             exit();
         } else {
             echo "<script>
@@ -96,4 +104,5 @@ include "db.php";
     }
     ?>
 </body>
+
 </html>

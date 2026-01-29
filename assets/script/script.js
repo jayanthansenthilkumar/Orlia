@@ -18,7 +18,7 @@ function setTheme(theme) {
         if (theme === 'dark') {
             themeIcon.className = 'ri-sun-line';
         } else {
-            themeIcon.className = 'ri-moon-clear-line';
+            themeIcon.className = 'ri-moon-line';
         }
     }
 }

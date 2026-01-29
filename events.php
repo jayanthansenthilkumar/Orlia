@@ -15,7 +15,10 @@ if (!isset($_SESSION['last_regen'])) {
     $_SESSION['last_regen'] = time();
 }
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
-    session_unset(); session_destroy(); header("Location: coordinator.php"); exit();
+    session_unset();
+    session_destroy();
+    header("Location: coordinator.php");
+    exit();
 }
 $_SESSION['last_activity'] = time();
 
@@ -27,16 +30,25 @@ $result2 = mysqli_query($conn, $sql2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Events - Orlia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
-        .event-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 24px; }
+        .event-tabs {
+            display: flex;
+            gap: 24px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 24px;
+        }
+
         .tab-button {
             padding: 12px 16px;
             background: none;
@@ -48,12 +60,30 @@ $result2 = mysqli_query($conn, $sql2);
             cursor: pointer;
             transition: all 0.2s;
         }
-        .tab-button:hover { color: var(--google-blue); }
-        .tab-button.active { color: var(--google-blue); border-bottom-color: var(--google-blue); }
-        div.dataTables_wrapper div.dataTables_filter input { border: 1px solid var(--border-subtle); border-radius: 4px; padding: 6px 12px; }
-        @media (max-width: 992px) { #menuToggle { display: block !important; } }
+
+        .tab-button:hover {
+            color: var(--google-blue);
+        }
+
+        .tab-button.active {
+            color: var(--google-blue);
+            border-bottom-color: var(--google-blue);
+        }
+
+        div.dataTables_wrapper div.dataTables_filter input {
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            padding: 6px 12px;
+        }
+
+        @media (max-width: 992px) {
+            #menuToggle {
+                display: block !important;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="admin-container">
         <!-- Sidebar -->
@@ -89,7 +119,7 @@ $result2 = mysqli_query($conn, $sql2);
 
         <!-- Main Content -->
         <main class="main-content">
-             <header class="navbar">
+            <header class="navbar">
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <button class="icon-btn" id="menuToggle" style="display: none;">
                         <i class="ri-menu-line"></i>
@@ -97,6 +127,12 @@ $result2 = mysqli_query($conn, $sql2);
                     <div class="page-title">Global Event List</div>
                 </div>
                 <div class="nav-actions">
+                    <div class="theme-switch-wrapper" style="position: static; margin-right: 15px;">
+                        <div class="theme-switch" id="theme-toggle" title="Toggle Theme"
+                            style="background: var(--bg-hover); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary);">
+                            <i class="ri-moon-line"></i>
+                        </div>
+                    </div>
                     <div class="profile-dropdown">
                         <div class="profile-trigger" id="profileTrigger">
                             <div class="avatar" style="background: var(--google-red);">
@@ -120,6 +156,7 @@ $result2 = mysqli_query($conn, $sql2);
                         <nav class="event-tabs">
                             <button class="tab-button active" data-target="soloTable">Solo Events</button>
                             <button class="tab-button" data-target="groupTable">Group Events</button>
+                            <button class="tab-button" data-target="controlPanel">Event Control</button>
                         </nav>
                     </div>
 
@@ -140,7 +177,8 @@ $result2 = mysqli_query($conn, $sql2);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $s = 1; while ($row = mysqli_fetch_array($result1)) { ?>
+                                    <?php $s = 1;
+                                    while ($row = mysqli_fetch_array($result1)) { ?>
                                         <tr>
                                             <td><?php echo $s++; ?></td>
                                             <td><?php echo $row['name'] ?></td>
@@ -173,7 +211,8 @@ $result2 = mysqli_query($conn, $sql2);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $s = 1; while ($row = mysqli_fetch_array($result2)) { ?>
+                                    <?php $s = 1;
+                                    while ($row = mysqli_fetch_array($result2)) { ?>
                                         <tr>
                                             <td><?php echo $s++; ?></td>
                                             <td><?php echo $row['teamname'] ?></td>
@@ -181,16 +220,18 @@ $result2 = mysqli_query($conn, $sql2);
                                             <td><?php echo $row['temail'] . ' / ' . $row['phoneno'] ?></td>
                                             <td>
                                                 <div style="max-height: 100px; overflow-y: auto;">
-                                                <?php
-                                                $teamMembers = json_decode($row['tmembername'], true);
-                                                if (!empty($teamMembers)) {
-                                                    echo '<ul style="padding-left: 15px; margin: 0; font-size: 0.85rem;">';
-                                                    foreach ($teamMembers as $member) {
-                                                        echo "<li>" . $member['name'] . " (" . $member['roll'] . ")</li>";
+                                                    <?php
+                                                    $teamMembers = json_decode($row['tmembername'], true);
+                                                    if (!empty($teamMembers)) {
+                                                        echo '<ul style="padding-left: 15px; margin: 0; font-size: 0.85rem;">';
+                                                        foreach ($teamMembers as $member) {
+                                                            echo "<li>" . $member['name'] . " (" . $member['roll'] . ")</li>";
+                                                        }
+                                                        echo '</ul>';
+                                                    } else {
+                                                        echo "<span style='color: var(--text-hint);'>No members</span>";
                                                     }
-                                                    echo '</ul>';
-                                                } else { echo "<span style='color: var(--text-hint);'>No members</span>"; }
-                                                ?>
+                                                    ?>
                                                 </div>
                                             </td>
                                             <td><?php echo $row['year'] ?></td>
@@ -202,12 +243,49 @@ $result2 = mysqli_query($conn, $sql2);
                                 </tbody>
                             </table>
                         </div>
+
+                        <div id="controlPanelDiv" style="display: none;">
+                            <table class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Event Name</th>
+                                        <th>Current Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $status_sql = "SELECT * FROM event_status";
+                                    $status_result = mysqli_query($conn, $status_sql);
+                                    while ($status_row = mysqli_fetch_array($status_result)) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $status_row['event_name']; ?></td>
+                                            <td>
+                                                <span
+                                                    class="badge <?php echo $status_row['status'] == 'open' ? 'bg-success' : 'bg-danger'; ?>">
+                                                    <?php echo strtoupper($status_row['status']); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary toggle-status-btn"
+                                                    data-id="<?php echo $status_row['id']; ?>"
+                                                    data-status="<?php echo $status_row['status']; ?>">
+                                                    <?php echo $status_row['status'] == 'open' ? 'Stop Registration' : 'Start Registration'; ?>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <script src="assets/script/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
@@ -231,7 +309,7 @@ $result2 = mysqli_query($conn, $sql2);
         profileTrigger.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('show'); });
         document.addEventListener('click', (e) => { if (!profileTrigger.contains(e.target)) dropdownMenu.classList.remove('show'); });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             const soloTable = $('#soloTable').DataTable({
                 pageLength: 10,
                 responsive: true,
@@ -245,21 +323,57 @@ $result2 = mysqli_query($conn, $sql2);
                 dom: '<"p-4"f>rt<"p-4"ip>'
             });
 
-            $('.tab-button').click(function() {
+            $('.tab-button').click(function () {
                 var targetTable = $(this).data('target');
                 $('.tab-button').removeClass('active');
                 $(this).addClass('active');
-                $('#soloTableDiv, #groupTableDiv').hide();
-                
+                $('#soloTableDiv, #groupTableDiv, #controlPanelDiv').hide();
+
                 if (targetTable === 'soloTable') {
                     $('#soloTableDiv').show();
                     soloTable.columns.adjust();
-                } else {
+                } else if (targetTable === 'groupTable') {
                     $('#groupTableDiv').show();
                     groupTable.columns.adjust();
+                } else {
+                    $('#controlPanelDiv').show();
+                }
+            });
+
+            // Toggle Status Interaction
+            $('.toggle-status-btn').click(function () {
+                var btn = $(this);
+                var id = btn.data('id');
+                var currentStatus = btn.data('status');
+                var newStatus = currentStatus === 'open' ? 'closed' : 'open';
+                var actionText = newStatus === 'open' ? 'Start' : 'Stop';
+
+                if (confirm('Are you sure you want to ' + actionText + ' registrations for this event?')) {
+                    $.ajax({
+                        url: 'backend.php',
+                        type: 'POST',
+                        data: {
+                            toggle_event_status: true,
+                            event_id: id,
+                            new_status: newStatus
+                        },
+                        success: function (response) {
+                            if (response.status === 200) {
+                                alert(response.message);
+                                location.reload();
+                            } else {
+                                alert('Error: ' + response.message);
+                            }
+                        },
+                        error: function () {
+                            alert('An error occurred while processing your request.');
+                        }
+                    });
                 }
             });
         });
+        });
     </script>
 </body>
+
 </html>

@@ -15,16 +15,29 @@ if (!isset($_SESSION['last_regen'])) {
     $_SESSION['last_regen'] = time();
 }
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
-    session_unset(); session_destroy(); header("Location: coordinator.php"); exit();
+    session_unset();
+    session_destroy();
+    header("Location: coordinator.php");
+    exit();
 }
 $_SESSION['last_activity'] = time();
 
 $userid = $_SESSION['username'];
 $groupEvents = [
-    'Divideconquer', 'Firelesscooking', 'Trailertime', 'Iplauction',
-    'Lyricalhunt', 'Dumpcharades', 'Groupdance', 'Rangoli',
-    'Sherlockholmes', 'Freefire', 'Treasurehunt', 'Artfromwaste',
-    'Twindance', 'Vegetablefruitart',
+    'Divideconquer',
+    'Firelesscooking',
+    'Trailertime',
+    'Iplauction',
+    'Lyricalhunt',
+    'Dumpcharades',
+    'Groupdance',
+    'Rangoli',
+    'Sherlockholmes',
+    'Freefire',
+    'Treasurehunt',
+    'Artfromwaste',
+    'Twindance',
+    'Vegetablefruitart',
 ];
 
 if (in_array($userid, $groupEvents)) {
@@ -38,20 +51,26 @@ $count1 = mysqli_num_rows($result1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orlia Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
         /* Mobile Toggle Visibility handled via JS/admin.css */
         @media (max-width: 992px) {
-            #menuToggle { display: block !important; }
+            #menuToggle {
+                display: block !important;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="admin-container">
         <!-- Sidebar -->
@@ -89,7 +108,13 @@ $count1 = mysqli_num_rows($result1);
                     <div class="page-title">Dashboard Overview</div>
                 </div>
                 <div class="nav-actions">
-                     <button class="icon-btn">
+                    <div class="theme-switch-wrapper" style="position: static; margin-right: 15px;">
+                        <div class="theme-switch" id="theme-toggle" title="Toggle Theme"
+                            style="background: var(--bg-hover); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary);">
+                            <i class="ri-moon-line"></i>
+                        </div>
+                    </div>
+                    <button class="icon-btn">
                         <i class="ri-notification-3-line"></i>
                         <span class="badge">3</span>
                     </button>
@@ -122,7 +147,8 @@ $count1 = mysqli_num_rows($result1);
                     <div class="card">
                         <div class="card-title">Total Participants</div>
                         <div class="card-value"><?php echo $count1; ?></div>
-                        <div style="margin-top: 10px; color: var(--google-green); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
+                        <div
+                            style="margin-top: 10px; color: var(--google-green); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
                             <i class="ri-arrow-up-circle-fill"></i> +12% this week
                         </div>
                     </div>
@@ -140,6 +166,7 @@ $count1 = mysqli_num_rows($result1);
         </main>
     </div>
 
+    <script src="assets/script/script.js"></script>
     <script>
         const profileTrigger = document.getElementById('profileTrigger');
         const dropdownMenu = document.getElementById('dropdownMenu');
@@ -153,9 +180,9 @@ $count1 = mysqli_num_rows($result1);
 
             // Close sidebar when clicking outside on mobile
             document.addEventListener('click', (e) => {
-                if (window.innerWidth <= 992 && 
-                    !sidebar.contains(e.target) && 
-                    !menuToggle.contains(e.target) && 
+                if (window.innerWidth <= 992 &&
+                    !sidebar.contains(e.target) &&
+                    !menuToggle.contains(e.target) &&
                     sidebar.classList.contains('open')) {
                     sidebar.classList.remove('open');
                 }
@@ -174,4 +201,5 @@ $count1 = mysqli_num_rows($result1);
         });
     </script>
 </body>
+
 </html>

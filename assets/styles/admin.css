@@ -1,65 +1,74 @@
 :root {
-    /* Brand Colors */
-    --google-blue: #4285F4;
-    --google-red: #EA4335;
-    --google-yellow: #FBBC05;
-    --google-green: #34A853;
+  /* Cultural Fest Palette - Vibrant & Neon */
+  --fest-purple: #8338ec;
+  --fest-pink: #ff006e;
+  --fest-cyan: #3a86ff;
+  --fest-yellow: #ffbe0b;
+  --fest-orange: #fb5607;
+  --fest-green: #06d6a0;
 
-    /* Semantic Colors */
-    --primary-main: var(--google-blue);
-    --primary-hover: #1a73e8;
-    --primary-light-bg: rgba(66, 133, 244, 0.1);
+  /* Aliases for Admin Consistency */
+  --google-blue: var(--fest-cyan);
+  --google-red: var(--fest-pink);
+  --google-yellow: var(--fest-yellow);
+  --google-green: var(--fest-green);
 
-    /* Surfaces */
-    --bg-body: #ffffff;
-    --bg-surface: #f8f9fa;
-    --bg-sidebar: #ffffff;
-    --bg-hover: #f1f3f4;
-    --bg-active: #e8f0fe;
-    --bg-danger: #fce8e6;
-    --bg-warning: #fef7e0;
-    --bg-success: #e6f4ea;
+  /* Semantic Colors */
+  --primary-main: var(--fest-purple);
+  --primary-hover: var(--fest-pink);
+  --primary-light-bg: rgba(131, 56, 236, 0.1);
 
-    /* Text */
-    --text-primary: #202124;
-    --text-secondary: #5f6368;
-    --text-hint: #9aa0a6;
+  /* Surfaces */
+  --bg-body: #ffffff;
+  --bg-surface: #fdfbff;
+  --bg-sidebar: #ffffff;
+  --bg-hover: #f8f0fc;
+  --bg-active: rgba(131, 56, 236, 0.1);
+  --bg-danger: rgba(255, 0, 110, 0.1);
+  --bg-warning: rgba(255, 190, 11, 0.1);
+  --bg-success: rgba(6, 214, 160, 0.1);
 
-    /* Borders & Shadows */
-    --border-subtle: rgba(0, 0, 0, 0.05);
-    --shadow-card: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    --shadow-hover: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
-    --shadow-primary: rgba(66, 133, 244, 0.3);
+  /* Text */
+  --text-primary: #2b2d42;
+  --text-secondary: #6c757d;
+  --text-hint: #9aa0a6;
 
-    /* Measurements */
-    --sidebar-width: 260px;
-    --header-height: 64px;
+  /* Borders & Shadows */
+  --border-subtle: rgba(131, 56, 236, 0.1);
+  --shadow-card: 0 4px 12px rgba(131, 56, 236, 0.08);
+  --shadow-hover: 0 8px 24px rgba(131, 56, 236, 0.15);
+  --shadow-primary: rgba(131, 56, 236, 0.4);
 
-    /* Transitions */
-    --transition-std: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  /* Measurements */
+  --sidebar-width: 260px;
+  --header-height: 70px;
+
+  /* Transitions */
+  --transition-std: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="dark"] {
-    --primary-hover: #8ab4f8;
-    --primary-light-bg: rgba(138, 180, 248, 0.15);
+  --primary-hover: var(--fest-cyan);
+  --primary-light-bg: rgba(58, 134, 255, 0.2);
 
-    --bg-body: #202124;
-    --bg-surface: #303134;
-    --bg-sidebar: #303134;
-    --bg-hover: #3c4043;
-    --bg-active: rgba(138, 180, 248, 0.15);
-    --bg-danger: rgba(234, 67, 53, 0.15);
-    --bg-warning: rgba(251, 188, 5, 0.15);
-    --bg-success: rgba(52, 168, 83, 0.15);
+  --bg-body: #0a0414;
+  --bg-surface: #150826;
+  --bg-sidebar: #150826;
+  --bg-hover: #220c40;
+  --bg-active: rgba(58, 134, 255, 0.15);
+  --bg-danger: rgba(255, 0, 110, 0.15);
+  --bg-warning: rgba(255, 190, 11, 0.15);
+  --bg-success: rgba(6, 214, 160, 0.15);
 
-    --text-primary: #e8eaed;
-    --text-secondary: #9aa0a6;
-    --text-hint: #80868b;
+  --text-primary: #f0ebf8;
+  --text-secondary: #b8b0c9;
+  --text-hint: #80868b;
 
-    --border-subtle: rgba(255, 255, 255, 0.1);
-    --shadow-card: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
-    --shadow-hover: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-primary: rgba(138, 180, 248, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-primary: rgba(58, 134, 255, 0.3);
 }
 
 /* Reset & Base */
@@ -70,31 +79,27 @@
 }
 
 body {
-    font-family: 'Outfit', 'Google Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
     background-color: var(--bg-body);
+    /* Subtle festival gradient bg */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(131, 56, 236, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 0, 110, 0.03) 0%, transparent 40%);
+    background-attachment: fixed;
     color: var(--text-primary);
     display: flex;
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1,h2,h3,h4,h5,h6 {
     font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-ul {
-    list-style: none;
-}
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; }
 
 /* Layout Structure */
 .admin-container {
@@ -141,6 +146,15 @@ ul {
     padding: 16px 12px;
     flex: 1;
     overflow-y: auto;
+}
+
+/* Fix for Bootstrap .nav conflict */
+.sidebar-nav .nav {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding-left: 0;
+    margin-bottom: 0;
 }
 
 .nav-item {

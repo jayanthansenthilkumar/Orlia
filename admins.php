@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db.php');  
+include('db.php');
 // Session Security: Prevent Session Fixation and enforce Timeout
 if (!isset($_SESSION['last_regen'])) {
     session_regenerate_id(true);
@@ -29,11 +29,14 @@ $result = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Admins - Orlia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -41,13 +44,21 @@ $result = mysqli_query($conn, $sql);
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
         /* Bootstrap Overlay Fixes for Google Theme */
-        div.dataTables_wrapper div.dataTables_filter input { border: 1px solid var(--border-subtle); border-radius: 4px; padding: 6px 12px; }
+        div.dataTables_wrapper div.dataTables_filter input {
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            padding: 6px 12px;
+        }
+
         /* Mobile Toggle Visibility handled via JS/admin.css */
         @media (max-width: 992px) {
-            #menuToggle { display: block !important; }
+            #menuToggle {
+                display: block !important;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="admin-container">
         <!-- Sidebar -->
@@ -91,6 +102,12 @@ $result = mysqli_query($conn, $sql);
                     <div class="page-title">Admin Management</div>
                 </div>
                 <div class="nav-actions">
+                    <div class="theme-switch-wrapper" style="position: static; margin-right: 15px;">
+                        <div class="theme-switch" id="theme-toggle" title="Toggle Theme"
+                            style="background: var(--bg-hover); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary);">
+                            <i class="ri-moon-line"></i>
+                        </div>
+                    </div>
                     <div class="profile-dropdown">
                         <div class="profile-trigger" id="profileTrigger">
                             <div class="avatar">
@@ -110,18 +127,22 @@ $result = mysqli_query($conn, $sql);
 
             <div class="content-wrapper">
                 <div class="card table-card">
-                    <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle);">
-                        <h3 class="card-title" style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">Admins List</h3>
+                    <div
+                        style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle);">
+                        <h3 class="card-title" style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">Admins
+                            List</h3>
                         <div style="display: flex; gap: 10px;">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmodal">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#addmodal">
                                 <i class="ri-add-line"></i> Add New User
                             </button>
-                            <button id="downloadExcel" class="btn btn-outline" style="border: 1px solid var(--border-subtle);">
+                            <button id="downloadExcel" class="btn btn-outline"
+                                style="border: 1px solid var(--border-subtle);">
                                 <i class="ri-file-excel-2-line"></i> Export
                             </button>
                         </div>
                     </div>
-                    
+
                     <table id="usersTable" class="display" style="width:100%">
                         <thead>
                             <tr>
@@ -135,30 +156,35 @@ $result = mysqli_query($conn, $sql);
                             <?php
                             $s = 1;
                             while ($row = mysqli_fetch_array($result)) {
-                            ?>
+                                ?>
                                 <tr>
                                     <td><?php echo $s ?></td>
                                     <td>
                                         <div style="display: flex; align-items: center; gap: 10px;">
-                                            <div class="avatar" style="width: 28px; height: 28px; font-size: 0.8rem; background: var(--bg-body); color: var(--text-secondary);">
+                                            <div class="avatar"
+                                                style="width: 28px; height: 28px; font-size: 0.8rem; background: var(--bg-body); color: var(--text-secondary);">
                                                 <?php echo strtoupper(substr($row['userid'], 0, 1)); ?>
                                             </div>
                                             <?php echo $row['userid'] ?>
                                         </div>
                                     </td>
-                                    <td><span style="font-family: monospace; background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;"><?php echo $row['password'] ?></span></td>
+                                    <td><span
+                                            style="font-family: monospace; background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;"><?php echo $row['password'] ?></span>
+                                    </td>
                                     <td>
                                         <div class="action-btns">
-                                            <button type="button" class="btn btn-sm btn-warning btnedit" value="<?php echo $row['id']; ?>">
+                                            <button type="button" class="btn btn-sm btn-warning btnedit"
+                                                value="<?php echo $row['id']; ?>">
                                                 <i class="ri-edit-line"></i> Edit
                                             </button>
-                                            <button type="button" class="btn btn-sm btn-danger btndelete" value="<?php echo $row['id']; ?>">
+                                            <button type="button" class="btn btn-sm btn-danger btndelete"
+                                                value="<?php echo $row['id']; ?>">
                                                 <i class="ri-delete-bin-line"></i> Delete
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-                            <?php
+                                <?php
                                 $s++;
                             }
                             ?>
@@ -185,7 +211,8 @@ $result = mysqli_query($conn, $sql);
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="text" name="password" class="form-control" placeholder="Enter password" required>
+                            <input type="text" name="password" class="form-control" placeholder="Enter password"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Role</label>
@@ -237,6 +264,7 @@ $result = mysqli_query($conn, $sql);
         </div>
     </div>
 
+    <script src="assets/script/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -261,10 +289,12 @@ $result = mysqli_query($conn, $sql);
             });
         }
 
-        profileTrigger.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('show'); });
-        document.addEventListener('click', (e) => { if (!profileTrigger.contains(e.target)) dropdownMenu.classList.remove('show'); });
+        if (profileTrigger) {
+            profileTrigger.addEventListener('click', (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('show'); });
+            document.addEventListener('click', (e) => { if (dropdownMenu && !profileTrigger.contains(e.target)) dropdownMenu.classList.remove('show'); });
+        }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#usersTable').DataTable({
                 pageLength: 10,
                 responsive: true,
@@ -273,37 +303,37 @@ $result = mysqli_query($conn, $sql);
             });
 
             // Ajax Handlers (Same as original, preserved for functionality)
-            $(document).on('submit', '#Adduser', function(e) {
+            $(document).on('submit', '#Adduser', function (e) {
                 e.preventDefault();
                 var Formdata = new FormData(this);
                 Formdata.append("Addadmins", true);
                 $.ajax({
                     url: "backend.php", method: "POST", data: Formdata, processData: false, contentType: false,
-                    success: function(response) {
+                    success: function (response) {
                         try {
                             var res = typeof response === 'object' ? response : jQuery.parseJSON(response);
-                        } catch(e) { console.error("JSON Error", e); return; }
-                        
-                        if (res.status == 200) { 
-                             Swal.fire({
+                        } catch (e) { console.error("JSON Error", e); return; }
+
+                        if (res.status == 200) {
+                            Swal.fire({
                                 title: 'Success!',
                                 text: res.message,
                                 icon: 'success'
                             }).then(() => { location.reload(); });
-                        } else { 
+                        } else {
                             Swal.fire('Error!', res.message, 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         Swal.fire('Error!', 'Something went wrong', 'error');
                     }
                 });
             });
 
-            $(document).on('click', '.btndelete', function(e) {
+            $(document).on('click', '.btndelete', function (e) {
                 e.preventDefault();
                 var id = $(this).val();
-                
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -316,17 +346,17 @@ $result = mysqli_query($conn, $sql);
                     if (result.isConfirmed) {
                         $.ajax({
                             url: "backend.php", method: "POST", data: { 'delete_user': true, 'userid': id },
-                            success: function(response) { location.reload(); }
+                            success: function (response) { location.reload(); }
                         });
                     }
                 });
             });
 
-            $(document).on('click', '.btnedit', function(e) {
+            $(document).on('click', '.btnedit', function (e) {
                 e.preventDefault();
                 $.ajax({
                     type: "POST", url: "backend.php", data: { 'edit_user': true, 'user_id': $(this).val() },
-                    success: function(response) {
+                    success: function (response) {
                         var res = jQuery.parseJSON(response);
                         if (res.status == 200) {
                             $('#id').val(res.data.id);
@@ -339,13 +369,13 @@ $result = mysqli_query($conn, $sql);
                 });
             });
 
-            $(document).on('submit', '#Editnewuser', function(e) {
+            $(document).on('submit', '#Editnewuser', function (e) {
                 e.preventDefault();
                 var formData = new FormData(this);
                 formData.append("save_edituser", true);
                 $.ajax({
                     type: "POST", url: "backend.php", data: formData, processData: false, contentType: false,
-                    success: function(response) { 
+                    success: function (response) {
                         Swal.fire({
                             title: 'Updated!',
                             text: 'User details updated successfully.',
@@ -355,12 +385,13 @@ $result = mysqli_query($conn, $sql);
                 });
             });
 
-            $('#downloadExcel').click(function() {
+            $('#downloadExcel').click(function () {
                 let table = document.getElementById("usersTable");
-                let wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+                let wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
                 XLSX.writeFile(wb, "Admins_List.xlsx");
             });
         });
     </script>
 </body>
+
 </html>

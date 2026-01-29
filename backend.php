@@ -5,7 +5,8 @@ include "db.php";
 // Set header for JSON response
 header('Content-Type: application/json');
 
-function sendResponse($status, $message, $data = null) {
+function sendResponse($status, $message, $data = null)
+{
     echo json_encode([
         'status' => $status,
         'message' => $message,
@@ -14,7 +15,8 @@ function sendResponse($status, $message, $data = null) {
     exit;
 }
 
-function checkAdminAuth() {
+function checkAdminAuth()
+{
     if (!isset($_SESSION['username'])) {
         sendResponse(403, 'Unauthorized Access');
     }
@@ -24,14 +26,15 @@ function checkAdminAuth() {
 if (isset($_POST['Add_newuser'])) {
     try {
         $stmt = $conn->prepare("INSERT INTO events (name, regno, year, phoneno, dept, day, events, mail) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssss", 
-            $_POST['fullName'], 
-            $_POST['rollNumber'], 
-            $_POST['year'], 
-            $_POST['phoneNumber'], 
-            $_POST['department'], 
-            $_POST['daySelection'], 
-            $_POST['events'], 
+        $stmt->bind_param(
+            "ssssssss",
+            $_POST['fullName'],
+            $_POST['rollNumber'],
+            $_POST['year'],
+            $_POST['phoneNumber'],
+            $_POST['department'],
+            $_POST['daySelection'],
+            $_POST['events'],
             $_POST['mailid']
         );
 
@@ -63,16 +66,17 @@ if (isset($_POST['groupnewuser'])) {
         $tmember_json = json_encode($teamMembers, JSON_UNESCAPED_UNICODE);
 
         $stmt = $conn->prepare("INSERT INTO groupevents (teamname, teamleadname, tregno, temail, tmembername, year, phoneno, dept, day, events) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssssss", 
-            $_POST['TeamName'], 
-            $_POST['fullName'], 
-            $_POST['rollNumber'], 
-            $_POST['mailid'], 
-            $tmember_json, 
-            $_POST['year'], 
-            $_POST['phoneNumber'], 
-            $_POST['department'], 
-            $_POST['daySelection'], 
+        $stmt->bind_param(
+            "ssssssssss",
+            $_POST['TeamName'],
+            $_POST['fullName'],
+            $_POST['rollNumber'],
+            $_POST['mailid'],
+            $tmember_json,
+            $_POST['year'],
+            $_POST['phoneNumber'],
+            $_POST['department'],
+            $_POST['daySelection'],
             $_POST['events']
         );
 
@@ -146,10 +150,11 @@ if (isset($_POST['save_edituser'])) {
     checkAdminAuth();
     try {
         $stmt = $conn->prepare("UPDATE login SET userid=?, password=?, role=? WHERE id=?");
-        $stmt->bind_param("sssi", 
-            $_POST['userid'], 
-            $_POST['password'], 
-            $_POST['role'], 
+        $stmt->bind_param(
+            "sssi",
+            $_POST['userid'],
+            $_POST['password'],
+            $_POST['role'],
             $_POST['id']
         );
 
@@ -157,6 +162,22 @@ if (isset($_POST['save_edituser'])) {
             sendResponse(200, 'details Updated Successfully');
         } else {
             sendResponse(500, 'Details Not Updated');
+        }
+    } catch (Exception $e) {
+        sendResponse(500, 'Error: ' . $e->getMessage());
+    }
+}
+// 7. Toggle Event Status (Protected)
+if (isset($_POST['toggle_event_status'])) {
+    checkAdminAuth();
+    try {
+        $stmt = $conn->prepare("UPDATE event_status SET status=? WHERE id=?");
+        $stmt->bind_param("si", $_POST['new_status'], $_POST['event_id']);
+
+        if ($stmt->execute()) {
+            sendResponse(200, 'Event Status Updated Successfully');
+        } else {
+            sendResponse(500, 'Status Not Updated');
         }
     } catch (Exception $e) {
         sendResponse(500, 'Error: ' . $e->getMessage());

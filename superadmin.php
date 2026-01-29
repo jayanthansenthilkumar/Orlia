@@ -15,7 +15,10 @@ if (!isset($_SESSION['last_regen'])) {
     $_SESSION['last_regen'] = time();
 }
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
-    session_unset(); session_destroy(); header("Location: coordinator.php"); exit();
+    session_unset();
+    session_destroy();
+    header("Location: coordinator.php");
+    exit();
 }
 $_SESSION['last_activity'] = time();
 
@@ -31,18 +34,26 @@ $totalParticipants = $count2 + $count1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Super Admin Dashboard - Orlia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>Orlia Super Admin</title>
     <link rel="stylesheet" href="assets/styles/admin.css">
     <style>
-        @media (max-width: 992px) { #menuToggle { display: block !important; } }
+        @media (max-width: 992px) {
+            #menuToggle {
+                display: block !important;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="admin-container">
         <!-- Sidebar -->
@@ -86,6 +97,12 @@ $totalParticipants = $count2 + $count1;
                     <div class="page-title">Super Admin Dashboard</div>
                 </div>
                 <div class="nav-actions">
+                    <div class="theme-switch-wrapper" style="position: static; margin-right: 15px;">
+                        <div class="theme-switch" id="theme-toggle" title="Toggle Theme"
+                            style="background: var(--bg-hover); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary);">
+                            <i class="ri-moon-line"></i>
+                        </div>
+                    </div>
                     <button class="icon-btn">
                         <i class="ri-notification-3-line"></i>
                         <span class="badge">5</span>
@@ -110,9 +127,12 @@ $totalParticipants = $count2 + $count1;
             <div class="content-wrapper">
                 <div class="grid-container">
                     <!-- Welcome Card -->
-                    <div class="card card--welcome" style="grid-column: 1 / -1; background: linear-gradient(135deg, var(--google-red), #b93221);">
+                    <div class="card card--welcome"
+                        style="grid-column: 1 / -1; background: linear-gradient(135deg, var(--google-red), #b93221);">
                         <h2 class="card-value">System Overview 🚀</h2>
-                        <div style="font-size: 1.25rem; margin-top: 8px; opacity: 0.9;">Welcome back, <?php echo $userid; ?></div>
+                        <div style="font-size: 1.25rem; margin-top: 8px; opacity: 0.9;">Welcome back,
+                            <?php echo $userid; ?>
+                        </div>
                         <p>Monitor system health, manage administrators, and oversee all event registrations.</p>
                     </div>
 
@@ -121,14 +141,16 @@ $totalParticipants = $count2 + $count1;
                         <div class="card-title">Total Admins</div>
                         <div class="card-value">29</div>
                         <div style="margin-top: 10px; color: var(--text-secondary); font-size: 0.9rem;">
-                            <i class="ri-shield-user-fill" style="margin-right: 5px; color: var(--google-blue);"></i> Active coordinators
+                            <i class="ri-shield-user-fill" style="margin-right: 5px; color: var(--google-blue);"></i>
+                            Active coordinators
                         </div>
                     </div>
 
                     <div class="card">
                         <div class="card-title">Total Users</div>
                         <div class="card-value"><?php echo $totalParticipants; ?></div>
-                        <div style="margin-top: 10px; color: var(--google-green); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
+                        <div
+                            style="margin-top: 10px; color: var(--google-green); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
                             <i class="ri-group-fill"></i> Across all events
                         </div>
                     </div>
@@ -136,7 +158,8 @@ $totalParticipants = $count2 + $count1;
                     <div class="card">
                         <div class="card-title">Total Events</div>
                         <div class="card-value">27</div>
-                        <div style="margin-top: 10px; color: var(--google-yellow); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
+                        <div
+                            style="margin-top: 10px; color: var(--google-yellow); font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
                             <i class="ri-calendar-check-fill"></i> Scheduled
                         </div>
                     </div>
@@ -145,6 +168,7 @@ $totalParticipants = $count2 + $count1;
         </main>
     </div>
 
+    <script src="assets/script/script.js"></script>
     <script>
         const profileTrigger = document.getElementById('profileTrigger');
         const dropdownMenu = document.getElementById('dropdownMenu');
@@ -167,4 +191,5 @@ $totalParticipants = $count2 + $count1;
         document.addEventListener('click', (e) => { if (!profileTrigger.contains(e.target)) dropdownMenu.classList.remove('show'); });
     </script>
 </body>
+
 </html>

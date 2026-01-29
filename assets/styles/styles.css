@@ -597,6 +597,25 @@ section {
   margin-bottom: 1.5rem;
 }
 
+
+/* Closed Badge Style */
+.closed-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 10;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+}
+
 .about-desc {
   font-size: 1.1rem;
   line-height: 1.8;
