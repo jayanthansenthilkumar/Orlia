@@ -11,22 +11,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `orlia`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `events`
---
-
 CREATE TABLE `events` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -38,12 +22,6 @@ CREATE TABLE `events` (
   `events` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `groupevents`
---
 
 CREATE TABLE `groupevents` (
   `id` int(11) NOT NULL,

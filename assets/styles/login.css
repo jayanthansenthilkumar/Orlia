@@ -213,6 +213,14 @@ body {
     background: linear-gradient(135deg, #4285F4, #34A853);
     opacity: 0.1;
     z-index: 0;
+    animation: float-circle 8s ease-in-out infinite;
+}
+
+@keyframes float-circle {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(10px, -15px) rotate(5deg); }
+    66% { transform: translate(-5px, 10px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
 }
 
 .brand-section .floating-circle:nth-child(1) {

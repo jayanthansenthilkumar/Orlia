@@ -17,6 +17,24 @@
 </head>
 
 <body>
+  <!-- Animated Background Particles -->
+  <div class="particles-container">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+  </div>
   <div class="theme-switch-wrapper">
     <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
       <i class="ri-moon-clear-line"></i>
@@ -593,10 +611,19 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     function disableLink(event) {
       event.preventDefault(); // Stops the default action
-      alert("Registration Closed for this event.Try for Another Events");
+      Swal.fire({
+          icon: 'warning',
+          title: 'Event Closed',
+          text: 'Registration for this event is closed. Please try another event.',
+          confirmButtonColor: '#4285F4',
+          confirmButtonText: 'OK',
+          background: '#fff',
+          color: '#202124'
+      });
     }
   </script>
   <script>
