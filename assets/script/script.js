@@ -87,18 +87,23 @@ function updateCountdown() {
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 // Update DOM elements with leading zeros
-                document.getElementById('days').innerText = days.toString().padStart(2, '0');
-                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+                const daysEl = document.getElementById('days');
+                const hoursEl = document.getElementById('hours');
+                const minutesEl = document.getElementById('minutes');
+                const secondsEl = document.getElementById('seconds');
+
+                if (daysEl) daysEl.innerText = days.toString().padStart(2, '0');
+                if (hoursEl) hoursEl.innerText = hours.toString().padStart(2, '0');
+                if (minutesEl) minutesEl.innerText = minutes.toString().padStart(2, '0');
+                if (secondsEl) secondsEl.innerText = seconds.toString().padStart(2, '0');
 
                 // Check if countdown is over
                 if (distance < 0) {
                     clearInterval(timer);
-                    document.getElementById('days').innerText = '00';
-                    document.getElementById('hours').innerText = '00';
-                    document.getElementById('minutes').innerText = '00';
-                    document.getElementById('seconds').innerText = '00';
+                    if (daysEl) daysEl.innerText = '00';
+                    if (hoursEl) hoursEl.innerText = '00';
+                    if (minutesEl) minutesEl.innerText = '00';
+                    if (secondsEl) secondsEl.innerText = '00';
                 }
             } catch (error) {
                 console.error('Error updating countdown:', error);
@@ -124,10 +129,15 @@ function updateCountdownDisplay() {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    document.getElementById('days').innerText = days.toString().padStart(2, '0');
-    document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-    document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    if (daysEl) daysEl.innerText = days.toString().padStart(2, '0');
+    if (hoursEl) hoursEl.innerText = hours.toString().padStart(2, '0');
+    if (minutesEl) minutesEl.innerText = minutes.toString().padStart(2, '0');
+    if (secondsEl) secondsEl.innerText = seconds.toString().padStart(2, '0');
 }
 
 function setFallbackCountdown() {
@@ -149,6 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCountdown();
         }
     }, 1000);
+
+    // Footer Update
+    updateFooter();
 });
 
 // Add visibility change handler for mobile browsers
@@ -156,4 +169,48 @@ document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
         updateCountdownDisplay();
     }
+});
+
+function updateFooter() {
+    const footerElement = document.querySelector('.single-line-footer p');
+    if (footerElement) {
+        const currentYear = new Date().getFullYear();
+        footerElement.innerHTML = `&copy; ${currentYear} TECHNOLOGY INNOVATION HUB. All Rights Reserved.`;
+    }
+}
+
+// Active Navigation Highlight
+function initActiveNavigation() {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-links li a');
+    
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    // Check if link href contains the id
+                    const href = link.getAttribute('href');
+                    if (href.includes(`#${id}`)) {
+                        // Remove active from all others first? 
+                        // It's safer to remove active from all whenever a new one is set
+                         navLinks.forEach(l => l.classList.remove('active'));
+                         link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, {
+        rootMargin: '-50% 0px -50% 0px' // Center line detection
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initActiveNavigation();
 });
