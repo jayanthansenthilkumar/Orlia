@@ -213,4 +213,26 @@ function initActiveNavigation() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initActiveNavigation();
+    
+    // Admin Sidebar Toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const adminSidebar = document.querySelector('.admin-sidebar');
+    
+    if (sidebarToggle && adminSidebar) {
+        // Show toggle button on mobile (check via CSS or JS, here we assume CSS handles display:none/block)
+        // Actually CSS sets display:block on max-width 991px for .menu-toggle
+        
+        sidebarToggle.addEventListener('click', () => {
+            adminSidebar.classList.toggle('active');
+        });
+
+        // Close when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 991) {
+                if (!adminSidebar.contains(e.target) && !sidebarToggle.contains(e.target) && adminSidebar.classList.contains('active')) {
+                    adminSidebar.classList.remove('active');
+                }
+            }
+        });
+    }
 });
