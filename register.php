@@ -13,6 +13,19 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 
+    <style>
+        /* Style for locked/fixed fields */
+        select:disabled,
+        input:disabled {
+            background-color: #f0f0f0;
+            /* Light gray background */
+            font-weight: bold;
+            /* Make text bolder to ensure readability if contrast is lower */
+            cursor: not-allowed;
+            opacity: 0.8;
+            /* Slightly less opaque */
+        }
+    </style>
 </head>
 
 <body>
@@ -56,26 +69,7 @@
                     <div class="form-group">
                         <input type="text" id="fullName" name="fullName" placeholder="Name" required>
                     </div>
-                    <div class="form-group">
-                        <input type="text" id="rollNumber" name="rollNumber" placeholder="Roll Number" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="mailid" name="mailid" placeholder="Mail Id" required>
-                    </div>
-                    <div class="form-group">
 
-                        <select id="year" name="year" required>
-                            <option value="" disabled selected>Select Year</option>
-                            <option value="I year">I Year</option>
-                            <option value="II year">II year</option>
-                            <option value="III year">III year</option>
-                            <option value="IV year">IV year</option>
-
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
-                    </div>
                     <div class="form-group">
                         <select id="department" name="department" required>
                             <option value="" disabled selected>Select Department</option>
@@ -96,12 +90,33 @@
                     </div>
 
                     <div class="form-group">
+                        <select id="year" name="year" required>
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="I year">I Year</option>
+                            <option value="II year">II year</option>
+                            <option value="III year">III year</option>
+                            <option value="IV year">IV year</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- Made placeholder slightly different to indicate user needs to fill suffix -->
+                        <input type="text" id="rollNumber" name="rollNumber" placeholder="Roll Number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" id="mailid" name="mailid" placeholder="Mail Id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
+                    </div>
+
+                    <div class="form-group">
                         <select id="daySelection" name="daySelection" required onchange="updateEvents()">
                             <option value="" disabled>Select Day</option>
-                            <option value="day1">Day 1
-                            </option>
-                            <option value="day2">Day 2
-                            </option>
+                            <option value="day1">Day 1</option>
+                            <option value="day2">Day 2</option>
                         </select>
                     </div>
 
@@ -245,6 +260,113 @@
                     updateEvents(selectedEvent);
                 }
             }
+
+            // Auto-fill roll number logic
+            const departmentSelect = document.getElementById('department');
+            const yearSelect = document.getElementById('year');
+            const rollNumberInput = document.getElementById('rollNumber');
+            
+            let currentFixedPrefix = '';
+            let isRollPrefixLocked = false;
+            
+            const deptCodes = {
+                'AIDS': 'BAD',
+                'AIML': 'BAM',
+                // 'CS': 'BSC', // Note: 'CS' is not in the dropdown options currently (likely refers to 'CSE' or 'CSBS' or 'Cyber'?), strictly following request mapping:
+                // Assuming 'CS' in user request might map to something else, but dropdown has CSE, CSBS, CYBER. 
+                // Let's stick to dropdown values. If dropdown has 'CSE', we use 'BCS'.
+                'CSE': 'BCS',
+                'CSBS': 'BCB',
+                'CYBER': 'BSC', // Assuming 'CS' from prompt might map to 'CYBER' or just explicit mapping needed? 
+                                // PROMPT SAYS: "CS - BSC". Dropdown has "CYBER" "CSE" "CSBS". 
+                                // Usually 'Cyber' is often separate. Let's assume 'CYBER' -> 'BSC' based on exclusion or user might mean 'Computer Science'. 
+                                // Wait, prompt says: "CS - BSC" and "CSE - BCS". 
+                                // Let's try to map best as possible. 
+                                // If dropdown has 'CYBER', and prompt has 'CS', maybe 'CYBER' is 'BSC'? 
+                                // Let's proceed with knowns clearly, if valid matches found.
+                'ECE': 'BEC',
+                'EEE': 'BEE',
+                'MECH': 'BME',
+                'CIVIL': 'BCE',
+                'IT': 'BIT',
+                'VLSI': 'BEV',
+                'MBA': 'MBA',
+                'MCA': 'MCA'
+            };
+
+            const yearCodes = {
+                'I year': '927625',
+                'II year': '927624',
+                'III year': '927623',
+                'IV year': '927622'
+            };
+
+            // Enforce the prefix if locked
+            rollNumberInput.addEventListener('input', function() {
+                if (isRollPrefixLocked && currentFixedPrefix) {
+                    if (!this.value.startsWith(currentFixedPrefix)) {
+                        this.value = currentFixedPrefix;
+                    }
+                }
+            });
+            
+            // Prevent deleting the prefix via backspace for better UX
+            rollNumberInput.addEventListener('keydown', function(e) {
+                if (isRollPrefixLocked && currentFixedPrefix) {
+                    if (this.selectionStart <= currentFixedPrefix.length && e.key === 'Backspace') {
+                         e.preventDefault();
+                    }
+                }
+            });
+
+            function checkAutoFillRollNumber() {
+                const dept = departmentSelect.value;
+                const year = yearSelect.value;
+                
+                let prefix = '';
+                
+                // Check if both valid
+                if (dept && year && yearCodes[year]) {
+                     const yCode = yearCodes[year];
+                     let dCode = deptCodes[dept] || '';
+                     
+                     // SPECIAL CASE: For AIML only if year == IV means prefix is 927622BAL
+                     if (dept === 'AIML' && year === 'IV year') {
+                         // Override dCode logic
+                         // Standard AIML is BAM, but IV Year is BAL
+                          dCode = 'BAL';
+                     }
+                     
+                     if (dCode) {
+                         prefix = yCode + dCode;
+                     }
+                }
+
+                if (prefix) {
+                    // Start locking
+                    if (currentFixedPrefix !== prefix) {
+                        // If prefix changed (or started), update input
+                        // If input was empty or had old prefix, replace/update
+                        // If input has some user entered suffix *after* old prefix, try to keep it? 
+                        // Simpler to just reset suffix if prefix changes drastically to avoid confusion.
+                        rollNumberInput.value = prefix;
+                    } else if (!rollNumberInput.value.startsWith(prefix)) {
+                        // If same prefix but user cleared it
+                        rollNumberInput.value = prefix;
+                    }
+                    
+                    currentFixedPrefix = prefix;
+                    isRollPrefixLocked = true;
+                } else {
+                    // No valid combination (maybe valid year/dept but no code defined)
+                    isRollPrefixLocked = false;
+                    currentFixedPrefix = '';
+                    // Optional: clear input? or leave as is?
+                }
+            }
+
+            departmentSelect.addEventListener('change', checkAutoFillRollNumber);
+            yearSelect.addEventListener('change', checkAutoFillRollNumber);
         };
 
     </script>

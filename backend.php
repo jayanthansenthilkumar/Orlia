@@ -64,6 +64,14 @@ if (isset($_POST['groupnewuser'])) {
         }
     }
 
+    // Check if Team Name already exists
+    $checkTeamQuery = "SELECT * FROM groupevents WHERE teamname='$teamname'";
+    $checkTeamResult = mysqli_query($conn, $checkTeamQuery);
+    if (mysqli_num_rows($checkTeamResult) > 0) {
+        echo json_encode(['status' => 409, 'message' => 'Team name already exists. Please choose a different name.']);
+        exit;
+    }
+
     // Collect team members in an array
     $teamMembers = [];
     $teamMembersCount = $_POST['teamMembersCount'] ?? 0;
@@ -72,7 +80,10 @@ if (isset($_POST['groupnewuser'])) {
         if (!empty($_POST["memberName$i"]) && !empty($_POST["memberRoll$i"])) {
             $teamMembers[] = [
                 'name' => $_POST["memberName$i"],
-                'roll' => $_POST["memberRoll$i"]
+                'roll' => $_POST["memberRoll$i"],
+                'phone' => $_POST["memberPhone$i"] ?? '',
+                'dept' => $_POST["memberDept$i"] ?? '',  // Capture Department
+                'year' => $_POST["memberYear$i"] ?? ''   // Capture Year
             ];
         }
     }
@@ -244,6 +255,18 @@ if (isset($_POST['update_event_status'])) {
         echo json_encode(['status' => 200, 'message' => 'Status updated']);
     } else {
         echo json_encode(['status' => 500, 'message' => 'Error updating status']);
+    }
+}
+
+if (isset($_POST['check_team_name'])) {
+    $teamName = mysqli_real_escape_string($conn, $_POST['teamName']);
+    $query = "SELECT * FROM groupevents WHERE teamname='$teamName'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        echo json_encode(['status' => 409, 'message' => 'Team name unavailable']);
+    } else {
+        echo json_encode(['status' => 200, 'message' => 'Team name available']);
     }
 }
 

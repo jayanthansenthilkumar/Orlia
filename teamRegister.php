@@ -13,6 +13,16 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- SweetAlert is loaded in body -->
+    <style>
+        /* Style for locked/fixed fields */
+        select:disabled,
+        input:disabled {
+            background-color: #f0f0f0;
+            /* Light gray background */
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,6 +49,74 @@
             <i class="ri-moon-line"></i>
         </div>
     </div>
+    <style>
+        /* Step Wizard Styles */
+        .step-container {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .step-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-prev,
+        .btn-next {
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+        }
+
+        .btn-prev {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        .btn-next {
+            background-color: #134e4a;
+            /* Matches theme */
+            color: white;
+        }
+
+        /* Progress Indicators */
+        .step-indicators {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .step-dot {
+            height: 10px;
+            width: 10px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .step-dot.active {
+            background-color: #134e4a;
+            transform: scale(1.2);
+        }
+    </style>
     <div class="registration-container">
         <div class="brand-section">
             <h1>ORLIA'26</h1>
@@ -46,73 +124,111 @@
         </div>
         <div class="form-section">
             <div class="registration-form">
-                <h2>ORLIA 2K26</h2>
+                <h2>Team Registration</h2>
+
+                <div class="step-indicators">
+                    <span class="step-dot active"></span>
+                    <span class="step-dot"></span>
+                    <span class="step-dot"></span>
+                </div>
+
                 <form id="Groupform">
-                    <div class="form-group">
-                        <input type="text" id="TeamName" name="TeamName" placeholder="Team Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="fullName" name="fullName" placeholder="Team Leader Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="rollNumber" name="rollNumber" placeholder="Leader Roll Number" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="mailid" name="mailid" placeholder="Leader Mail Id" required>
+                    <!-- Step 1: Team & Leader Details -->
+                    <div class="step-container active" id="step1">
+                        <h3>Team & Leader Details</h3>
+                        <div class="form-group">
+                            <input type="text" id="TeamName" name="TeamName" placeholder="Team Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="fullName" name="fullName" placeholder="Team Leader Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <select id="department" name="department" required>
+                                <option value="" disabled selected>Select Department</option>
+                                <option value="AIDS">Artificial Intelligence and Data Science</option>
+                                <option value="AIML">Artificial Intelligence and Machine Learning</option>
+                                <option value="CSE">Computer Science Engineering</option>
+                                <option value="CSBS">Computer Science And Business Systems</option>
+                                <option value="ECE">Electronics & Communication Engineering</option>
+                                <option value="EEE">Electrical & Electronics Engineering</option>
+                                <option value="MECH">Mechanical Engineering</option>
+                                <option value="CIVIL">Civil Engineering</option>
+                                <option value="IT">Information Technology</option>
+                                <option value="VLSI">Electronics Engineering (VLSI Design)</option>
+                                <option value="MCA">Master Of Computer Applications</option>
+                                <option value="MBA">Master of Business Administration</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select id="year" name="year" required>
+                                <option value="" disabled selected>Select Year</option>
+                                <option value="I year">I Year</option>
+                                <option value="II year">II Year</option>
+                                <option value="III year">III Year</option>
+                                <option value="IV year">IV Year</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="rollNumber" name="rollNumber" placeholder="Leader Roll Number"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="mailid" name="mailid" placeholder="Leader Mail Id" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn-next" onclick="nextStep(1)">Next</button>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <select id="year" name="year" required>
-                            <option value="" disabled selected>Select Year</option>
-                            <option value="I year">I Year</option>
-                            <option value="II year">II Year</option>
-                            <option value="III year">III Year</option>
-                            <option value="IV year">IV Year</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
-                    </div>
-                    <div class="form-group">
-                        <select id="department" name="department" required>
-                            <option value="" disabled selected>Select Department</option>
-                            <option value="AIDS">Artificial Intelligence and Data Science</option>
-                            <option value="AIML">Artificial Intelligence and Machine Learning</option>
-                            <option value="CSE">Computer Science Engineering</option>
-                            <option value="CSBS">Computer Science And Business Systems</option>
-                            <option value="ECE">Electronics & Communication Engineering</option>
-                            <option value="EEE">Electrical & Electronics Engineering</option>
-                            <option value="MECH">Mechanical Engineering</option>
-                            <option value="CIVIL">Civil Engineering</option>
-                            <option value="IT">Information Technology</option>
-                            <option value="VLSI">Electronics Engineering (VLSI Design)</option>
-                            <option value="MCA">Master Of Computer Applications</option>
-                            <option value="MBA">Master of Business Administration</option>
-                        </select>
+                    <!-- Step 2: Event Details -->
+                    <div class="step-container" id="step2">
+                        <h3>Event Details</h3>
+                        <div class="form-group">
+                            <select id="daySelection" name="daySelection" required onchange="updateEvents()">
+                                <option value="" disabled>Select Day</option>
+                                <option value="day1">Day 1</option>
+                                <option value="day2">Day 2</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select id="events" name="events" required>
+                                <option value="" disabled>Select Event</option>
+                            </select>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn-prev" onclick="prevStep(2)">Previous</button>
+                            <button type="button" class="btn-next" onclick="nextStep(2)">Next</button>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <select id="daySelection" name="daySelection" required onchange="updateEvents()">
-                            <option value="" disabled>Select Day</option>
-                            <option value="day1">Day 1
-                            </option>
-                            <option value="day2">Day 2
-                            </option>
-                        </select>
+                    <!-- Step 3: Team Members -->
+                    <div class="step-container" id="step3">
+                        <h3>Team Members</h3>
+                        <div class="form-group">
+                            <input type="number" id="teamMembersCount" name="teamMembersCount"
+                                placeholder="Number of Team Members" min="1" max="15" required
+                                onchange="addTeamMembers()">
+                        </div>
+                        <div id="teamMembersContainer"></div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn-prev" onclick="prevStep(3)">Previous</button>
+                            <button type="submit" class="submit-btn"
+                                style="width: auto; min-width: 120px;">Register</button>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <select id="events" name="events" required>
-                            <option value="" disabled>Select Event</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="number" id="teamMembersCount" name="teamMembersCount"
-                            placeholder="Number of Team Members" min="1" max="15" required onchange="addTeamMembers()">
-                    </div>
-                    <div id="teamMembersContainer"></div>
-                    <button type="submit" class="submit-btn">Register</button>
                 </form>
             </div>
         </div>
@@ -124,7 +240,62 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
     <script>
+        // Multi-step Form Logic
+        function updateIndicators() {
+            const dots = document.querySelectorAll('.step-dot');
+            const steps = document.querySelectorAll('.step-container');
+            let activeStepIndex = 0;
+
+            steps.forEach((step, index) => {
+                if (step.classList.contains('active')) {
+                    activeStepIndex = index;
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                if (index === activeStepIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function nextStep(currentStep) {
+            // Validate current step fields
+            const currentContainer = document.getElementById('step' + currentStep);
+            const inputs = currentContainer.querySelectorAll('input, select');
+            let isValid = true;
+
+            // Check HTML5 validation
+            inputs.forEach(input => {
+                if (input.hasAttribute('required') && !input.value) {
+                    isValid = false;
+                    input.reportValidity();
+                    return;
+                }
+                if (!input.checkValidity()) {
+                    isValid = false;
+                    input.reportValidity();
+                }
+            });
+
+            if (!isValid) return;
+
+            // Go to next
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + (currentStep + 1)).classList.add('active');
+            updateIndicators();
+        }
+
+        function prevStep(currentStep) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + (currentStep - 1)).classList.add('active');
+            updateIndicators();
+        }
+
         const eventTeamSizes = {
             'Divideconquer': {
                 min: 4,
@@ -247,24 +418,46 @@
             const selectedEvent = this.value;
             const teamMembersInput = document.getElementById('teamMembersCount');
 
+            // Case-insensitive lookup for event configs
+            let config = null;
+            // Try direct lookup first
             if (eventTeamSizes[selectedEvent]) {
+                config = eventTeamSizes[selectedEvent];
+            } else {
+                // Try case-insensitive matching
+                const lowerSelected = selectedEvent.toLowerCase();
+                const key = Object.keys(eventTeamSizes).find(k => k.toLowerCase() === lowerSelected);
+                if (key) {
+                    config = eventTeamSizes[key];
+                }
+            }
+
+            if (config) {
                 const {
                     min,
                     max
-                } = eventTeamSizes[selectedEvent];
+                } = config;
                 // Subtract 1 from min and max since leader is counted separately
                 teamMembersInput.min = min - 1;
                 teamMembersInput.max = max - 1;
                 teamMembersInput.disabled = false;
                 teamMembersInput.placeholder = `Enter additional members (${min - 1}-${max - 1})`;
 
-                if (teamMembersInput.value < min - 1 || teamMembersInput.value > max - 1) {
+                // Adjust value if out of bounds
+                const currentVal = parseInt(teamMembersInput.value) || 0;
+                if (currentVal < min - 1) {
                     teamMembersInput.value = min - 1;
+                } else if (currentVal > max - 1) {
+                    teamMembersInput.value = max - 1;
                 }
+
+                // If the value was empty or 0 and min-1 is > 0, we just set it. 
+                // Ensuring addTeamMembers is called to render the inputs immediately
                 addTeamMembers();
             } else {
                 teamMembersInput.disabled = true;
                 teamMembersInput.placeholder = 'Select an event first';
+                teamMembersInput.value = '';
                 document.getElementById('teamMembersContainer').innerHTML = '';
             }
         });
@@ -275,7 +468,20 @@
             container.innerHTML = "";
 
             const selectedEvent = document.getElementById('events').value;
-            const limits = eventTeamSizes[selectedEvent];
+
+            // Case-insensitive lookup (same logic as change listener)
+            let config = null;
+            if (eventTeamSizes[selectedEvent]) {
+                config = eventTeamSizes[selectedEvent];
+            } else {
+                const lowerSelected = selectedEvent.toLowerCase();
+                const key = Object.keys(eventTeamSizes).find(k => k.toLowerCase() === lowerSelected);
+                if (key) {
+                    config = eventTeamSizes[key];
+                }
+            }
+
+            const limits = config;
 
             // Add 1 to count to include the leader
             const totalCount = count + 1;
@@ -292,12 +498,42 @@
                             <input type="text" name="memberName${i}" placeholder="Team Member ${i} Name" required>
                         </div>
                         <div class="form-group">
+                            <select name="memberDept${i}" required>
+                                <option value="" disabled selected>Select Department</option>
+                                <option value="AIDS">AIDS</option>
+                                <option value="AIML">AIML</option>
+                                <option value="CSE">CSE</option>
+                                <option value="CSBS">CSBS</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="MECH">MECH</option>
+                                <option value="CIVIL">CIVIL</option>
+                                <option value="IT">IT</option>
+                                <option value="VLSI">VLSI</option>
+                                <option value="MCA">MCA</option>
+                                <option value="MBA">MBA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="memberYear${i}" required>
+                                <option value="" disabled selected>Select Year</option>
+                                <option value="I year">I Year</option>
+                                <option value="II year">II Year</option>
+                                <option value="III year">III Year</option>
+                                <option value="IV year">IV Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <input type="text" name="memberRoll${i}" placeholder="Team Member ${i} Roll Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="memberPhone${i}" placeholder="Team Member ${i} Phone Number" required>
                         </div>
                     `;
                 }
             }
         }
+
 
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
@@ -312,6 +548,227 @@
                     daySelect.disabled = true;
                     // Update events and pre-select the event from URL if present
                     updateEvents(selectedEvent);
+                }
+            }
+
+            // Auto-fill roll number logic
+            const departmentSelect = document.getElementById('department');
+            const yearSelect = document.getElementById('year');
+            const rollNumberInput = document.getElementById('rollNumber');
+
+            let currentFixedPrefix = '';
+            let isRollPrefixLocked = false;
+
+            const deptCodes = {
+                'AIDS': 'BAD',
+                'AIML': 'BAM',
+                'CSE': 'BCS',
+                'CSBS': 'BCB',
+                'CYBER': 'BSC',
+                'ECE': 'BEC',
+                'EEE': 'BEE',
+                'MECH': 'BME',
+                'CIVIL': 'BCE',
+                'IT': 'BIT',
+                'VLSI': 'BEV',
+                'MBA': 'MBA',
+                'MCA': 'MCA'
+            };
+
+            const yearCodes = {
+                'I year': '927625',
+                'II year': '927624',
+                'III year': '927623',
+                'IV year': '927622'
+            };
+
+            // Enforce the prefix if locked
+            rollNumberInput.addEventListener('input', function () {
+                if (isRollPrefixLocked && currentFixedPrefix) {
+                    if (!this.value.startsWith(currentFixedPrefix)) {
+                        this.value = currentFixedPrefix;
+                    }
+                }
+            });
+
+            // Prevent deleting the prefix via backspace for better UX
+            rollNumberInput.addEventListener('keydown', function (e) {
+                if (isRollPrefixLocked && currentFixedPrefix) {
+                    if (this.selectionStart <= currentFixedPrefix.length && e.key === 'Backspace') {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            // Real-time Team Name Validation
+            const teamNameInput = document.getElementById('TeamName');
+            let typingTimer;
+            const doneTypingInterval = 500; // 0.5s
+
+            teamNameInput.addEventListener('keyup', function () {
+                clearTimeout(typingTimer);
+                const val = this.value;
+
+                // Clear feedback if empty
+                if (!val) {
+                    setTeamNameFeedback('');
+                    return;
+                }
+
+                typingTimer = setTimeout(checkTeamName, doneTypingInterval);
+            });
+
+            function checkTeamName() {
+                const teamName = teamNameInput.value;
+                if (!teamName) return;
+
+                $.ajax({
+                    url: 'backend.php',
+                    method: 'POST',
+                    data: { check_team_name: true, teamName: teamName },
+                    success: function (response) {
+                        try {
+                            const res = JSON.parse(response);
+                            if (res.status == 200) {
+                                setTeamNameFeedback('available');
+                            } else {
+                                setTeamNameFeedback('taken');
+                            }
+                        } catch (e) {
+                            console.error('Error parsing response');
+                        }
+                    }
+                });
+            }
+
+            function setTeamNameFeedback(status) {
+                // Remove existing feedback
+                const existing = teamNameInput.parentNode.querySelector('.feedback-msg');
+                if (existing) existing.remove();
+
+                if (!status) {
+                    teamNameInput.style.borderColor = '';
+                    return;
+                }
+
+                const msg = document.createElement('span');
+                msg.classList.add('feedback-msg');
+                msg.style.fontSize = '0.8rem';
+                msg.style.marginTop = '5px';
+                msg.style.display = 'block';
+
+                if (status === 'available') {
+                    teamNameInput.style.borderColor = 'green';
+                    msg.style.color = 'green';
+                    msg.innerHTML = '<i class="ri-check-line"></i> Team name available';
+                } else {
+                    teamNameInput.style.borderColor = 'red';
+                    msg.style.color = 'red';
+                    msg.innerHTML = '<i class="ri-close-line"></i> Team name already taken';
+                }
+
+                teamNameInput.parentNode.appendChild(msg);
+            }
+
+            function checkAutoFillRollNumber() {
+                const dept = departmentSelect.value;
+                const year = yearSelect.value;
+
+                let prefix = '';
+
+                // Check if both valid
+                if (dept && year && yearCodes[year]) {
+                    const yCode = yearCodes[year];
+                    let dCode = deptCodes[dept] || '';
+
+                    // SPECIAL CASE: For AIML only if year == IV means prefix is 927622BAL
+                    if (dept === 'AIML' && year === 'IV year') {
+                        dCode = 'BAL';
+                    }
+
+                    if (dCode) {
+                        prefix = yCode + dCode;
+                    }
+                }
+
+                if (prefix) {
+                    if (currentFixedPrefix !== prefix) {
+                        rollNumberInput.value = prefix;
+                    } else if (!rollNumberInput.value.startsWith(prefix)) {
+                        rollNumberInput.value = prefix;
+                    }
+
+                    currentFixedPrefix = prefix;
+                    isRollPrefixLocked = true;
+                } else {
+                    isRollPrefixLocked = false;
+                    currentFixedPrefix = '';
+                }
+            }
+
+            departmentSelect.addEventListener('change', checkAutoFillRollNumber);
+            yearSelect.addEventListener('change', checkAutoFillRollNumber);
+
+            // Team Member Roll Number Logic (Event Delegation)
+            document.getElementById('teamMembersContainer').addEventListener('change', function (e) {
+                if (e.target.tagName === 'SELECT' && (e.target.name.startsWith('memberDept') || e.target.name.startsWith('memberYear'))) {
+                    const memberIndex = e.target.name.match(/\d+/)[0];
+                    updateMemberRollPrefix(memberIndex);
+                }
+            });
+
+            // Prevent backspace on frozen prefix for team members
+            document.getElementById('teamMembersContainer').addEventListener('keydown', function (e) {
+                if (e.target.name && e.target.name.startsWith('memberRoll') && e.key === 'Backspace') {
+                    const memberIndex = e.target.name.match(/\d+/)[0];
+                    const rollInput = e.target;
+                    const prefix = rollInput.dataset.fixedPrefix;
+                    if (prefix && rollInput.selectionStart <= prefix.length) {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            // Enforce prefix on input
+            document.getElementById('teamMembersContainer').addEventListener('input', function (e) {
+                if (e.target.name && e.target.name.startsWith('memberRoll')) {
+                    const rollInput = e.target;
+                    const prefix = rollInput.dataset.fixedPrefix;
+                    if (prefix && !rollInput.value.startsWith(prefix)) {
+                        rollInput.value = prefix;
+                    }
+                }
+            });
+
+            function updateMemberRollPrefix(index) {
+                const deptSelect = document.querySelector(`select[name="memberDept${index}"]`);
+                const yearSelect = document.querySelector(`select[name="memberYear${index}"]`);
+                const rollInput = document.querySelector(`input[name="memberRoll${index}"]`);
+
+                if (!deptSelect || !yearSelect || !rollInput) return;
+
+                const dept = deptSelect.value;
+                const year = yearSelect.value;
+
+                let prefix = '';
+                if (dept && year && yearCodes[year]) {
+                    const yCode = yearCodes[year];
+                    let dCode = deptCodes[dept] || '';
+                    if (dept === 'AIML' && year === 'IV year') {
+                        dCode = 'BAL';
+                    }
+                    if (dCode) {
+                        prefix = yCode + dCode;
+                    }
+                }
+
+                if (prefix) {
+                    rollInput.dataset.fixedPrefix = prefix;
+                    if (!rollInput.value.startsWith(prefix)) {
+                        rollInput.value = prefix;
+                    }
+                } else {
+                    delete rollInput.dataset.fixedPrefix;
                 }
             }
         };
@@ -333,8 +790,8 @@
             Formdata.append("groupnewuser", true);
 
             // Re-disable if they were disabled
-            if(dayDisabled) daySelect.prop('disabled', true);
-            if(eventsDisabled) eventsSelect.prop('disabled', true);
+            if (dayDisabled) daySelect.prop('disabled', true);
+            if (eventsDisabled) eventsSelect.prop('disabled', true);
 
 
             $.ajax({
@@ -347,12 +804,30 @@
                     var res = JSON.parse(response);
                     if (res.status == 200) {
                         $('#Groupform')[0].reset();
+                        // Reset wizard to step 1
+                        document.querySelectorAll('.step-container').forEach(s => s.classList.remove('active'));
+                        document.getElementById('step1').classList.add('active');
+                        updateIndicators(); // Will reset dots
+
                         Swal.fire({
                             title: "Great!",
                             text: res.message,
                             icon: "success",
-                            confirmButtonColor: '#134e4a'
+                            confirmButtonColor: '#134e4a',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = 'index.php';
+                            }
                         });
+                    } else if (res.status == 409) {
+                        Swal.fire({
+                            title: "Duplicate Team Name!",
+                            text: res.message,
+                            icon: "warning",
+                            confirmButtonColor: '#d33'
+                        });
+                        $('#TeamName').val('');
                     } else {
                         Swal.fire({
                             title: "Error!",
