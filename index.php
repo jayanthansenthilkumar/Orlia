@@ -54,7 +54,8 @@
                 <h1 class="glitch-text" data-text="ORLIA'26">ORLIA'26</h1>
             </div>
             <p class="hero-subtitle">CULTURE & INNOVATION REIMAGINED</p>
-            <p class="hero-desc">Step into a realm where tradition meets the digital frontier. Two days of electrifying performances, art, and tech.</p>
+            <p class="hero-desc">Step into a realm where tradition meets the digital frontier. Two days of electrifying
+                performances, art, and tech.</p>
             <div class="hero-details">
                 <div class="hero-detail">
                     <i class="ri-map-pin-2-line"></i>
@@ -395,7 +396,7 @@
                             <i class="ri-map-pin-line"></i>
                             <span>MKCE</span>
                         </div>
-                        <a href="day1.html" class="event-btn">View Schedule</a>
+                        <a href="day1.php" class="event-btn">View Schedule</a>
                     </div>
                 </div>
 
@@ -414,7 +415,7 @@
                             <i class="ri-map-pin-line"></i>
                             <span>MKCE</span>
                         </div>
-                        <a href="day2.html" class="event-btn">View Schedule</a>
+                        <a href="day2.php" class="event-btn">View Schedule</a>
                     </div>
                 </div>
             </div>

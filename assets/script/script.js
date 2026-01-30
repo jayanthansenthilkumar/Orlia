@@ -236,3 +236,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
+// Modal Logic for Events
+function toggleModal(modalId) {
+    const modal = document.getElementById(modalId);
+    const allModals = document.querySelectorAll('.modal');
+    
+    // Close all other modals first
+    allModals.forEach(m => {
+        if (m.id !== modalId) {
+            m.style.display = 'none';
+        }
+    });
+    
+    // Toggle the selected modal
+    if (modal) {
+        modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    }
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', (event) => {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
+    }
+});
+
+// Event Closed Alert
+function disableLink(event) {
+    event.preventDefault();
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Event Closed',
+            text: 'Registration for this event is closed. Please try another event.',
+            confirmButtonColor: '#4285F4',
+            confirmButtonText: 'OK',
+            background: '#fff',
+            color: '#202124'
+        });
+    } else {
+        alert('Event Closed');
+    }
+}

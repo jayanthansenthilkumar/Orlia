@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Orlia'26</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    
+
 
 </head>
 
@@ -76,7 +78,7 @@
                     </div>
                     <div class="form-group">
                         <select id="department" name="department" required>
-                            <option value=""disabled selected>Select Department</option>
+                            <option value="" disabled selected>Select Department</option>
                             <option value="AIDS">Artificial Intelligence and Data Science</option>
                             <option value="AIML">Artificial Intelligence and Machine Learning</option>
                             <option value="CYBER">CSE - Cyber Security</option>
@@ -115,7 +117,7 @@
                             <i class="ri-map-pin-line"></i>
                             <span>MKCE</span>
                         </div>
-                        <a href="index.html" class="event-btn">Home</a>
+                        <a href="index.php" class="event-btn">Home</a>
                     </div>
                 </form>
             </div>
@@ -127,12 +129,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).on('submit', '#registerForm', function(e) {
+        $(document).on('submit', '#registerForm', function (e) {
             e.preventDefault();
             var Formdata = new FormData(this);
             Formdata.append("Add_newuser", true);
             console.log(Formdata)
-            
+
             // WARNING: backend.php has been removed.
             /*
             $.ajax({
@@ -145,9 +147,9 @@
             });
             */
 
-             // Mock success
-             $('#registerForm')[0].reset();
-             Swal.fire({
+            // Mock success
+            $('#registerForm')[0].reset();
+            Swal.fire({
                 title: "Good job!",
                 text: "You Register for the Events (Mock - Backend removed)",
                 icon: "success"
@@ -165,33 +167,33 @@
 
             if (daySelection.value === "day1") {
                 eventList = [{
-                        value: "Tamilspeech",
-                        text: "Tamil Speech"
-                    },
-                    {
-                        value: "Englishspeech",
-                        text: "English Speech"
-                    },
-                    {
-                        value: "Singing",
-                        text: "Singing"
-                    },
-                    // {
-                    //     value: "Drawing",
-                    //     text: "Drawing"
-                    // },
-                    // {
-                    //     value: "Mehandi",
-                    //     text: "Mehandi"
-                    // },
-                    {
-                        value: "Memecreation",
-                        text: "Meme Creation"
-                    },
-                    {
-                        value: "Solodance",
-                        text: "Solo Dance"
-                    }
+                    value: "Tamilspeech",
+                    text: "Tamil Speech"
+                },
+                {
+                    value: "Englishspeech",
+                    text: "English Speech"
+                },
+                {
+                    value: "Singing",
+                    text: "Singing"
+                },
+                // {
+                //     value: "Drawing",
+                //     text: "Drawing"
+                // },
+                // {
+                //     value: "Mehandi",
+                //     text: "Mehandi"
+                // },
+                {
+                    value: "Memecreation",
+                    text: "Meme Creation"
+                },
+                {
+                    value: "Solodance",
+                    text: "Solo Dance"
+                }
                 ];
             } else if (daySelection.value === "day2") {
                 eventList = [
@@ -230,7 +232,7 @@
             });
         }
 
-        window.onload = function() {
+        window.onload = function () {
             const selectedDay = '';
             const selectedEvent = '';
 

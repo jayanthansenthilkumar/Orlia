@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
+
 <body>
     <!-- Animated Background Particles -->
     <div class="particles-container">
@@ -47,7 +49,7 @@
             <div class="floating-circle"></div>
             <div class="registration-form">
                 <h2>Login</h2>
-                <form id="adminLoginForm" method="POST" action="coordinator.html">
+                <form id="adminLoginForm" method="POST" action="adminDashboard.php">
                     <div class="form-group">
                         <input type="text" id="userid" name="username" placeholder="Username" required>
                     </div>
@@ -60,7 +62,7 @@
 
                     <div class="event-footer">
                         <div class="event-location" style="opacity: 0;"></div> <!-- Spacer -->
-                        <a href="index.html" class="event-btn">
+                        <a href="index.php" class="event-btn">
                             <i class="ri-arrow-left-line"></i> Back to Home
                         </a>
                     </div>

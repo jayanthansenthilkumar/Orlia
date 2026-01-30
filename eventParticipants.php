@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,22 @@
     <link rel="icon" href="assets/images/agastya.png" type="image/png">
     <link rel="stylesheet" href="assets/styles/styles.css">
     <link rel="stylesheet" href="assets/styles/admin.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 </head>
+
 <body>
     <div class="admin-body">
-        <nav class="admin-sidebar">
-            <div class="admin-brand">EVENT ADMIN</div>
-            <ul class="admin-nav">
-                <li><a href="eventAdmin.html"><i class="ri-dashboard-line"></i> Dashboard</a></li>
-                <li><a href="eventParticipants.html" class="active"><i class="ri-user-line"></i> Participants</a></li>
-                <!-- <li><a href="index.html"><i class="ri-logout-box-line"></i> Logout</a></li> -->
-            </ul>
-        </nav>
+        <!-- Sidebar -->
+        <?php
+        $role = 'event';
+        $page = 'participants';
+        include 'includes/sidebar.php';
+        ?>
 
         <main class="admin-main">
             <header class="admin-header">
@@ -49,7 +51,8 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.html" class="text-danger"><i class="ri-logout-box-line"></i> Logout</a></li>
+                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                        Logout</a></li>
                             </ul>
                         </div>
                     </div>
@@ -58,9 +61,10 @@
 
             <!-- Event Title dynamically leads here -->
             <div class="mb-4">
-                <h2 style="font-family: 'Space Grotesk'; color: var(--text-main);">Event: <span style="color: var(--primary-main);">Code Debugging</span></h2>
+                <h2 style="font-family: 'Space Grotesk'; color: var(--text-main);">Event: <span
+                        style="color: var(--primary-main);">Code Debugging</span></h2>
             </div>
-            
+
             <div class="table-container">
                 <table id="eventTable" class="display" style="width:100%">
                     <thead>
@@ -87,11 +91,13 @@
                             <td>Solo</td>
                             <td><span class="status-badge status-active">Verified</span></td>
                             <td>
-                                <button class="action-btn btn-edit" title="Verify"><i class="ri-check-line"></i></button>
-                                <button class="action-btn btn-delete" title="Remove"><i class="ri-close-line"></i></button>
+                                <button class="action-btn btn-edit" title="Verify"><i
+                                        class="ri-check-line"></i></button>
+                                <button class="action-btn btn-delete" title="Remove"><i
+                                        class="ri-close-line"></i></button>
                             </td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td>#EV002</td>
                             <td>Alpha Squad</td>
                             <td>21IT044 (Kevin D)</td>
@@ -101,8 +107,10 @@
                             <td>Group (4)</td>
                             <td><span class="status-badge status-inactive">Pending</span></td>
                             <td>
-                                <button class="action-btn btn-edit" title="Verify"><i class="ri-check-line"></i></button>
-                                <button class="action-btn btn-delete" title="Remove"><i class="ri-close-line"></i></button>
+                                <button class="action-btn btn-edit" title="Verify"><i
+                                        class="ri-check-line"></i></button>
+                                <button class="action-btn btn-delete" title="Remove"><i
+                                        class="ri-close-line"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -121,7 +129,7 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="assets/script/script.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#eventTable').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
@@ -132,4 +140,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,23 +8,22 @@
     <link rel="icon" href="assets/images/agastya.png" type="image/png">
     <link rel="stylesheet" href="assets/styles/styles.css">
     <link rel="stylesheet" href="assets/styles/admin.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 </head>
+
 <body>
     <div class="admin-body">
-        <nav class="admin-sidebar">
-            <div class="admin-brand">SUPER ADMIN</div>
-            <ul class="admin-nav">
-                <li><a href="superAdmin.html"><i class="ri-dashboard-3-line"></i> Dashboard</a></li>
-                <li><a href="manageAdmins.html"><i class="ri-shield-user-line"></i> Manage Admins</a></li>
-                <li><a href="overallParticipants.html" class="active"><i class="ri-group-line"></i> Overall Participants</a></li>
-                <li><a href="manageEvent.html"><i class="ri-calendar-check-line"></i> Manage Events</a></li>
-                <!-- <li><a href="index.html"><i class="ri-logout-box-line"></i> Logout</a></li> -->
-            </ul>
-        </nav>
+        <!-- Sidebar -->
+        <?php
+        $role = 'super';
+        $page = 'participants';
+        include 'includes/sidebar.php';
+        ?>
 
         <main class="admin-main">
             <header class="admin-header">
@@ -51,7 +51,8 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.html" class="text-danger"><i class="ri-logout-box-line"></i> Logout</a></li>
+                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                        Logout</a></li>
                             </ul>
                         </div>
                     </div>
@@ -66,7 +67,8 @@
 
             <!-- Solo Participants Section -->
             <div id="solo" class="tab-content active">
-                <h2 class="mb-3" style="font-family: 'Space Grotesk'; color: var(--text-main);">Solo Event Participants</h2>
+                <h2 class="mb-3" style="font-family: 'Space Grotesk'; color: var(--text-main);">Solo Event Participants
+                </h2>
                 <div class="table-container">
                     <table id="soloTable" class="display" style="width:100%">
                         <thead>
@@ -90,7 +92,7 @@
                                 <td>Code Debugging</td>
                                 <td>9988776655</td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td>S-002</td>
                                 <td>Bob Mech</td>
                                 <td>22MECH055</td>
@@ -106,7 +108,8 @@
 
             <!-- Group Participants Section -->
             <div id="group" class="tab-content">
-                <h2 class="mb-3" style="font-family: 'Space Grotesk'; color: var(--text-main);">Group Event Participants</h2>
+                <h2 class="mb-3" style="font-family: 'Space Grotesk'; color: var(--text-main);">Group Event Participants
+                </h2>
                 <div class="table-container">
                     <table id="groupTable" class="display" style="width:100%">
                         <thead>
@@ -121,7 +124,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                             <tr>
+                            <tr>
                                 <td>G-001</td>
                                 <td>Tech Titans</td>
                                 <td>Charlie CSE</td>
@@ -130,7 +133,7 @@
                                 <td>Hackathon</td>
                                 <td>7766554433</td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td>G-002</td>
                                 <td>Robo Rockers</td>
                                 <td>David EEE</td>
@@ -156,38 +159,38 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="assets/script/script.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Initialize DataTables with Buttons
-            var soloTable = $('#soloTable').DataTable({ 
+            var soloTable = $('#soloTable').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
-            var groupTable = $('#groupTable').DataTable({ 
+            var groupTable = $('#groupTable').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
-            
+
             // Adjust columns on tab switch because hidden tables miscalculate width
-            window.openTab = function(tabName) {
+            window.openTab = function (tabName) {
                 // Hide all tab content
                 $('.tab-content').removeClass('active');
                 $('.tab-btn').removeClass('active');
-                
+
                 // Show current tab
                 $('#' + tabName).addClass('active');
-                
+
                 // Set active button
                 // Find button with onclick="openTab('tabName')" - simple approach
                 $(`button[onclick="openTab('${tabName}')"]`).addClass('active');
-                
+
                 // Recalculate DataTable dimensions
-                if(tabName === 'solo') {
+                if (tabName === 'solo') {
                     soloTable.columns.adjust().responsive.recalc();
                 } else {
                     groupTable.columns.adjust().responsive.recalc();
@@ -196,4 +199,5 @@
         });
     </script>
 </body>
+
 </html>

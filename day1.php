@@ -10,35 +10,35 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
- 
+
 
 </head>
 
 <body>
   <!-- Animated Background Particles -->
   <div class="particles-container">
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
   <div class="theme-switch-wrapper">
     <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
       <i class="ri-moon-line"></i>
     </div>
   </div>
-  <a href="index.html" class="back-btn">
+  <a href="index.php" class="back-btn">
     <i class="ri-arrow-left-line"></i>
     Back to Home
   </a>
@@ -59,7 +59,7 @@
         <div class="event-image">
           <img src="assets/images/tamilspeech.jpg" alt="" />
           <button class="rules-btn" onclick="toggleModal('tamilModal')">Topics</button>
-          <a href="register.html?day=day1&event=Tamilspeech" class="register-btn">Register Now</a>
+          <a href="register.php?day=day1&event=Tamilspeech" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -96,7 +96,7 @@
         <div class="event-image">
           <img src="assets/images/engspeech.jpg" alt="" />
           <button class="rules-btn" onclick="toggleModal('englishModal')">Topics</button>
-          <a href="register.html?day=day1&event=Englishspeech" class="register-btn">Register Now</a>
+          <a href="register.php?day=day1&event=Englishspeech" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -132,7 +132,7 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/sing.jpg" alt="Drama Performance" />
-          <a href="register.html?day=day1&event=Singing" class="register-btn">Register Now</a>
+          <a href="register.php?day=day1&event=Singing" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -170,7 +170,7 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/solo.jpg" alt="Traditional Arts" />
-          <a href="register.html?day=day1&event=Solodance" class="register-btn">Register Now</a>
+          <a href="register.php?day=day1&event=Solodance" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -245,7 +245,7 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/trailertime.jpg" alt="Quiz Competition" />
-          <a href="groupregister.html?day=day1&event=Trailertime" class="register-btn">Register Now</a>
+          <a href="teamRegister.php?day=day1&event=Trailertime" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -461,7 +461,7 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/divideconquer.jpg" alt="Art Exhibition" />
-          <a href="groupregister.html?day=day1&event=Divideconquer" class="register-btn">Register Now</a>
+          <a href="teamRegister.php?day=day1&event=Divideconquer" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -497,7 +497,7 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/meme.jpg" alt="Debate Competition" />
-          <a href="register.html?day=day1&event=Memecreation" class="register-btn">Register Now</a>
+          <a href="register.php?day=day1&event=Memecreation" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -534,7 +534,7 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/group.jpg" alt="Traditional Arts" />
-          <a href="groupregister.html?day=day1&event=Groupdance" class="register-btn">Register Now</a>
+          <a href="teamRegister.php?day=day1&event=Groupdance" class="register-btn">Register Now</a>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -614,52 +614,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    function disableLink(event) {
-      event.preventDefault(); // Stops the default action
-      Swal.fire({
-          icon: 'warning',
-          title: 'Event Closed',
-          text: 'Registration for this event is closed. Please try another event.',
-          confirmButtonColor: '#4285F4',
-          confirmButtonText: 'OK',
-          background: '#fff',
-          color: '#202124'
-      });
-    }
-  </script>
-  <script>
-    function toggleModal(modalId) {
-      const modal = document.getElementById(modalId);
-      const allModals = document.querySelectorAll('.modal');
 
-      // Close all other modals first
-      allModals.forEach(m => {
-        if (m.id !== modalId) {
-          m.style.display = 'none';
-        }
-      });
-
-      // Toggle the selected modal
-      modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-    }
-
-    // Close modal when clicking outside
-    window.onclick = function (event) {
-      if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-      }
-    }
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') {
-        document.querySelectorAll('.modal').forEach(modal => {
-          modal.style.display = 'none';
-        });
-      }
-    });
-  </script>
   <script src="assets/script/script.js"></script>
   <script src="assets/script/assistant.js"></script>
 </body>

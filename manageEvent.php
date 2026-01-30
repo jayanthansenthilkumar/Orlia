@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,22 +8,21 @@
     <link rel="icon" href="assets/images/agastya.png" type="image/png">
     <link rel="stylesheet" href="assets/styles/styles.css">
     <link rel="stylesheet" href="assets/styles/admin.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 </head>
+
 <body>
     <div class="admin-body">
-        <nav class="admin-sidebar">
-            <div class="admin-brand">ORLIA ADMIN</div>
-            <ul class="admin-nav">
-                <li><a href="superAdmin.html"><i class="ri-dashboard-3-line"></i> Dashboard</a></li>
-                <li><a href="manageAdmins.html"><i class="ri-shield-user-line"></i> Manage Admins</a></li>
-                <li><a href="overallParticipants.html"><i class="ri-group-line"></i> Overall Participants</a></li>
-                <li><a href="manageEvent.html" class="active"><i class="ri-calendar-check-line"></i> Manage Events</a></li>
-                <!-- <li><a href="index.html"><i class="ri-logout-box-line"></i> Logout</a></li> -->
-            </ul>
-        </nav>
+        <!-- Sidebar -->
+        <?php
+        $role = 'super';
+        $page = 'events';
+        include 'includes/sidebar.php';
+        ?>
 
         <main class="admin-main">
             <header class="admin-header">
@@ -50,7 +50,8 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.html" class="text-danger"><i class="ri-logout-box-line"></i> Logout</a></li>
+                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                        Logout</a></li>
                             </ul>
                         </div>
                     </div>
@@ -97,12 +98,12 @@
                             </td>
                             <td><button class="action-btn btn-edit">Edit</button></td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td>#EV03</td>
                             <td>Hackathon</td>
                             <td>Technical</td>
                             <td>Team</td>
-                             <td>
+                            <td>
                                 <label class="switch">
                                     <input type="checkbox">
                                     <span class="slider"></span>
@@ -120,11 +121,12 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="assets/script/script.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#eventsTable').DataTable({
                 responsive: true
             });
         });
     </script>
 </body>
+
 </html>
