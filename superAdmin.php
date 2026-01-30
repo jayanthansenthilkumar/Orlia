@@ -52,7 +52,7 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                <li><a href="logout.php" class="text-danger"><i class="ri-logout-box-line"></i>
                                         Logout</a></li>
                             </ul>
                         </div>
@@ -60,54 +60,64 @@
                 </div>
             </header>
 
+            <?php
+            // Calculate Stats
+            include 'db.php';
+            $admin_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users"));
+            $solo_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM soloevents"));
+            $group_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM groupevents"));
+            $total_reg = $solo_count + $group_count;
+            $active_events = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM events WHERE status=1"));
+            ?>
             <div class="stat-grid">
                 <div class="stat-card">
                     <div class="stat-icon"><i class="ri-admin-line"></i></div>
                     <div class="stat-info">
-                        <h3>5</h3>
+                        <h3><?= $admin_count ?></h3>
                         <p>Total Admins</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="ri-user-follow-line"></i></div>
                     <div class="stat-info">
-                        <h3>1,254</h3>
+                        <h3><?= $total_reg ?></h3>
                         <p>Total Registrations</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="ri-calendar-2-line"></i></div>
                     <div class="stat-info">
-                        <h3>12</h3>
+                        <h3><?= $active_events ?></h3>
                         <p>Active Events</p>
                     </div>
                 </div>
             </div>
 
             <div class="table-container">
-                <h2 class="mb-4">System Activity Log</h2>
+                <h2 class="mb-4">Recent Registrations (Solo)</h2>
                 <table id="activityTable" class="display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Time</th>
-                            <th>User</th>
-                            <th>Action</th>
-                            <th>Details</th>
+                            <th>ID</th>
+                            <th>User/Team</th>
+                            <th>Department</th>
+                            <th>Event</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>10 mins ago</td>
-                            <td>Admin1</td>
-                            <td>Status Change</td>
-                            <td>Closed registration for 'Paper Presentation'</td>
-                        </tr>
-                        <tr>
-                            <td>1 hour ago</td>
-                            <td>SuperAdmin</td>
-                            <td>Added Admin</td>
-                            <td>Created new admin account 'EventLead'</td>
-                        </tr>
+                        <?php
+                        // Showing recent 5 solo registrations as activity
+                        $query = "SELECT * FROM soloevents ORDER BY id DESC LIMIT 5";
+                        $result = mysqli_query($conn, $query);
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <tr>
+                                <td>#S<?= $row['id'] ?></td>
+                                <td><?= $row['name'] ?></td>
+                                <td><?= $row['dept'] ?></td>
+                                <td><?= $row['events'] ?></td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

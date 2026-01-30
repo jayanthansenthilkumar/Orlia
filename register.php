@@ -131,132 +131,122 @@
     <script>
         $(document).on('submit', '#registerForm', function (e) {
             e.preventDefault();
+            var daySelect = $('#daySelection');
+            var eventsSelect = $('#events');
+            var dayDisabled = daySelect.prop('disabled');
+            var eventsDisabled = eventsSelect.prop('disabled');
+
+            // Temporarily enable to capture data
+            daySelect.prop('disabled', false);
+            eventsSelect.prop('disabled', false);
+
             var Formdata = new FormData(this);
             Formdata.append("Add_newuser", true);
-            console.log(Formdata)
 
-            // WARNING: backend.php has been removed.
-            /*
+            // Re-disable if they were disabled (to maintain UI state if error occurs)
+            if (dayDisabled) daySelect.prop('disabled', true);
+            if (eventsDisabled) eventsSelect.prop('disabled', true);
+
+            console.log(Object.fromEntries(Formdata));
+
             $.ajax({
                 url: "backend.php",
                 method: "POST",
                 data: Formdata,
                 processData: false,
                 contentType: false,
-                success: function(response) { ... }
-            });
-            */
-
-            // Mock success
-            $('#registerForm')[0].reset();
-            Swal.fire({
-                title: "Good job!",
-                text: "You Register for the Events (Mock - Backend removed)",
-                icon: "success"
+                success: function (response) {
+                    var res = JSON.parse(response);
+                    if (res.status == 200) {
+                        $('#registerForm')[0].reset();
+                        Swal.fire({
+                            title: "Good job!",
+                            text: res.message,
+                            icon: "success"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: res.message,
+                            icon: "error"
+                        });
+                    }
+                }
             });
         });
 
-        function updateEvents() {
+        function updateEvents(preSelectedEvent = null) {
             const daySelection = document.getElementById("daySelection");
             const eventsDropdown = document.getElementById("events");
 
-            eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
-            eventsDropdown.disabled = false;
+            eventsDropdown.innerHTML = '<option value="" disabled selected>Loading...</option>';
+            eventsDropdown.disabled = true;
 
-            let eventList = [];
+            const selectedDay = daySelection.value;
 
-            if (daySelection.value === "day1") {
-                eventList = [{
-                    value: "Tamilspeech",
-                    text: "Tamil Speech"
+            if (!selectedDay) return;
+
+            $.ajax({
+                url: 'backend.php',
+                type: 'GET',
+                data: {
+                    get_events: true,
+                    day: selectedDay,
+                    type: 'Solo' // Fetch Solo events for individual registration
                 },
-                {
-                    value: "Englishspeech",
-                    text: "English Speech"
-                },
-                {
-                    value: "Singing",
-                    text: "Singing"
-                },
-                // {
-                //     value: "Drawing",
-                //     text: "Drawing"
-                // },
-                // {
-                //     value: "Mehandi",
-                //     text: "Mehandi"
-                // },
-                {
-                    value: "Memecreation",
-                    text: "Meme Creation"
-                },
-                {
-                    value: "Solodance",
-                    text: "Solo Dance"
-                }
-                ];
-            } else if (daySelection.value === "day2") {
-                eventList = [
-                    // {
-                    //     value: "Photography",
-                    //     text: "Photography"
-                    // },
-                    {
-                        value: "Shortflim",
-                        text: "Shortflim"
-                    },
-                    {
-                        value: "Bestmanager",
-                        text: "Best Manager"
-                    },
-                    {
-                        value: "Instrumentalplaying",
-                        text: "Instrumental Playing"
-                    },
-                    {
-                        value: "Mime",
-                        text: "Mime"
-                    },
-                    {
-                        value: "Rjvj",
-                        text: "Rj/vj Hunt"
+                success: function (response) {
+                    try {
+                        const events = JSON.parse(response);
+                        eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
+
+                        if (events.length > 0) {
+                            events.forEach(event => {
+                                const option = document.createElement("option");
+                                option.value = event.value;
+                                option.textContent = event.text;
+                                if (preSelectedEvent && event.value.toLowerCase() === preSelectedEvent.toLowerCase()) {
+                                    option.selected = true;
+                                    eventsDropdown.disabled = true; // Lock event selection if pre-selected
+                                }
+                                eventsDropdown.appendChild(option);
+                            });
+
+                            // Only enable if not locked by pre-selection
+                            if (!eventsDropdown.disabled) {
+                                eventsDropdown.disabled = false;
+                            }
+                        } else {
+                            eventsDropdown.innerHTML = '<option value="" disabled selected>No events available</option>';
+                        }
+                    } catch (e) {
+                        console.error("Error parsing events", e);
+                        eventsDropdown.innerHTML = '<option value="" disabled selected>Error loading events</option>';
                     }
-                ];
-            }
-
-            eventList.forEach(event => {
-                const option = document.createElement("option");
-                option.value = event.value;
-                option.textContent = event.text;
-                eventsDropdown.appendChild(option);
+                },
+                error: function () {
+                    eventsDropdown.innerHTML = '<option value="" disabled selected>Error connection</option>';
+                }
             });
         }
 
         window.onload = function () {
-            const selectedDay = '';
-            const selectedEvent = '';
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedDay = urlParams.get('day');
+            const selectedEvent = urlParams.get('event');
 
             if (selectedDay) {
                 const daySelect = document.getElementById('daySelection');
                 daySelect.value = selectedDay;
-                daySelect.disabled = true;
 
-                updateEvents();
-
-                if (selectedEvent) {
-                    setTimeout(() => {
-                        const eventsDropdown = document.getElementById('events');
-                        for (let i = 0; i < eventsDropdown.options.length; i++) {
-                            if (eventsDropdown.options[i].value === selectedEvent) {
-                                eventsDropdown.selectedIndex = i;
-                                eventsDropdown.disabled = true;
-                                break;
-                            }
-                        }
-                    }, 100);
+                // If a valid day is selected
+                if (daySelect.value) {
+                    daySelect.disabled = true; // Fix day selection
+                    // Update events and pre-select the event from URL if present
+                    updateEvents(selectedEvent);
                 }
             }
         };
+
     </script>
 </body>
 

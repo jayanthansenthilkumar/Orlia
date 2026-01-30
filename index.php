@@ -63,7 +63,7 @@
                 </div>
                 <div class="hero-detail">
                     <i class="ri-calendar-event-line"></i>
-                    <span>April 3-4, 2026</span>
+                    <span>March 13-14, 2026</span>
                 </div>
             </div>
             <a href="#events" class="hero-btn">
@@ -502,7 +502,7 @@
                 <div class="contact-card">
                     <i class="ri-time-line"></i>
                     <h3>Event Days</h3>
-                    <p>April 3-4, 2025</p>
+                    <p>March 13-14, 2025</p>
                 </div>
             </div>
         </div>

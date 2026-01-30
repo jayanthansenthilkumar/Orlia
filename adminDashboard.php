@@ -1,3 +1,31 @@
+<?php
+session_start();
+include 'db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+    $sql = "SELECT * FROM users WHERE userid = '$username' AND password = '$password'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['userid'] = $row['userid'];
+        $_SESSION['role'] = $row['role'];
+    } else {
+        echo "<script>alert('Invalid Username or Password'); window.location.href='login.php';</script>";
+        exit();
+        // header("Location: login.php?error=invalid");
+        // exit();
+    }
+}
+
+if (!isset($_SESSION['userid'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +85,7 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                <li><a href="logout.php" class="text-danger"><i class="ri-logout-box-line"></i>
                                         Logout</a></li>
                             </ul>
                         </div>
@@ -65,26 +93,33 @@
                 </div>
             </header>
 
+            <?php
+            // Fetch Stats
+            $solo_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM soloevents"));
+            $group_count = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM groupevents"));
+            $total_reg = $solo_count + $group_count;
+            ?>
+
             <!-- Stats Grid -->
             <div class="stat-grid">
                 <div class="stat-card">
                     <div class="stat-icon"><i class="ri-user-follow-line"></i></div>
                     <div class="stat-info">
-                        <h3>1,254</h3>
+                        <h3><?= $total_reg ?></h3>
                         <p>Total Registrations</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="ri-user-line"></i></div>
                     <div class="stat-info">
-                        <h3>850</h3>
+                        <h3><?= $solo_count ?></h3>
                         <p>Solo Participants</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="ri-group-line"></i></div>
                     <div class="stat-info">
-                        <h3>404</h3>
+                        <h3><?= $group_count ?></h3>
                         <p>Team Participants</p>
                     </div>
                 </div>
@@ -92,7 +127,7 @@
 
             <!-- Recent Registrations Preview -->
             <div class="table-container">
-                <h2 class="mb-4">Recent Registrations</h2>
+                <h2 class="mb-4">Recent Registrations (Solo)</h2>
                 <table id="recentTable" class="display" style="width:100%">
                     <thead>
                         <tr>
@@ -100,27 +135,23 @@
                             <th>Name</th>
                             <th>Department</th>
                             <th>Event Type</th>
-                            <th>Date</th>
-                            <th>Status</th>
+                            <th>Event</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#OR001</td>
-                            <td>John Doe</td>
-                            <td>CSE</td>
-                            <td>Solo (Code Debug)</td>
-                            <td>2024-03-15</td>
-                            <td><span class="status-badge status-active">Paid</span></td>
-                        </tr>
-                        <tr>
-                            <td>#OR002</td>
-                            <td>Jane Smith</td>
-                            <td>ECE</td>
-                            <td>Group (Hackathon)</td>
-                            <td>2024-03-15</td>
-                            <td><span class="status-badge status-inactive">Pending</span></td>
-                        </tr>
+                        <?php
+                        $recent_query = "SELECT * FROM soloevents ORDER BY id DESC LIMIT 5";
+                        $recent_run = mysqli_query($conn, $recent_query);
+                        while ($row = mysqli_fetch_assoc($recent_run)) {
+                            ?>
+                            <tr>
+                                <td>#S<?= $row['id'] ?></td>
+                                <td><?= $row['name'] ?></td>
+                                <td><?= $row['dept'] ?></td>
+                                <td>Solo</td>
+                                <td><?= $row['events'] ?></td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

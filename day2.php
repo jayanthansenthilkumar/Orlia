@@ -1,3 +1,16 @@
+<?php
+include 'db.php';
+$event_status = [];
+$status_q = mysqli_query($conn, "SELECT event_key, status FROM events");
+while ($row = mysqli_fetch_assoc($status_q)) {
+  $event_status[$row['event_key']] = $row['status'];
+}
+function is_closed($key)
+{
+  global $event_status;
+  return isset($event_status[$key]) && $event_status[$key] == 0;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,7 +71,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/rangoli.jpg" alt="Dance Competition" />
-          <a href="#" onclick="disableLink(event)" class="register-btn">Register Now</a>
+          <?php if (is_closed('Rangoli')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="teamRegister.php?day=day2&event=Rangoli" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -94,7 +111,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/photo.jpeg" alt="Singing Competition" />
-          <a href="#" onclick="disableLink(event)" class="register-btn">Register Now</a>
+          <?php if (is_closed('Photography')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="register.php?day=day2&event=Photography" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -131,7 +152,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/instrument.jpg" alt="Quiz Competition" />
-          <a href="register.php?day=day2&event=Instrumentalplaying" class="register-btn">Register Now</a>
+          <?php if (is_closed('Instrumentalplaying')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="register.php?day=day2&event=Instrumentalplaying" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -169,7 +194,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/treasure.jpg" alt="Poetry Recitation" />
-          <a href="#" onclick="disableLink(event)" class="register-btn">Register Now</a>
+          <?php if (is_closed('Treasurehunt')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="teamRegister.php?day=day2&event=Treasurehunt" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -205,7 +234,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/shortflim.jpg" alt="Drama Performance" />
-          <a href="register.php?day=day2&event=Shortflim" class="register-btn">Register Now</a>
+          <?php if (is_closed('Shortflim')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="register.php?day=day2&event=Shortflim" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -243,7 +276,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/mime.jpg" alt="Music Band Performance" />
-          <a href="register.php?day=day2&event=Mime" class="register-btn">Register Now</a>
+          <?php if (is_closed('Mime')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="register.php?day=day2&event=Mime" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -280,7 +317,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/managerever.jpg" alt="Photography Contest" />
-          <a href="register.php?day=day2&event=Bestmanager" class="register-btn">Register Now</a>
+          <?php if (is_closed('Bestmanager')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="register.php?day=day2&event=Bestmanager" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -318,7 +359,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/art.jpg" alt="Debate Competition" />
-          <a href="teamRegister.php?day=day2&event=Artfromwaste" class="register-btn">Register Now</a>
+          <?php if (is_closed('Artfromwaste')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="teamRegister.php?day=day2&event=Artfromwaste" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -357,7 +402,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/sherlhome.jpg" alt="Art Exhibition" />
-          <a href="#" onclick="disableLink(event)" class="register-btn">Register Now</a>
+          <?php if (is_closed('Sherlockholmes')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="teamRegister.php?day=day2&event=Sherlockholmes" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -392,7 +441,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/freefire.jpg" alt="Fashion Show" />
-          <a href="#" onclick="disableLink(event)" class="register-btn">Register Now</a>
+          <?php if (is_closed('Freefire')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="teamRegister.php?day=day2&event=Freefire" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -433,7 +486,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/rjvj.jpg" alt="Stand-up Comedy" />
-          <a href="register.php?day=day2&event=Rjvj" class="register-btn">Register Now</a>
+          <?php if (is_closed('Rjvj')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="register.php?day=day2&event=Rjvj" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -470,7 +527,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/fruits.jpg" alt="Stand-up Comedy" />
-          <a href="teamRegister.php?day=day2&event=Vegetablefruitart" class="register-btn">Register Now</a>
+          <?php if (is_closed('Vegetablefruitart')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="teamRegister.php?day=day2&event=Vegetablefruitart" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">
@@ -506,7 +567,11 @@
       <div class="event-card">
         <div class="event-image">
           <img src="assets/images/twindnce.jpg" alt="Short Film Festival" />
-          <a href="teamRegister.php?day=day2&event=Twindance" class="register-btn">Register Now</a>
+          <?php if (is_closed('Twindance')): ?>
+            <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
+          <?php else: ?>
+            <a href="teamRegister.php?day=day2&event=Twindance" class="register-btn">Register Now</a>
+          <?php endif; ?>
         </div>
         <div class="event-header">
           <div class="event-header-row">

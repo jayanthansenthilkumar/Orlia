@@ -49,14 +49,14 @@
             <div class="floating-circle"></div>
             <div class="registration-form">
                 <h2>Login</h2>
-                <form id="adminLoginForm" method="POST" action="adminDashboard.php">
+                <form id="adminLoginForm">
                     <div class="form-group">
                         <input type="text" id="userid" name="username" placeholder="Username" required>
                     </div>
                     <div class="form-group">
                         <input type="password" id="password" name="password" placeholder="Password" required>
                     </div>
-                    <button type="submit" class="submit-btn">
+                    <button type="submit" class="submit-btn" name="login_user">
                         <i class="ri-login-circle-line"></i> Login Access
                     </button>
 
@@ -70,9 +70,54 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="assets/script/script.js"></script>
     <script src="assets/script/assistant.js"></script>
+    <script>
+        $(document).on('submit', '#adminLoginForm', function (e) {
+            e.preventDefault();
+            
+            var formData = new FormData(this);
+            formData.append("login_user", true);
+
+            $.ajax({
+                type: "POST",
+                url: "backend.php",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var res = JSON.parse(response);
+
+                    if (res.status == 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Login Successful',
+                            text: 'Redirecting...',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.href = res.redirect || 'adminDashboard.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Failed',
+                            text: res.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong! Connection failed.'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

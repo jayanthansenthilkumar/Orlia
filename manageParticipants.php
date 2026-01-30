@@ -51,7 +51,7 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                <li><a href="logout.php" class="text-danger"><i class="ri-logout-box-line"></i>
                                         Logout</a></li>
                             </ul>
                         </div>
@@ -82,39 +82,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Mock Data -->
-                            <tr>
-                                <td>#001</td>
-                                <td>Arun Kumar</td>
-                                <td>22CSE045</td>
-                                <td>CSE</td>
-                                <td>III</td>
-                                <td>
-                                    <div>arun@example.com</div>
-                                    <small>9876543210</small>
-                                </td>
-                                <td>Code Debug</td>
-                                <td>
-                                    <button class="action-btn btn-edit"><i class="ri-pencil-line"></i></button>
-                                    <button class="action-btn btn-delete"><i class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#002</td>
-                                <td>Priya S</td>
-                                <td>23ECE012</td>
-                                <td>ECE</td>
-                                <td>II</td>
-                                <td>
-                                    <div>priya@example.com</div>
-                                    <small>8876543210</small>
-                                </td>
-                                <td>Paper Presentation</td>
-                                <td>
-                                    <button class="action-btn btn-edit"><i class="ri-pencil-line"></i></button>
-                                    <button class="action-btn btn-delete"><i class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
+                            <?php
+                            include 'db.php';
+                            $query = "SELECT * FROM soloevents";
+                            $query_run = mysqli_query($conn, $query);
+                            if (mysqli_num_rows($query_run) > 0) {
+                                while ($row = mysqli_fetch_assoc($query_run)) {
+                                    ?>
+                                    <tr>
+                                        <td>#S<?= $row['id'] ?></td>
+                                        <td><?= $row['name'] ?></td>
+                                        <td><?= $row['regno'] ?></td>
+                                        <td><?= $row['dept'] ?></td>
+                                        <td><?= $row['year'] ?></td>
+                                        <td>
+                                            <div><?= $row['mail'] ?></div>
+                                            <small><?= $row['phoneno'] ?></small>
+                                        </td>
+                                        <td><?= $row['events'] ?></td>
+                                        <td>
+                                            <button class="action-btn btn-edit" data-id="<?= $row['id'] ?>"><i
+                                                    class="ri-pencil-line"></i></button>
+                                            <button class="action-btn btn-delete" data-id="<?= $row['id'] ?>"><i
+                                                    class="ri-delete-bin-line"></i></button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -126,7 +122,7 @@
                     <table id="groupTable" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Team ID</th>
+                                <th>ID</th>
                                 <th>Team Name</th>
                                 <th>Leader Name</th>
                                 <th>Leader Roll No</th>
@@ -137,19 +133,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>G-001</td>
-                                <td>Code Breakers</td>
-                                <td>Rahul M</td>
-                                <td>21IT056</td>
-                                <td>4</td>
-                                <td>Hackathon</td>
-                                <td>rahul@example.com</td>
-                                <td>
-                                    <button class="action-btn btn-edit"><i class="ri-pencil-line"></i></button>
-                                    <button class="action-btn btn-delete"><i class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
+                            <?php
+                            $query = "SELECT * FROM groupevents";
+                            $query_run = mysqli_query($conn, $query);
+                            if (mysqli_num_rows($query_run) > 0) {
+                                while ($row = mysqli_fetch_assoc($query_run)) {
+                                    // Calculate member count
+                                    $members = json_decode($row['tmembername'], true);
+                                    $count = is_array($members) ? count($members) : 0;
+                                    ?>
+                                    <tr>
+                                        <td>#G<?= $row['id'] ?></td>
+                                        <td><?= $row['teamname'] ?></td>
+                                        <td><?= $row['teamleadname'] ?></td>
+                                        <td><?= $row['tregno'] ?></td>
+                                        <td><?= $count ?></td>
+                                        <td><?= $row['events'] ?></td>
+                                        <td>
+                                            <div><?= $row['temail'] ?></div>
+                                            <small><?= $row['phoneno'] ?></small>
+                                        </td>
+                                        <td>
+                                            <button class="action-btn btn-edit" data-id="<?= $row['id'] ?>"><i
+                                                    class="ri-pencil-line"></i></button>
+                                            <button class="action-btn btn-delete" data-id="<?= $row['id'] ?>"><i
+                                                    class="ri-delete-bin-line"></i></button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -204,8 +218,35 @@
                     groupTable.columns.adjust().responsive.recalc();
                 }
             }
+
+            // Delete Participant
+            $(document).on('click', '.btn-delete', function () {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Participant has been removed.',
+                            'success'
+                        );
+                    }
+                });
+            });
+
+            // Edit Participant
+            $(document).on('click', '.btn-edit', function () {
+                Swal.fire('Info', 'Edit functionality to be implemented', 'info');
+            });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

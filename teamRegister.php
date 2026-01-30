@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orlia'26 - Registration</title>
     <link rel="stylesheet" href="assets/styles/styles.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    
+
     <!-- SweetAlert is loaded in body -->
 </head>
 
@@ -183,49 +185,65 @@
             }
         };
 
-        window.onload = function() {
-            const selectedDay = '';
-            const selectedEvent = '';
+        function updateEvents(preSelectedEvent = null) {
+            const daySelection = document.getElementById("daySelection");
+            const eventsDropdown = document.getElementById("events");
 
-            if (selectedDay && selectedEvent) {
-                // Set day selection
-                const daySelect = document.getElementById('daySelection');
-                daySelect.value = selectedDay;
-                daySelect.disabled = true;
+            eventsDropdown.innerHTML = '<option value="" disabled selected>Loading...</option>';
+            eventsDropdown.disabled = true;
 
-                // Update events list
-                updateEvents();
+            const selectedDay = daySelection.value;
 
-                // Set event and handle team members
-                setTimeout(() => {
-                    const eventsDropdown = document.getElementById('events');
-                    for (let i = 0; i < eventsDropdown.options.length; i++) {
-                        if (eventsDropdown.options[i].value === selectedEvent) {
-                            eventsDropdown.selectedIndex = i;
-                            eventsDropdown.disabled = true;
+            if (!selectedDay) return;
 
-                            // Handle team size limits
-                            if (eventTeamSizes[selectedEvent]) {
-                                const teamMembersInput = document.getElementById('teamMembersCount');
-                                const {
-                                    min,
-                                    max
-                                } = eventTeamSizes[selectedEvent];
-                                teamMembersInput.min = min - 1;
-                                teamMembersInput.max = max - 1;
-                                teamMembersInput.disabled = false;
-                                teamMembersInput.placeholder = `Enter additional members (${min-1}-${max-1})`;
-                                teamMembersInput.value = min - 1;
-                                addTeamMembers();
+            $.ajax({
+                url: 'backend.php',
+                type: 'GET',
+                data: {
+                    get_events: true,
+                    day: selectedDay,
+                    type: 'Group' // Fetch Group events
+                },
+                success: function (response) {
+                    try {
+                        const events = JSON.parse(response);
+                        eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
+
+                        if (events.length > 0) {
+                            events.forEach(event => {
+                                const option = document.createElement("option");
+                                option.value = event.value;
+                                option.textContent = event.text;
+                                if (preSelectedEvent && event.value.toLowerCase() === preSelectedEvent.toLowerCase()) {
+                                    option.selected = true;
+                                }
+                                eventsDropdown.appendChild(option);
+                            });
+                            eventsDropdown.disabled = false;
+
+                            // If an event is pre-selected or selected, trigger change to update team member fields
+                            if (preSelectedEvent) {
+                                // We need to wait a tick for the DOM to update or manually trigger logic
+                                // Since we are setting selected=true above, let's manually call the change logic
+                                const event = new Event('change');
+                                eventsDropdown.dispatchEvent(event);
+                                eventsDropdown.disabled = true;
                             }
-                            break;
+                        } else {
+                            eventsDropdown.innerHTML = '<option value="" disabled selected>No events available</option>';
                         }
+                    } catch (e) {
+                        console.error("Error parsing events", e);
+                        eventsDropdown.innerHTML = '<option value="" disabled selected>Error loading events</option>';
                     }
-                }, 100);
-            }
-        };
+                },
+                error: function () {
+                    eventsDropdown.innerHTML = '<option value="" disabled selected>Error connection</option>';
+                }
+            });
+        }
 
-        document.getElementById('events').addEventListener('change', function() {
+        document.getElementById('events').addEventListener('change', function () {
             const selectedEvent = this.value;
             const teamMembersInput = document.getElementById('teamMembersCount');
 
@@ -238,7 +256,7 @@
                 teamMembersInput.min = min - 1;
                 teamMembersInput.max = max - 1;
                 teamMembersInput.disabled = false;
-                teamMembersInput.placeholder = `Enter additional members (${min-1}-${max-1})`;
+                teamMembersInput.placeholder = `Enter additional members (${min - 1}-${max - 1})`;
 
                 if (teamMembersInput.value < min - 1 || teamMembersInput.value > max - 1) {
                     teamMembersInput.value = min - 1;
@@ -281,126 +299,69 @@
             }
         }
 
-        function updateEvents() {
-            const daySelection = document.getElementById("daySelection");
-            const eventsDropdown = document.getElementById("events");
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedDay = urlParams.get('day');
+            const selectedEvent = urlParams.get('event');
 
-            eventsDropdown.innerHTML = '<option value="" disabled selected>Select Event</option>';
-            eventsDropdown.disabled = false;
+            if (selectedDay) {
+                const daySelect = document.getElementById('daySelection');
+                daySelect.value = selectedDay;
 
-            let eventList = [];
-
-            if (daySelection.value === "day1") {
-                eventList = [{
-                        value: "Divideconquer",
-                        text: "Divide conquer"
-                    },
-                    // {
-                    //     value: "Firelesscooking",
-                    //     text: "Fireless cooking"
-                    // },
-
-
-                    {
-                        value: "Trailertime",
-                        text: "Trailer Time"
-                    },
-
-                    // {
-                    //     value: "Iplauction",
-                    //     text: "Ipl Auction"
-                    // },
-                    // {
-                    //     value: "Lyricalhunt",
-                    //     text: "Lyrical Hunt"
-                    // },
-                    // {
-                    //     value: "Dumpcharades",
-                    //     text: "Dump Charades"
-                    // },
-
-                    {
-                        value: "Groupdance",
-                        text: "Group Dance"
-                    },
-                ];
-            } else if (daySelection.value === "day2") {
-                eventList = [
-                    // {
-                    //         value: "Rangoli",
-                    //         text: "Rangoli"
-                    //     },
-
-
-                    //     {
-                    //         value: "Sherlockholmes",
-                    //         text: "Sherlock Holmes"
-                    //     },
-
-                    //     {
-                    //         value: "Freefire",
-                    //         text: "Free Fire"
-                    //     },
-                    // {
-                    //     value: "Treasurehunt",
-                    //     text: "Treasure Hunt"
-                    // },
-
-                    {
-                        value: "Artfromwaste",
-                        text: "Art From Waste"
-                    },
-                    {
-                        value: "Twindance",
-                        text: "Twin Dance"
-                    },
-                    {
-                        value: "Mime",
-                        text: "Mime"
-                    },
-                    {
-                        value: "Vegetablefruitart",
-                        text: "Vegetable Fruit Art"
-                    },
-
-                ];
+                if (daySelect.value) {
+                    daySelect.disabled = true;
+                    // Update events and pre-select the event from URL if present
+                    updateEvents(selectedEvent);
+                }
             }
+        };
 
-            eventList.forEach(event => {
-                const option = document.createElement("option");
-                option.value = event.value;
-                option.textContent = event.text;
-                eventsDropdown.appendChild(option);
-            });
-        }
-
-        $(document).on('submit', '#Groupform', function(e) {
+        $(document).on('submit', '#Groupform', function (e) {
             console.log("Form submitted");
             e.preventDefault();
+            var daySelect = $('#daySelection');
+            var eventsSelect = $('#events');
+            var dayDisabled = daySelect.prop('disabled');
+            var eventsDisabled = eventsSelect.prop('disabled');
+
+            // Temporarily enable to capture data
+            daySelect.prop('disabled', false);
+            eventsSelect.prop('disabled', false);
+
             var Formdata = new FormData(this);
 
             Formdata.append("groupnewuser", true);
 
+            // Re-disable if they were disabled
+            if(dayDisabled) daySelect.prop('disabled', true);
+            if(eventsDisabled) eventsSelect.prop('disabled', true);
 
-            // WARNING: backend.php has been removed. This AJAX call will fail.
-            // Placeholder logic for demonstration:
-            /*
+
             $.ajax({
                 url: "backend.php",
                 method: "POST",
                 data: Formdata,
                 processData: false,
                 contentType: false,
-                success: function(response) { ... }
-            });
-            */
-           
-           // Mock success for now since backend is gone
-           Swal.fire({
-                title: "Registered (Mock)!",
-                text: "The PHP backend has been removed, so this is a simulation.",
-                icon: "success",
-                confirmButtonColor: '#134e4a'
+                success: function (response) {
+                    var res = JSON.parse(response);
+                    if (res.status == 200) {
+                        $('#Groupform')[0].reset();
+                        Swal.fire({
+                            title: "Great!",
+                            text: res.message,
+                            icon: "success",
+                            confirmButtonColor: '#134e4a'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: res.message,
+                            icon: "error",
+                            confirmButtonColor: '#d33'
+                        });
+                    }
+                }
             });
         });
     </script>

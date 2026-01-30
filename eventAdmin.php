@@ -55,7 +55,7 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                <li><a href="logout.php" class="text-danger"><i class="ri-logout-box-line"></i>
                                         Logout</a></li>
                             </ul>
                         </div>

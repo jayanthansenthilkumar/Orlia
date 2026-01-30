@@ -19,6 +19,14 @@
     <div class="admin-body">
         <!-- Sidebar -->
         <?php
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['role']) || $_SESSION['role'] != '2') {
+            header("Location: index.php");
+            exit();
+        }
+
         $role = 'super';
         $page = 'admins';
         include 'includes/sidebar.php';
@@ -50,7 +58,7 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                <li><a href="logout.php" class="text-danger"><i class="ri-logout-box-line"></i>
                                         Logout</a></li>
                             </ul>
                         </div>
@@ -70,35 +78,44 @@
                         <tr>
                             <th>ID</th>
                             <th>Username</th>
-                            <th>Email</th>
                             <th>Role</th>
-                            <th>Created At</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#AD01</td>
-                            <td>admin_technical</td>
-                            <td>tech@orlia.com</td>
-                            <td>Event Admin</td>
-                            <td>2024-01-10</td>
-                            <td>
-                                <button class="action-btn btn-edit"><i class="ri-pencil-line"></i></button>
-                                <button class="action-btn btn-delete"><i class="ri-delete-bin-line"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#AD02</td>
-                            <td>admin_nontech</td>
-                            <td>nontech@orlia.com</td>
-                            <td>Event Admin</td>
-                            <td>2024-01-12</td>
-                            <td>
-                                <button class="action-btn btn-edit"><i class="ri-pencil-line"></i></button>
-                                <button class="action-btn btn-delete"><i class="ri-delete-bin-line"></i></button>
-                            </td>
-                        </tr>
+                        <?php
+                        include 'db.php';
+                        $query = "SELECT * FROM users";
+                        $query_run = mysqli_query($conn, $query);
+
+                        if (mysqli_num_rows($query_run) > 0) {
+                            while ($row = mysqli_fetch_assoc($query_run)) {
+                                ?>
+                                <tr>
+                                    <td>#AD<?= $row['id'] ?></td>
+                                    <td><?= $row['userid'] ?></td>
+                                    <td>
+                                        <?php
+                                        if ($row['role'] == '2') {
+                                            echo "Super Admin";
+                                        } elseif ($row['role'] == '1') {
+                                            echo "Event Admin";
+                                        } else {
+                                            echo "Co-Admin";
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <button class="action-btn btn-edit" data-id="<?= $row['id'] ?>"><i
+                                                class="ri-pencil-line"></i></button>
+                                        <button class="action-btn btn-delete" data-id="<?= $row['id'] ?>"><i
+                                                class="ri-delete-bin-line"></i></button>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -113,8 +130,218 @@
             $('#adminsTable').DataTable({
                 responsive: true
             });
+
+            const swalStyles = `
+                <style>
+                    .swal-custom-input {
+                        width: 80% !important;
+                        margin: 10px auto !important;
+                        padding: 12px !important;
+                        border: 1px solid #ddd !important;
+                        border-radius: 8px !important;
+                        font-family: 'Outfit', sans-serif !important;
+                        font-size: 1rem !important;
+                        display: block !important;
+                    }
+                    .swal-custom-select {
+                        width: 80% !important;
+                        margin: 10px auto !important;
+                        padding: 12px !important;
+                        border: 1px solid #ddd !important;
+                        border-radius: 8px !important;
+                        font-family: 'Outfit', sans-serif !important;
+                        font-size: 1rem !important;
+                        background: white !important;
+                        display: block !important;
+                    }
+                    .swal-custom-label {
+                        text-align: left !important;
+                        width: 80% !important;
+                        margin: 0 auto 5px !important;
+                        display: block !important;
+                        font-weight: 500 !important;
+                        color: #555 !important;
+                    }
+                </style>
+            `;
+            $('head').append(swalStyles);
+
+            // Add Admin Button Click
+            $('.hero-btn').click(function () {
+                Swal.fire({
+                    title: 'Add New Admin',
+                    html: `
+                        <div style="text-align: left; margin-bottom: 5px; width: 80%; margin: 0 auto;">
+                            <label class="swal-custom-label">Username</label>
+                            <input id="swal-userid" class="swal-custom-input" placeholder="Enter Username">
+                            
+                            <label class="swal-custom-label">Password</label>
+                            <input id="swal-password" type="password" class="swal-custom-input" placeholder="Enter Password">
+                            
+                            <label class="swal-custom-label">Role</label>
+                            <select id="swal-role" class="swal-custom-select">
+                                <option value="0">Co-Admin</option>
+                                <option value="1">Event Admin</option>
+                                <option value="2">Super Admin</option>
+                            </select>
+                        </div>
+                    `,
+                    confirmButtonText: 'Add Admin',
+                    confirmButtonColor: '#134e4a',
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        const userid = document.getElementById('swal-userid').value;
+                        const password = document.getElementById('swal-password').value;
+                        const role = document.getElementById('swal-role').value;
+                        if (!userid || !password) {
+                            Swal.showValidationMessage('Please enter username and password');
+                        }
+                        return { userid: userid, password: password, role: role };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'backend.php',
+                            data: {
+                                Addadmins: true,
+                                userid: result.value.userid,
+                                password: result.value.password,
+                                role: result.value.role
+                            },
+                            success: function (response) {
+                                try {
+                                    var res = JSON.parse(response);
+                                    if (res.status == 200) {
+                                        Swal.fire('Success', res.message, 'success').then(() => location.reload());
+                                    } else {
+                                        Swal.fire('Error', res.message, 'error');
+                                    }
+                                } catch (e) {
+                                    Swal.fire('Error', 'Invalid response from server', 'error');
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Delete Admin Click
+            $(document).on('click', '.btn-delete', function () {
+                const id = $(this).data('id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'backend.php',
+                            data: { delete_user: true, userid: id },
+                            success: function (response) {
+                                try {
+                                    var res = JSON.parse(response);
+                                    if (res.status == 200) {
+                                        Swal.fire('Deleted!', res.message, 'success').then(() => location.reload());
+                                    } else {
+                                        Swal.fire('Error', res.message, 'error');
+                                    }
+                                } catch (e) {
+                                    Swal.fire('Error', 'Invalid server response', 'error');
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Edit Admin Click
+            $(document).on('click', '.btn-edit', function () {
+                const id = $(this).data('id');
+                // Fetch user data first
+                $.ajax({
+                    type: 'POST',
+                    url: 'backend.php',
+                    data: { edit_user: true, user_id: id },
+                    success: function (response) {
+                        try {
+                            const res = JSON.parse(response);
+                            if (res.status == 200) {
+                                const data = res.data;
+                                Swal.fire({
+                                    title: 'Edit Admin',
+                                    html: `
+                                        <div style="text-align: left; margin-bottom: 5px; width: 80%; margin: 0 auto;">
+                                            <input type="hidden" id="edit-id" value="${data.id}">
+                                            
+                                            <label class="swal-custom-label">Username</label>
+                                            <input id="edit-userid" class="swal-custom-input" value="${data.userid}" placeholder="Username">
+                                            
+                                            <label class="swal-custom-label">Password</label>
+                                            <input id="edit-password" type="text" class="swal-custom-input" value="${data.password}" placeholder="Password">
+                                            
+                                            <label class="swal-custom-label">Role</label>
+                                            <select id="edit-role" class="swal-custom-select">
+                                                <option value="0" ${data.role == 0 ? 'selected' : ''}>Co-Admin</option>
+                                                <option value="1" ${data.role == 1 ? 'selected' : ''}>Event Admin</option>
+                                                <option value="2" ${data.role == 2 ? 'selected' : ''}>Super Admin</option>
+                                            </select>
+                                        </div>
+                                    `,
+                                    confirmButtonText: 'Update Details',
+                                    confirmButtonColor: '#134e4a',
+                                    showCancelButton: true,
+                                    preConfirm: () => {
+                                        return {
+                                            id: document.getElementById('edit-id').value,
+                                            userid: document.getElementById('edit-userid').value,
+                                            password: document.getElementById('edit-password').value,
+                                            role: document.getElementById('edit-role').value
+                                        };
+                                    }
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'backend.php',
+                                            data: {
+                                                save_edituser: true,
+                                                id: result.value.id,
+                                                userid: result.value.userid,
+                                                password: result.value.password,
+                                                role: result.value.role
+                                            },
+                                            success: function (saveResp) {
+                                                const saveRes = JSON.parse(saveResp);
+                                                if (saveRes.status == 200) {
+                                                    Swal.fire('Updated!', saveRes.message, 'success').then(() => location.reload());
+                                                } else {
+                                                    Swal.fire('Error', saveRes.message, 'error');
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            } else {
+                                Swal.fire('Error', 'Could not fetch user details', 'error');
+                            }
+                        } catch (e) {
+                            console.error(e);
+                            Swal.fire('Error', 'Invalid server response', 'error');
+                        }
+                    }
+                });
+            });
+
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

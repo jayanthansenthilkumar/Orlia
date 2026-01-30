@@ -51,7 +51,7 @@
                                 <li><a href="#"><i class="ri-user-settings-line"></i> Profile</a></li>
                                 <li><a href="#"><i class="ri-settings-4-line"></i> Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.php" class="text-danger"><i class="ri-logout-box-line"></i>
+                                <li><a href="logout.php" class="text-danger"><i class="ri-logout-box-line"></i>
                                         Logout</a></li>
                             </ul>
                         </div>
@@ -83,24 +83,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>S-001</td>
-                                <td>Alice Tech</td>
-                                <td>21IT001</td>
-                                <td>IT</td>
-                                <td>IV</td>
-                                <td>Code Debugging</td>
-                                <td>9988776655</td>
-                            </tr>
-                            <tr>
-                                <td>S-002</td>
-                                <td>Bob Mech</td>
-                                <td>22MECH055</td>
-                                <td>Mech</td>
-                                <td>III</td>
-                                <td>Water Rocketry</td>
-                                <td>8877665544</td>
-                            </tr>
+                            <?php
+                            include 'db.php';
+                            $query = "SELECT * FROM soloevents";
+                            $query_run = mysqli_query($conn, $query);
+                            if (mysqli_num_rows($query_run) > 0) {
+                                while ($row = mysqli_fetch_assoc($query_run)) {
+                                    ?>
+                                    <tr>
+                                        <td>#S<?= $row['id'] ?></td>
+                                        <td><?= $row['name'] ?></td>
+                                        <td><?= $row['regno'] ?></td>
+                                        <td><?= $row['dept'] ?></td>
+                                        <td><?= $row['year'] ?></td>
+                                        <td><?= $row['events'] ?></td>
+                                        <td><?= $row['phoneno'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -114,34 +116,37 @@
                     <table id="groupTable" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Team ID</th>
+                                <th>ID</th>
                                 <th>Team Name</th>
                                 <th>Leader Name</th>
                                 <th>Leader Roll No</th>
-                                <th>Members Count</th>
+                                <th>Members</th>
                                 <th>Event</th>
                                 <th>Leader Phone</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>G-001</td>
-                                <td>Tech Titans</td>
-                                <td>Charlie CSE</td>
-                                <td>21CSE100</td>
-                                <td>4</td>
-                                <td>Hackathon</td>
-                                <td>7766554433</td>
-                            </tr>
-                            <tr>
-                                <td>G-002</td>
-                                <td>Robo Rockers</td>
-                                <td>David EEE</td>
-                                <td>22EEE030</td>
-                                <td>3</td>
-                                <td>Robo Wars</td>
-                                <td>6655443322</td>
-                            </tr>
+                            <?php
+                            $query = "SELECT * FROM groupevents";
+                            $query_run = mysqli_query($conn, $query);
+                            if (mysqli_num_rows($query_run) > 0) {
+                                while ($row = mysqli_fetch_assoc($query_run)) {
+                                    $members = json_decode($row['tmembername'], true);
+                                    $count = is_array($members) ? count($members) : 0;
+                                    ?>
+                                    <tr>
+                                        <td>#G<?= $row['id'] ?></td>
+                                        <td><?= $row['teamname'] ?></td>
+                                        <td><?= $row['teamleadname'] ?></td>
+                                        <td><?= $row['tregno'] ?></td>
+                                        <td><?= $count ?></td>
+                                        <td><?= $row['events'] ?></td>
+                                        <td><?= $row['phoneno'] ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
