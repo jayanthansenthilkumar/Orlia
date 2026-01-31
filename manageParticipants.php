@@ -71,6 +71,12 @@ checkUserAccess();
 
             <!-- Solo Participants Section -->
             <div id="solo" class="tab-content active">
+                <div class="filters-bar" style="margin-bottom: 20px;">
+                    <label for="soloEventFilter" style="font-weight: 500; margin-right: 10px; color: var(--text-main);">Filter by Event:</label>
+                    <select id="soloEventFilter" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-glass); background: var(--bg-surface); color: var(--text-main); font-family: 'Outfit', sans-serif;">
+                        <option value="">All Events</option>
+                    </select>
+                </div>
                 <div class="table-container">
                     <table id="soloTable" class="display" style="width:100%">
                         <thead>
@@ -82,7 +88,7 @@ checkUserAccess();
                                 <th>Year</th>
                                 <th>Contact</th>
                                 <th>Event</th>
-                                <th>Actions</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -104,12 +110,7 @@ checkUserAccess();
                                             <small><?= $row['phoneno'] ?></small>
                                         </td>
                                         <td><?= $row['events'] ?></td>
-                                        <td>
-                                            <button class="action-btn btn-edit" data-id="<?= $row['id'] ?>"><i
-                                                    class="ri-pencil-line"></i></button>
-                                            <button class="action-btn btn-delete" data-id="<?= $row['id'] ?>"><i
-                                                    class="ri-delete-bin-line"></i></button>
-                                        </td>
+
                                     </tr>
                                     <?php
                                 }
@@ -122,6 +123,12 @@ checkUserAccess();
 
             <!-- Group Participants Section -->
             <div id="group" class="tab-content">
+                <div class="filters-bar" style="margin-bottom: 20px;">
+                    <label for="groupEventFilter" style="font-weight: 500; margin-right: 10px; color: var(--text-main);">Filter by Event:</label>
+                    <select id="groupEventFilter" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-glass); background: var(--bg-surface); color: var(--text-main); font-family: 'Outfit', sans-serif;">
+                        <option value="">All Events</option>
+                    </select>
+                </div>
                 <div class="table-container">
                     <table id="groupTable" class="display" style="width:100%">
                         <thead>
@@ -133,7 +140,7 @@ checkUserAccess();
                                 <th>Members</th>
                                 <th>Event</th>
                                 <th>Leader Contact</th>
-                                <th>Actions</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -156,12 +163,6 @@ checkUserAccess();
                                         <td>
                                             <div><?= $row['temail'] ?></div>
                                             <small><?= $row['phoneno'] ?></small>
-                                        </td>
-                                        <td>
-                                            <button class="action-btn btn-edit" data-id="<?= $row['id'] ?>"><i
-                                                    class="ri-pencil-line"></i></button>
-                                            <button class="action-btn btn-delete" data-id="<?= $row['id'] ?>"><i
-                                                    class="ri-delete-bin-line"></i></button>
                                         </td>
                                     </tr>
                                     <?php
@@ -202,6 +203,36 @@ checkUserAccess();
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
+
+            // --- Populate Event Filters ---
+
+            // Solo Table Filter (Column index 6 is Event)
+            var uniqueSoloEvents = soloTable.column(6).data().unique().sort();
+            uniqueSoloEvents.each(function (val) {
+                if (val) {
+                    $('#soloEventFilter').append('<option value="' + val + '">' + val + '</option>');
+                }
+            });
+
+            // Group Table Filter (Column index 5 is Event)
+            var uniqueGroupEvents = groupTable.column(5).data().unique().sort();
+            uniqueGroupEvents.each(function (val) {
+                if (val) {
+                    $('#groupEventFilter').append('<option value="' + val + '">' + val + '</option>');
+                }
+            });
+
+            // Filter Change Listeners
+            $('#soloEventFilter').on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                soloTable.column(6).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+
+            $('#groupEventFilter').on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                groupTable.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+
 
             // Adjust columns on tab switch
             window.openTab = function (tabName) {

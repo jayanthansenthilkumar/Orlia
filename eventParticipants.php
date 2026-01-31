@@ -63,7 +63,7 @@ checkUserAccess();
                 </div>
             </header>
 
-<?php
+            <?php
             include 'db.php';
             $eventKey = $_SESSION['userid'];
 
@@ -71,21 +71,21 @@ checkUserAccess();
             $event_name_query = "SELECT event_name FROM events WHERE event_key='$eventKey'";
             $event_name_run = mysqli_query($conn, $event_name_query);
             $event_name = "Unknown Event";
-            if($event_name_run && mysqli_num_rows($event_name_run) > 0){
+            if ($event_name_run && mysqli_num_rows($event_name_run) > 0) {
                 $event_row = mysqli_fetch_assoc($event_name_run);
                 $event_name = $event_row['event_name'];
             }
 
             // Fetch Participants
             $rows = [];
-            
+
             // Solo
             $solo_q = "SELECT * FROM soloevents WHERE events='$eventKey'";
             $solo_r = mysqli_query($conn, $solo_q);
-            if($solo_r){
-                while($item = mysqli_fetch_assoc($solo_r)){
+            if ($solo_r) {
+                while ($item = mysqli_fetch_assoc($solo_r)) {
                     $rows[] = [
-                        'id' => 'S'.$item['id'],
+                        'id' => 'S' . $item['id'],
                         'name' => $item['name'],
                         'roll' => $item['regno'],
                         'year' => $item['year'],
@@ -99,10 +99,10 @@ checkUserAccess();
             // Group
             $group_q = "SELECT * FROM groupevents WHERE events='$eventKey'";
             $group_r = mysqli_query($conn, $group_q);
-            if($group_r){
-                while($item = mysqli_fetch_assoc($group_r)){
+            if ($group_r) {
+                while ($item = mysqli_fetch_assoc($group_r)) {
                     $rows[] = [
-                        'id' => 'G'.$item['id'],
+                        'id' => 'G' . $item['id'],
                         'name' => $item['teamname'],
                         'roll' => $item['tregno'], // Leader Roll
                         'year' => $item['year'],
@@ -113,11 +113,18 @@ checkUserAccess();
                 }
             }
             ?>
-            
+
             <!-- Event Title dynamically leads here -->
             <div class="mb-4">
                 <h2 style="font-family: 'Space Grotesk'; color: var(--text-main);">Event: <span
                         style="color: var(--primary-main);"><?= htmlspecialchars($event_name) ?></span></h2>
+            </div>
+
+            <div class="filters-bar" style="margin-bottom: 20px;">
+                <label for="typeFilter" style="font-weight: 500; margin-right: 10px; color: var(--text-main);">Filter by Type:</label>
+                <select id="typeFilter" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-glass); background: var(--bg-surface); color: var(--text-main); font-family: 'Outfit', sans-serif;">
+                    <option value="">All Types</option>
+                </select>
             </div>
 
             <div class="table-container">
@@ -134,16 +141,16 @@ checkUserAccess();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($rows as $row): ?>
-                        <tr>
-                            <td>#<?= $row['id'] ?></td>
-                            <td><?= $row['name'] ?></td>
-                            <td><?= $row['roll'] ?></td>
-                            <td><?= $row['dept'] ?></td>
-                            <td><?= $row['year'] ?></td>
-                            <td><?= $row['contact'] ?></td>
-                            <td><span class="status-badge status-active"><?= $row['type'] ?></span></td>
-                        </tr>
+                        <?php foreach ($rows as $row): ?>
+                            <tr>
+                                <td>#<?= $row['id'] ?></td>
+                                <td><?= $row['name'] ?></td>
+                                <td><?= $row['roll'] ?></td>
+                                <td><?= $row['dept'] ?></td>
+                                <td><?= $row['year'] ?></td>
+                                <td><?= $row['contact'] ?></td>
+                                <td><span class="status-badge status-active"><?= $row['type'] ?></span></td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -162,14 +169,40 @@ checkUserAccess();
     <script src="assets/script/script.js"></script>
     <script>
         $(document).ready(function () {
-            $('#eventTable').DataTable({
+            var eventTable = $('#eventTable').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
+
+            // Populate Type Filter (Column index 6 is Type: Solo/Group)
+            var uniqueTypes = eventTable.column(6).data().unique().sort();
+            uniqueTypes.each(function (val) {
+                // val contains HTML like <span class="status-badge">Solo</span>, we need text content
+                var textVal = $(val).text().trim(); // Or simplistic regex if it's just text.
+                // Actually the data() returns the original content including HTML.
+                // Let's assume the render or content is simple.
+                // Better approach: Use a regex to extract text or just text()
+                var div = document.createElement("div");
+                div.innerHTML = val;
+                var cleanVal = div.textContent || div.innerText || "";
+
+                if (cleanVal) {
+                    // Check if option exists to avoid duplicates if HTML varies slightly
+                    if ($('#typeFilter option[value="' + cleanVal + '"]').length === 0) {
+                        $('#typeFilter').append('<option value="' + cleanVal + '">' + cleanVal + '</option>');
+                    }
+                }
+            });
+
+            $('#typeFilter').on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                eventTable.column(6).search(val ? val : '', true, false).draw();
+            });
         });
     </script>
 </body>
+
 </html>

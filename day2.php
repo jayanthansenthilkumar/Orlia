@@ -11,6 +11,10 @@ function is_closed($key)
   return isset($event_status[$key]) && $event_status[$key] == 0;
 }
 ?>
+<?php
+include 'includes/auth.php';
+checkUserAccess(true);
+?>
 <!DOCTYPE html>
 <html lang="en">
 

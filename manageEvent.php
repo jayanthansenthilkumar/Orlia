@@ -72,7 +72,7 @@ checkUserAccess();
                             <th>Type</th>
                             <th>Day</th>
                             <th>Registration Status</th>
-                            <th>Actions</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -106,7 +106,7 @@ checkUserAccess();
                                         <span class="slider"></span>
                                     </label>
                                 </td>
-                                <td><button class="action-btn btn-edit">Edit</button></td>
+
                             </tr>
                         <?php } ?>
                     </tbody>

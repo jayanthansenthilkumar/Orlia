@@ -1,3 +1,7 @@
+<?php
+include 'includes/auth.php';
+checkUserAccess(true);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -467,7 +471,7 @@
                         <img src="assets/images/24/gal11.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal12.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal13.jpg" alt="Gallery Image">
-                        <img src="assets/images/24/gal14.jpg" alt="Gallery Image">  
+                        <img src="assets/images/24/gal14.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal15.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal16.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal17.jpg" alt="Gallery Image">

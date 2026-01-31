@@ -1,11 +1,16 @@
 <?php
-function checkUserAccess()
+function checkUserAccess($isPublic = false)
 {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 
-    // Check if user is logged in
+    // If public page and NOT logged in, just return (allow access)
+    if ($isPublic && !isset($_SESSION['userid'])) {
+        return;
+    }
+    // If protected page and NOT logged in, redirect to login
+    // Or if logged in but on public page, check if allowed
     if (!isset($_SESSION['userid'])) {
         header('Location: login.php');
         exit();
@@ -31,7 +36,7 @@ function checkUserAccess()
         '0' => ['adminDashboard.php', 'manageParticipants.php', 'manageAdmins.php', 'logout.php'] // Co-Admin
     ];
 
-    // Determine Dashboard for redirect
+    // Determine Dashboard for redirect (optional, now we destroy session)
     $dashboards = [
         '2' => 'superAdmin.php',
         '1' => 'eventAdmin.php',
@@ -41,9 +46,11 @@ function checkUserAccess()
     // Check access rights
     if (array_key_exists($user_role, $allowed_pages)) {
         if (!in_array($current_page, $allowed_pages[$user_role])) {
-            // Unauthorized page for this role
-            $redirect_url = $dashboards[$user_role] ?? 'index.php';
-            header("Location: $redirect_url");
+            // Unauthorized page for this role -> DESTROY SESSION
+            session_unset();
+            session_destroy();
+            // Redirect to public home or login
+            header("Location: index.php");
             exit();
         }
     } else {

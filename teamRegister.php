@@ -1,3 +1,7 @@
+<?php
+include 'includes/auth.php';
+checkUserAccess(true);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
