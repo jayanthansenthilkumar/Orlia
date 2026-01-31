@@ -56,7 +56,7 @@ function is_closed($key)
     Back to Home
   </a>
 
-  <section class="day-hero">
+  <section class="day-hero day2-hero">
     <div class="glitch-wrapper">
       <h1 class="glitch-text" data-text="DAY 02">DAY 02</h1>
     </div>

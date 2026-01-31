@@ -450,7 +450,6 @@
                         <img src="assets/images/25/gal20.jpeg" alt="Gallery Image">
                     </div>
                 </div>
-
                 <h3 style="text-align: center; margin: 40px 0 20px;">2024 Highlights</h3>
                 <div class="gallery-track reverse">
                     <div class="gallery-row">
@@ -468,7 +467,7 @@
                         <img src="assets/images/24/gal11.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal12.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal13.jpg" alt="Gallery Image">
-                        <img src="assets/images/24/gal14.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal14.jpg" alt="Gallery Image">  
                         <img src="assets/images/24/gal15.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal16.jpg" alt="Gallery Image">
                         <img src="assets/images/24/gal17.jpg" alt="Gallery Image">

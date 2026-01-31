@@ -239,6 +239,46 @@ a {
   transform: scale(1.05);
 }
 
+
+/* Back Button Style */
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--bg-glass-strong);
+  border: 1px solid var(--border-glass);
+  border-radius: 50px;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 2000;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-glass);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background: var(--bg-hover);
+  transform: translateX(5px);
+  color: var(--google-blue);
+  box-shadow: var(--shadow-float);
+  border-color: var(--google-blue);
+}
+
+.back-btn i {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.back-btn:hover i {
+  transform: translateX(-3px);
+}
+
 .sidebar {
   position: fixed;
   left: 20px;
@@ -1412,6 +1452,15 @@ section {
     padding: 8px;
   }
 
+  /* Back Btn Mobile */
+  .back-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    top: 15px;
+    left: 15px;
+    backdrop-filter: blur(15px); /* Stronger blur for small screens */
+  }
+
   /* Footer Mobile */
   .single-line-footer {
     padding: 20px 10px;
@@ -1431,6 +1480,7 @@ section {
 }
 
 /* Day 1 & Day 2 Specific Styles */
+/* Day 1 & Day 2 Specific Styles */
 .day-hero {
   position: relative;
   min-height: 400px;
@@ -1438,9 +1488,6 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../images/banner_new.jpg");
   background-size: cover;
   background-position: center;
   text-align: center;
@@ -1448,6 +1495,18 @@ section {
   margin-bottom: 0;
   border-bottom: 1px solid var(--border-glass);
 }
+
+/* .day1-hero {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../images/banner_new.jpg");
+}
+
+.day2-hero {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../images/banner_new.jpg");
+} */
 
 .day1-events,
 .day2-events {
