@@ -61,7 +61,7 @@ function is_closed($key)
       <h1 class="glitch-text" data-text="DAY 02">DAY 02</h1>
     </div>
     <p class="section-subtitle">
-      April 4, 2026 - Cultural Events
+      March 14, 2026 - Cultural Events
     </p>
   </section>
 
@@ -70,7 +70,7 @@ function is_closed($key)
       <!-- Dance Competition -->
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/rangoli.jpg" alt="Dance Competition" />
+          <img src="assets/images/events/rangoli.jpg" alt="Dance Competition" />
           <?php if (is_closed('Rangoli')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -110,7 +110,7 @@ function is_closed($key)
       <!-- Singing Competition -->
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/photo.jpeg" alt="Singing Competition" />
+          <img src="assets/images/events/photo.jpeg" alt="Singing Competition" />
           <?php if (is_closed('Photography')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -151,7 +151,7 @@ function is_closed($key)
 
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/instrument.jpg" alt="Quiz Competition" />
+          <img src="assets/images/events/instrument.jpg" alt="Quiz Competition" />
           <?php if (is_closed('Instrumentalplaying')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -193,7 +193,7 @@ function is_closed($key)
 
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/treasure.jpg" alt="Poetry Recitation" />
+          <img src="assets/images/events/treasure.jpg" alt="Poetry Recitation" />
           <?php if (is_closed('Treasurehunt')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -233,7 +233,7 @@ function is_closed($key)
       <!-- Drama Performance -->
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/shortflim.jpg" alt="Drama Performance" />
+          <img src="assets/images/events/shortflim.jpg" alt="Drama Performance" />
           <?php if (is_closed('Shortflim')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -275,7 +275,7 @@ function is_closed($key)
 
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/mime.jpg" alt="Music Band Performance" />
+          <img src="assets/images/events/mime.jpg" alt="Music Band Performance" />
           <?php if (is_closed('Mime')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -316,7 +316,7 @@ function is_closed($key)
 
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/managerever.jpg" alt="Photography Contest" />
+          <img src="assets/images/events/managerever.jpg" alt="Photography Contest" />
           <?php if (is_closed('Bestmanager')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -358,7 +358,7 @@ function is_closed($key)
 
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/art.jpg" alt="Debate Competition" />
+          <img src="assets/images/events/art.jpg" alt="Debate Competition" />
           <?php if (is_closed('Artfromwaste')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -401,7 +401,7 @@ function is_closed($key)
 
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/sherlhome.jpg" alt="Art Exhibition" />
+          <img src="assets/images/events/sherlhome.jpg" alt="Art Exhibition" />
           <?php if (is_closed('Sherlockholmes')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -440,7 +440,7 @@ function is_closed($key)
       </div>
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/freefire.jpg" alt="Fashion Show" />
+          <img src="assets/images/events/freefire.jpg" alt="Fashion Show" />
           <?php if (is_closed('Freefire')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -485,7 +485,7 @@ function is_closed($key)
       <!-- Stand-up Comedy -->
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/rjvj.jpg" alt="Stand-up Comedy" />
+          <img src="assets/images/events/rjvj.jpg" alt="Stand-up Comedy" />
           <?php if (is_closed('Rjvj')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -526,7 +526,7 @@ function is_closed($key)
       <!-- Traditional Arts -->
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/fruits.jpg" alt="Stand-up Comedy" />
+          <img src="assets/images/events/fruits.jpg" alt="Stand-up Comedy" />
           <?php if (is_closed('Vegetablefruitart')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>
@@ -566,7 +566,7 @@ function is_closed($key)
 
       <div class="event-card">
         <div class="event-image">
-          <img src="assets/images/twindnce.jpg" alt="Short Film Festival" />
+          <img src="assets/images/events/twindnce.jpg" alt="Short Film Festival" />
           <?php if (is_closed('Twindance')): ?>
             <button class="register-btn disabled" disabled style="background: #555; cursor: not-allowed;">Closed</button>
           <?php else: ?>

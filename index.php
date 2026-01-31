@@ -11,7 +11,6 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -114,7 +113,7 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="assets/images/agastya.jpg" alt="Cultural Event">
+                    <img src="assets/images/orlia25mkce.jpg" alt="Cultural Event">
                 </div>
             </div>
         </div>
@@ -426,54 +425,57 @@
             <h2>Past Events Gallery</h2>
             <p class="section-subtitle">Glimpses of Our Journey</p>
             <div class="gallery-wrapper">
-
                 <h3 style="text-align: center; margin-bottom: 20px;">2025 Highlights</h3>
                 <div class="gallery-track">
                     <div class="gallery-row">
-                        <img src="assets/images/gal1.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal2.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal3.jpg" alt="Gallery Image">
-                        <img src="assets/images/balaannadance.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal4.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal5.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal6.jpg" alt="Gallery Image">
-                    </div>
-                    <div class="gallery-row">
-                        <img src="assets/images/gal1.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal2.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal3.jpg" alt="Gallery Image">
-                        <img src="assets/images/balaannadance.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal4.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal5.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal6.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal1.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal2.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal3.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/balaannadance.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal4.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal5.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal6.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal7.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal8.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal9.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal10.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal11.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal12.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal13.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal14.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal15.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal16.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal17.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal18.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal19.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal20.jpg" alt="Gallery Image">
                     </div>
                 </div>
 
                 <h3 style="text-align: center; margin: 40px 0 20px;">2024 Highlights</h3>
                 <div class="gallery-track reverse">
                     <div class="gallery-row">
-                        <img src="assets/images/gal11.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal12.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal13.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal14.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal15.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal16.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal17.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal18.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal19.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal20.jpg" alt="Gallery Image">
-                    </div>
-                    <div class="gallery-row">
-                        <img src="assets/images/gal11.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal12.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal13.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal14.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal15.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal16.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal17.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal18.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal19.jpg" alt="Gallery Image">
-                        <img src="assets/images/gal20.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal1.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal2.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal3.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/balaannadance.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal4.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal5.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal6.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal7.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal8.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal9.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal10.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal11.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal12.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal13.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal14.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal15.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal16.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal17.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal18.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal19.jpg" alt="Gallery Image">
+                        <img src="assets/images/24/gal20.jpg" alt="Gallery Image">
                     </div>
                 </div>
             </div>
