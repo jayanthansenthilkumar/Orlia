@@ -1,3 +1,7 @@
+<?php
+include 'includes/auth.php';
+checkUserAccess();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,14 +23,6 @@
     <div class="admin-body">
         <!-- Sidebar -->
         <?php
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (!isset($_SESSION['role']) || $_SESSION['role'] != '2') {
-            header("Location: index.php");
-            exit();
-        }
-
         $role = 'super';
         $page = 'admins';
         include 'includes/sidebar.php';

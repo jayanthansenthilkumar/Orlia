@@ -1,3 +1,7 @@
+<?php
+include 'includes/auth.php';
+checkUserAccess();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,10 +63,61 @@
                 </div>
             </header>
 
+<?php
+            include 'db.php';
+            $eventKey = $_SESSION['userid'];
+
+            // Fetch Event Name
+            $event_name_query = "SELECT event_name FROM events WHERE event_key='$eventKey'";
+            $event_name_run = mysqli_query($conn, $event_name_query);
+            $event_name = "Unknown Event";
+            if($event_name_run && mysqli_num_rows($event_name_run) > 0){
+                $event_row = mysqli_fetch_assoc($event_name_run);
+                $event_name = $event_row['event_name'];
+            }
+
+            // Fetch Participants
+            $rows = [];
+            
+            // Solo
+            $solo_q = "SELECT * FROM soloevents WHERE events='$eventKey'";
+            $solo_r = mysqli_query($conn, $solo_q);
+            if($solo_r){
+                while($item = mysqli_fetch_assoc($solo_r)){
+                    $rows[] = [
+                        'id' => 'S'.$item['id'],
+                        'name' => $item['name'],
+                        'roll' => $item['regno'],
+                        'year' => $item['year'],
+                        'dept' => $item['dept'],
+                        'contact' => $item['phoneno'],
+                        'type' => 'Solo'
+                    ];
+                }
+            }
+
+            // Group
+            $group_q = "SELECT * FROM groupevents WHERE events='$eventKey'";
+            $group_r = mysqli_query($conn, $group_q);
+            if($group_r){
+                while($item = mysqli_fetch_assoc($group_r)){
+                    $rows[] = [
+                        'id' => 'G'.$item['id'],
+                        'name' => $item['teamname'],
+                        'roll' => $item['tregno'], // Leader Roll
+                        'year' => $item['year'],
+                        'dept' => $item['dept'],
+                        'contact' => $item['phoneno'], // Leader Contact
+                        'type' => 'Group'
+                    ];
+                }
+            }
+            ?>
+            
             <!-- Event Title dynamically leads here -->
             <div class="mb-4">
                 <h2 style="font-family: 'Space Grotesk'; color: var(--text-main);">Event: <span
-                        style="color: var(--primary-main);">Code Debugging</span></h2>
+                        style="color: var(--primary-main);"><?= htmlspecialchars($event_name) ?></span></h2>
             </div>
 
             <div class="table-container">
@@ -76,43 +131,20 @@
                             <th>Year</th>
                             <th>Contact</th> <!-- Or Leader Contact -->
                             <th>Type</th> <!-- Solo/Group -->
-                            <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php foreach($rows as $row): ?>
                         <tr>
-                            <td>#EV001</td>
-                            <td>Michael B</td>
-                            <td>21MECH012</td>
-                            <td>Mech</td>
-                            <td>IV</td>
-                            <td>michael@example.com</td>
-                            <td>Solo</td>
-                            <td><span class="status-badge status-active">Verified</span></td>
-                            <td>
-                                <button class="action-btn btn-edit" title="Verify"><i
-                                        class="ri-check-line"></i></button>
-                                <button class="action-btn btn-delete" title="Remove"><i
-                                        class="ri-close-line"></i></button>
-                            </td>
+                            <td>#<?= $row['id'] ?></td>
+                            <td><?= $row['name'] ?></td>
+                            <td><?= $row['roll'] ?></td>
+                            <td><?= $row['dept'] ?></td>
+                            <td><?= $row['year'] ?></td>
+                            <td><?= $row['contact'] ?></td>
+                            <td><span class="status-badge status-active"><?= $row['type'] ?></span></td>
                         </tr>
-                        <tr>
-                            <td>#EV002</td>
-                            <td>Alpha Squad</td>
-                            <td>21IT044 (Kevin D)</td>
-                            <td>IT</td>
-                            <td>III</td>
-                            <td>kevin@example.com</td>
-                            <td>Group (4)</td>
-                            <td><span class="status-badge status-inactive">Pending</span></td>
-                            <td>
-                                <button class="action-btn btn-edit" title="Verify"><i
-                                        class="ri-check-line"></i></button>
-                                <button class="action-btn btn-delete" title="Remove"><i
-                                        class="ri-close-line"></i></button>
-                            </td>
-                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -140,5 +172,4 @@
         });
     </script>
 </body>
-
 </html>

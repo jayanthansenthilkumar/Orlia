@@ -129,6 +129,13 @@
                             </select>
                         </div>
 
+                        <div class="form-group" id="songFieldContainer" style="display: none;">
+                            <label for="songFile"
+                                style="display: block; margin-bottom: 5px; color: var(--text-color);">Upload Song (MP3
+                                only)</label>
+                            <input type="file" id="songFile" name="song" accept=".mp3">
+                        </div>
+
                         <div class="form-group">
                             <input type="number" id="teamMembersCount" name="teamMembersCount"
                                 placeholder="Number of Team Members" min="1" max="15" required>
@@ -384,6 +391,20 @@
 
         document.getElementById('events').addEventListener('change', function () {
             const selectedEvent = this.value;
+
+            // Handle Song Field Visibility
+            const songContainer = document.getElementById('songFieldContainer');
+            const songInput = document.getElementById('songFile');
+
+            if (selectedEvent && selectedEvent.toLowerCase() === 'groupdance') {
+                songContainer.style.display = 'block';
+                songInput.required = true;
+            } else {
+                songContainer.style.display = 'none';
+                songInput.required = false;
+                songInput.value = '';
+            }
+
             const teamMembersInput = document.getElementById('teamMembersCount');
 
             // Case-insensitive lookup for event configs

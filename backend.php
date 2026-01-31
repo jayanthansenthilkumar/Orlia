@@ -53,6 +53,32 @@ if (isset($_POST['groupnewuser'])) {
     $day = mysqli_real_escape_string($conn, $_POST['daySelection']);
     $events = mysqli_real_escape_string($conn, $_POST['events']);
 
+    $song = '';
+    if (isset($_FILES['song']) && $_FILES['song']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['song']['tmp_name'];
+        $fileName = $_FILES['song']['name'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+        $allowedfileExtensions = array('mp3');
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+            $uploadFileDir = 'uploads/songs/';
+            if (!is_dir($uploadFileDir)) {
+                mkdir($uploadFileDir, 0777, true);
+            }
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+            $dest_path = $uploadFileDir . $newFileName;
+            if(move_uploaded_file($fileTmpPath, $dest_path)) {
+                $song = $dest_path;
+            } else {
+                echo json_encode(['status' => 500, 'message' => 'Error moving the uploaded file.']);
+                exit;
+            }
+        } else {
+            echo json_encode(['status' => 400, 'message' => 'Invalid file format. Only MP3 allowed.']);
+            exit;
+        }
+    }
+
     // Check Event Status
     $statusQuery = "SELECT status FROM events WHERE event_key='$events'";
     $statusResult = mysqli_query($conn, $statusQuery);
@@ -91,7 +117,7 @@ if (isset($_POST['groupnewuser'])) {
     // Convert team members array to JSON
     $tmember_json = json_encode($teamMembers, JSON_UNESCAPED_UNICODE);
 
-    $query = "INSERT INTO groupevents (teamname, teamleadname, tregno, temail, tmembername, year, phoneno, dept, day, events) VALUES ('$teamname', '$teamleadname', '$tregno', '$temail', '$tmember_json', '$year', '$phoneno', '$dept', '$day', '$events')";
+    $query = "INSERT INTO groupevents (teamname, teamleadname, tregno, temail, tmembername, year, phoneno, dept, day, events, song) VALUES ('$teamname', '$teamleadname', '$tregno', '$temail', '$tmember_json', '$year', '$phoneno', '$dept', '$day', '$events', '$song')";
     if (mysqli_query($conn, $query)) {
         $res = [
             'status' => 200,
@@ -228,11 +254,16 @@ if (isset($_POST['login_user'])) {
 
         $_SESSION['userid'] = $row['userid'];
         $_SESSION['role'] = $row['role'];
+        $_SESSION['login_time'] = time();
 
         $res = [
             'status' => 200,
             'message' => 'Login Successful',
-            'redirect' => $row['role'] == 'event' ? 'eventAdmin.php' : ($row['role'] == 'super' ? 'superAdmin.php' : 'adminDashboard.php')
+            'redirect' => $row['role'] == '1' ? 'eventAdmin.php' : ($row['role'] == '2' ? 'superAdmin.php' : 'adminDashboard.php'),
+            'user' => [
+                'userid' => $row['userid'],
+                'role' => $row['role']
+            ]
         ];
         echo json_encode($res);
         return;

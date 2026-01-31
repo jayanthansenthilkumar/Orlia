@@ -1,3 +1,18 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['userid'])) {
+    if ($_SESSION['role'] == '1') {
+        header("Location: eventAdmin.php");
+    } elseif ($_SESSION['role'] == '2') {
+        header("Location: superAdmin.php");
+    } else {
+        header("Location: adminDashboard.php");
+    }
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,6 +113,7 @@
                             timer: 1500,
                             showConfirmButton: false
                         }).then(() => {
+                            sessionStorage.setItem('userData', JSON.stringify(res.user));
                             window.location.href = res.redirect || 'adminDashboard.php';
                         });
                     } else {
