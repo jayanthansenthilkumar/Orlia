@@ -13,16 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- SweetAlert is loaded in body -->
-    <style>
-        /* Style for locked/fixed fields */
-        select:disabled,
-        input:disabled {
-            background-color: #f0f0f0;
-            /* Light gray background */
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -45,78 +36,11 @@
         <div class="particle"></div>
     </div>
     <div class="theme-switch-wrapper">
-        <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
+        <!-- <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
             <i class="ri-moon-line"></i>
-        </div>
+        </div> -->
     </div>
-    <style>
-        /* Step Wizard Styles */
-        .step-container {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
 
-        .step-container.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .form-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .btn-prev,
-        .btn-next {
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            border: none;
-            font-weight: 600;
-        }
-
-        .btn-prev {
-            background-color: #ddd;
-            color: #333;
-        }
-
-        .btn-next {
-            background-color: #134e4a;
-            /* Matches theme */
-            color: white;
-        }
-
-        /* Progress Indicators */
-        .step-indicators {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .step-dot {
-            height: 10px;
-            width: 10px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            margin: 0 5px;
-        }
-
-        .step-dot.active {
-            background-color: #134e4a;
-            transform: scale(1.2);
-        }
-    </style>
     <div class="registration-container">
         <div class="brand-section">
             <h1>ORLIA'26</h1>
@@ -126,9 +50,8 @@
             <div class="registration-form">
                 <h2>Team Registration</h2>
 
-                <div class="step-indicators">
+                <div class="step-indicators" id="stepIndicators">
                     <span class="step-dot active"></span>
-                    <span class="step-dot"></span>
                     <span class="step-dot"></span>
                 </div>
 
@@ -189,7 +112,7 @@
                         </div>
                     </div>
 
-                    <!-- Step 2: Event Details -->
+                    <!-- Step 2: Event Details & Member Count -->
                     <div class="step-container" id="step2">
                         <h3>Event Details</h3>
                         <div class="form-group">
@@ -206,28 +129,19 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <input type="number" id="teamMembersCount" name="teamMembersCount"
+                                placeholder="Number of Team Members" min="1" max="15" required>
+                        </div>
+
                         <div class="form-navigation">
                             <button type="button" class="btn-prev" onclick="prevStep(2)">Previous</button>
                             <button type="button" class="btn-next" onclick="nextStep(2)">Next</button>
                         </div>
                     </div>
 
-                    <!-- Step 3: Team Members -->
-                    <div class="step-container" id="step3">
-                        <h3>Team Members</h3>
-                        <div class="form-group">
-                            <input type="number" id="teamMembersCount" name="teamMembersCount"
-                                placeholder="Number of Team Members" min="1" max="15" required
-                                onchange="addTeamMembers()">
-                        </div>
-                        <div id="teamMembersContainer"></div>
-
-                        <div class="form-navigation">
-                            <button type="button" class="btn-prev" onclick="prevStep(3)">Previous</button>
-                            <button type="submit" class="submit-btn"
-                                style="width: auto; min-width: 120px;">Register</button>
-                        </div>
-                    </div>
+                    <!-- Dynamic Steps Placeholder -->
+                    <div id="dynamicStepsContainer"></div>
 
                 </form>
             </div>
@@ -242,6 +156,7 @@
 
 
     <script>
+        // Multi-step Form Logic
         // Multi-step Form Logic
         function updateIndicators() {
             const dots = document.querySelectorAll('.step-dot');
@@ -261,6 +176,18 @@
                     dot.classList.remove('active');
                 }
             });
+        }
+
+        function createIndicators(totalSteps) {
+            const container = document.getElementById('stepIndicators');
+            container.innerHTML = '';
+            for (let i = 0; i < totalSteps; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'step-dot';
+                if (i === 0) dot.classList.add('active');
+                container.appendChild(dot);
+            }
+            updateIndicators();
         }
 
         function nextStep(currentStep) {
@@ -284,17 +211,58 @@
 
             if (!isValid) return;
 
+            // If we are on Step 2, generate the dynamic steps before moving
+            if (currentStep === 2) {
+                generateTeamSteps();
+            }
+
             // Go to next
             document.getElementById('step' + currentStep).classList.remove('active');
-            document.getElementById('step' + (currentStep + 1)).classList.add('active');
-            updateIndicators();
+            const nextStepContainer = document.getElementById('step' + (currentStep + 1));
+
+            if (nextStepContainer) {
+                nextStepContainer.classList.add('active');
+                updateIndicators();
+
+                // Set focus to the first input of the new step
+                const firstInput = nextStepContainer.querySelector('input, select');
+                if (firstInput) {
+                    firstInput.focus();
+                }
+            }
         }
 
         function prevStep(currentStep) {
             document.getElementById('step' + currentStep).classList.remove('active');
-            document.getElementById('step' + (currentStep - 1)).classList.add('active');
-            updateIndicators();
+            const prevStepContainer = document.getElementById('step' + (currentStep - 1));
+
+            if (prevStepContainer) {
+                prevStepContainer.classList.add('active');
+                updateIndicators();
+
+                // Set focus
+                const firstInput = prevStepContainer.querySelector('input, select');
+                if (firstInput) {
+                    firstInput.focus();
+                }
+            }
         }
+
+        // Prevent Enter key from submitting the form on early steps
+        document.getElementById('Groupform').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                const activeStep = document.querySelector('.step-container.active');
+                // Only prevent if we are NOT on the last step containing submit-btn
+                if (activeStep) {
+                    const submitBtn = activeStep.querySelector('.submit-btn');
+                    if (!submitBtn) {
+                        e.preventDefault();
+                        const nextBtn = activeStep.querySelector('.btn-next');
+                        if (nextBtn) nextBtn.click();
+                    }
+                }
+            }
+        });
 
         const eventTeamSizes = {
             'Divideconquer': {
@@ -452,53 +420,48 @@
                 }
 
                 // If the value was empty or 0 and min-1 is > 0, we just set it. 
-                // Ensuring addTeamMembers is called to render the inputs immediately
-                addTeamMembers();
+                // No immediate generation needed, will generate on nextStep(2)
             } else {
                 teamMembersInput.disabled = true;
                 teamMembersInput.placeholder = 'Select an event first';
                 teamMembersInput.value = '';
-                document.getElementById('teamMembersContainer').innerHTML = '';
             }
         });
 
-        function addTeamMembers() {
-            const count = parseInt(document.getElementById("teamMembersCount").value);
-            const container = document.getElementById("teamMembersContainer");
-            container.innerHTML = "";
+        function generateTeamSteps() {
+            const count = parseInt(document.getElementById("teamMembersCount").value) || 0;
+            const container = document.getElementById("dynamicStepsContainer");
+            container.innerHTML = ""; // Clear existing
 
-            const selectedEvent = document.getElementById('events').value;
+            if (count === 0) return;
 
-            // Case-insensitive lookup (same logic as change listener)
-            let config = null;
-            if (eventTeamSizes[selectedEvent]) {
-                config = eventTeamSizes[selectedEvent];
-            } else {
-                const lowerSelected = selectedEvent.toLowerCase();
-                const key = Object.keys(eventTeamSizes).find(k => k.toLowerCase() === lowerSelected);
-                if (key) {
-                    config = eventTeamSizes[key];
-                }
-            }
+            // Configuration
+            const memberChunkSize = 1; // Number of members per tab/slide
+            const totalMembers = count;
+            const totalSteps = Math.ceil(totalMembers / memberChunkSize);
 
-            const limits = config;
+            // We start numbering dynamic steps from 3
+            // Step 1: Leader, Step 2: Event, Step 3+: Members
 
-            // Add 1 to count to include the leader
-            const totalCount = count + 1;
+            for (let s = 0; s < totalSteps; s++) {
+                const stepId = 3 + s;
+                const memberIndex = s + 1; // 1, 2, 3...
 
-            if (limits && totalCount >= limits.min && totalCount <= limits.max) {
-                // Display total team size including leader
-                container.innerHTML =
-                    `<div class="form-group"><p>Total team size (including leader): ${totalCount}</p></div>`;
+                const isLastStep = (s === totalSteps - 1);
 
-                // Generate fields for additional members
-                for (let i = 1; i <= count; i++) {
-                    container.innerHTML += `
+                let html = `
+                <div class="step-container" id="step${stepId}">
+                    <h3>Team Member ${memberIndex} Details</h3>
+                `;
+
+                // We are only showing one member per step now
+                html += `
+                    <div class="member-block">
                         <div class="form-group">
-                            <input type="text" name="memberName${i}" placeholder="Team Member ${i} Name" required>
+                            <input type="text" name="memberName${memberIndex}" placeholder="Team Member ${memberIndex} Name" required>
                         </div>
                         <div class="form-group">
-                            <select name="memberDept${i}" required>
+                            <select name="memberDept${memberIndex}" required>
                                 <option value="" disabled selected>Select Department</option>
                                 <option value="AIDS">AIDS</option>
                                 <option value="AIML">AIML</option>
@@ -515,7 +478,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select name="memberYear${i}" required>
+                            <select name="memberYear${memberIndex}" required>
                                 <option value="" disabled selected>Select Year</option>
                                 <option value="I year">I Year</option>
                                 <option value="II year">II Year</option>
@@ -524,14 +487,34 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="memberRoll${i}" placeholder="Team Member ${i} Roll Number" required>
+                            <input type="text" name="memberRoll${memberIndex}" placeholder="Team Member ${memberIndex} Roll Number" required>
                         </div>
                         <div class="form-group">
-                            <input type="tel" name="memberPhone${i}" placeholder="Team Member ${i} Phone Number" required>
+                            <input type="tel" name="memberPhone${memberIndex}" placeholder="Team Member ${memberIndex} Phone Number" required>
                         </div>
-                    `;
+                    </div>
+                `;
+
+                html += `
+                    <div class="form-navigation">
+                        <button type="button" class="btn-prev" onclick="prevStep(${stepId})">Previous</button>
+                `;
+
+                if (isLastStep) {
+                    html += `<button type="submit" class="submit-btn" style="width: auto; min-width: 120px;">Register</button>`;
+                } else {
+                    html += `<button type="button" class="btn-next" onclick="nextStep(${stepId})">Next</button>`;
                 }
+
+                html += `
+                    </div>
+                </div>`;
+
+                container.insertAdjacentHTML('beforeend', html);
             }
+
+            // Update indicators (Step 1 + Step 2 + Dynamic Steps)
+            createIndicators(2 + totalSteps);
         }
 
 
@@ -710,7 +693,9 @@
             yearSelect.addEventListener('change', checkAutoFillRollNumber);
 
             // Team Member Roll Number Logic (Event Delegation)
-            document.getElementById('teamMembersContainer').addEventListener('change', function (e) {
+            // Team Member Roll Number Logic (Event Delegation)
+            // Updated to listen on document because elements are dynamic
+            document.addEventListener('change', function (e) {
                 if (e.target.tagName === 'SELECT' && (e.target.name.startsWith('memberDept') || e.target.name.startsWith('memberYear'))) {
                     const memberIndex = e.target.name.match(/\d+/)[0];
                     updateMemberRollPrefix(memberIndex);
@@ -718,7 +703,7 @@
             });
 
             // Prevent backspace on frozen prefix for team members
-            document.getElementById('teamMembersContainer').addEventListener('keydown', function (e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.target.name && e.target.name.startsWith('memberRoll') && e.key === 'Backspace') {
                     const memberIndex = e.target.name.match(/\d+/)[0];
                     const rollInput = e.target;
@@ -730,7 +715,7 @@
             });
 
             // Enforce prefix on input
-            document.getElementById('teamMembersContainer').addEventListener('input', function (e) {
+            document.addEventListener('input', function (e) {
                 if (e.target.name && e.target.name.startsWith('memberRoll')) {
                     const rollInput = e.target;
                     const prefix = rollInput.dataset.fixedPrefix;

@@ -33,9 +33,9 @@
         <div class="particle"></div>
     </div>
     <div class="theme-switch-wrapper">
-        <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
+        <!-- <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
             <i class="ri-moon-line"></i>
-        </div>
+        </div> -->
     </div>
     <nav class="sidebar">
         <ul class="nav-links">
@@ -428,27 +428,26 @@
                 <h3 style="text-align: center; margin-bottom: 20px;">2025 Highlights</h3>
                 <div class="gallery-track">
                     <div class="gallery-row">
-                        <img src="assets/images/25/gal1.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal2.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal3.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/balaannadance.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal4.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal5.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal6.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal7.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal8.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal9.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal10.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal11.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal12.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal13.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal14.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal15.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal16.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal17.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal18.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal19.jpg" alt="Gallery Image">
-                        <img src="assets/images/25/gal20.jpg" alt="Gallery Image">
+                        <img src="assets/images/25/gal1.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal2.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal3.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal4.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal5.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal6.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal7.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal8.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal9.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal10.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal11.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal12.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal13.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal14.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal15.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal16.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal17.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal18.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal19.jpeg" alt="Gallery Image">
+                        <img src="assets/images/25/gal20.jpeg" alt="Gallery Image">
                     </div>
                 </div>
 

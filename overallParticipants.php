@@ -34,9 +34,9 @@
                     </div>
                 </div>
                 <div class="header-right">
-                    <div class="theme-switch" id="theme-toggle">
+                    <!-- <div class="theme-switch" id="theme-toggle">
                         <i class="ri-moon-line"></i>
-                    </div>
+                    </div> -->
                     <!-- User Profile -->
                     <div class="user-profile">
                         <div class="user-avatar">

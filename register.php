@@ -13,19 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 
-    <style>
-        /* Style for locked/fixed fields */
-        select:disabled,
-        input:disabled {
-            background-color: #f0f0f0;
-            /* Light gray background */
-            font-weight: bold;
-            /* Make text bolder to ensure readability if contrast is lower */
-            cursor: not-allowed;
-            opacity: 0.8;
-            /* Slightly less opaque */
-        }
-    </style>
+
 </head>
 
 <body>
@@ -48,9 +36,9 @@
         <div class="particle"></div>
     </div>
     <div class="theme-switch-wrapper">
-        <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
+        <!-- <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
             <i class="ri-moon-line"></i>
-        </div>
+        </div> -->
     </div>
     <div class="registration-container">
         <div class="brand-section">
@@ -265,10 +253,10 @@
             const departmentSelect = document.getElementById('department');
             const yearSelect = document.getElementById('year');
             const rollNumberInput = document.getElementById('rollNumber');
-            
+
             let currentFixedPrefix = '';
             let isRollPrefixLocked = false;
-            
+
             const deptCodes = {
                 'AIDS': 'BAD',
                 'AIML': 'BAM',
@@ -278,12 +266,12 @@
                 'CSE': 'BCS',
                 'CSBS': 'BCB',
                 'CYBER': 'BSC', // Assuming 'CS' from prompt might map to 'CYBER' or just explicit mapping needed? 
-                                // PROMPT SAYS: "CS - BSC". Dropdown has "CYBER" "CSE" "CSBS". 
-                                // Usually 'Cyber' is often separate. Let's assume 'CYBER' -> 'BSC' based on exclusion or user might mean 'Computer Science'. 
-                                // Wait, prompt says: "CS - BSC" and "CSE - BCS". 
-                                // Let's try to map best as possible. 
-                                // If dropdown has 'CYBER', and prompt has 'CS', maybe 'CYBER' is 'BSC'? 
-                                // Let's proceed with knowns clearly, if valid matches found.
+                // PROMPT SAYS: "CS - BSC". Dropdown has "CYBER" "CSE" "CSBS". 
+                // Usually 'Cyber' is often separate. Let's assume 'CYBER' -> 'BSC' based on exclusion or user might mean 'Computer Science'. 
+                // Wait, prompt says: "CS - BSC" and "CSE - BCS". 
+                // Let's try to map best as possible. 
+                // If dropdown has 'CYBER', and prompt has 'CS', maybe 'CYBER' is 'BSC'? 
+                // Let's proceed with knowns clearly, if valid matches found.
                 'ECE': 'BEC',
                 'EEE': 'BEE',
                 'MECH': 'BME',
@@ -302,19 +290,19 @@
             };
 
             // Enforce the prefix if locked
-            rollNumberInput.addEventListener('input', function() {
+            rollNumberInput.addEventListener('input', function () {
                 if (isRollPrefixLocked && currentFixedPrefix) {
                     if (!this.value.startsWith(currentFixedPrefix)) {
                         this.value = currentFixedPrefix;
                     }
                 }
             });
-            
+
             // Prevent deleting the prefix via backspace for better UX
-            rollNumberInput.addEventListener('keydown', function(e) {
+            rollNumberInput.addEventListener('keydown', function (e) {
                 if (isRollPrefixLocked && currentFixedPrefix) {
                     if (this.selectionStart <= currentFixedPrefix.length && e.key === 'Backspace') {
-                         e.preventDefault();
+                        e.preventDefault();
                     }
                 }
             });
@@ -322,24 +310,24 @@
             function checkAutoFillRollNumber() {
                 const dept = departmentSelect.value;
                 const year = yearSelect.value;
-                
+
                 let prefix = '';
-                
+
                 // Check if both valid
                 if (dept && year && yearCodes[year]) {
-                     const yCode = yearCodes[year];
-                     let dCode = deptCodes[dept] || '';
-                     
-                     // SPECIAL CASE: For AIML only if year == IV means prefix is 927622BAL
-                     if (dept === 'AIML' && year === 'IV year') {
-                         // Override dCode logic
-                         // Standard AIML is BAM, but IV Year is BAL
-                          dCode = 'BAL';
-                     }
-                     
-                     if (dCode) {
-                         prefix = yCode + dCode;
-                     }
+                    const yCode = yearCodes[year];
+                    let dCode = deptCodes[dept] || '';
+
+                    // SPECIAL CASE: For AIML only if year == IV means prefix is 927622BAL
+                    if (dept === 'AIML' && year === 'IV year') {
+                        // Override dCode logic
+                        // Standard AIML is BAM, but IV Year is BAL
+                        dCode = 'BAL';
+                    }
+
+                    if (dCode) {
+                        prefix = yCode + dCode;
+                    }
                 }
 
                 if (prefix) {
@@ -354,7 +342,7 @@
                         // If same prefix but user cleared it
                         rollNumberInput.value = prefix;
                     }
-                    
+
                     currentFixedPrefix = prefix;
                     isRollPrefixLocked = true;
                 } else {

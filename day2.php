@@ -47,9 +47,9 @@ function is_closed($key)
     <div class="particle"></div>
   </div>
   <div class="theme-switch-wrapper">
-    <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
+    <!-- <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
       <i class="ri-moon-line"></i>
-    </div>
+    </div> -->
   </div>
   <a href="index.php" class="back-btn">
     <i class="ri-arrow-left-line"></i>

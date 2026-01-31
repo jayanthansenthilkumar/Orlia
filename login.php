@@ -32,9 +32,9 @@
         <div class="particle"></div>
     </div>
     <div class="theme-switch-wrapper">
-        <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
+        <!-- <div class="theme-switch" id="theme-toggle" title="Toggle Theme">
             <i class="ri-moon-line"></i>
-        </div>
+        </div> -->
     </div>
     <div class="registration-container">
         <div class="brand-section">
@@ -77,7 +77,7 @@
     <script>
         $(document).on('submit', '#adminLoginForm', function (e) {
             e.preventDefault();
-            
+
             var formData = new FormData(this);
             formData.append("login_user", true);
 
@@ -108,8 +108,8 @@
                         });
                     }
                 },
-                error: function(xhr, status, error) {
-                     Swal.fire({
+                error: function (xhr, status, error) {
+                    Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         text: 'Something went wrong! Connection failed.'
