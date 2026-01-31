@@ -170,6 +170,8 @@ checkUserAccess(true);
                             title: "Good job!",
                             text: res.message,
                             icon: "success"
+                        }).then(() => {
+                            window.location.href = "index.php#events";
                         });
                     } else {
                         Swal.fire({
