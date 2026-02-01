@@ -430,18 +430,20 @@ checkUserAccess(true);
                     min,
                     max
                 } = config;
-                // Subtract 1 from min and max since leader is counted separately
-                teamMembersInput.min = min - 1;
-                teamMembersInput.max = max - 1;
+                // Use min and max directly
+                teamMembersInput.min = min;
+                teamMembersInput.max = max;
                 teamMembersInput.disabled = false;
-                teamMembersInput.placeholder = `Enter additional members (${min - 1}-${max - 1})`;
+                teamMembersInput.placeholder = `Total Team Size (${min}-${max})`;
 
                 // Adjust value if out of bounds
                 const currentVal = parseInt(teamMembersInput.value) || 0;
-                if (currentVal < min - 1) {
-                    teamMembersInput.value = min - 1;
-                } else if (currentVal > max - 1) {
-                    teamMembersInput.value = max - 1;
+                if (currentVal) {
+                    if (currentVal < min) {
+                        teamMembersInput.value = min;
+                    } else if (currentVal > max) {
+                        teamMembersInput.value = max;
+                    }
                 }
 
                 // If the value was empty or 0 and min-1 is > 0, we just set it. 
@@ -454,16 +456,16 @@ checkUserAccess(true);
         });
 
         function generateTeamSteps() {
-            const count = parseInt(document.getElementById("teamMembersCount").value) || 0;
+            const totalCount = parseInt(document.getElementById("teamMembersCount").value) || 0;
             const container = document.getElementById("dynamicStepsContainer");
             container.innerHTML = ""; // Clear existing
 
-            if (count === 0) return;
+            if (totalCount <= 1) return;
 
             // Configuration
             const memberChunkSize = 1; // Number of members per tab/slide
-            const totalMembers = count;
-            const totalSteps = Math.ceil(totalMembers / memberChunkSize);
+            const additionalMembers = totalCount - 1;
+            const totalSteps = Math.ceil(additionalMembers / memberChunkSize);
 
             // We start numbering dynamic steps from 3
             // Step 1: Leader, Step 2: Event, Step 3+: Members
@@ -488,18 +490,18 @@ checkUserAccess(true);
                         <div class="form-group">
                             <select name="memberDept${memberIndex}" required>
                                 <option value="" disabled selected>Select Department</option>
-                                <option value="AIDS">AIDS</option>
-                                <option value="AIML">AIML</option>
-                                <option value="CSE">CSE</option>
-                                <option value="CSBS">CSBS</option>
-                                <option value="ECE">ECE</option>
-                                <option value="EEE">EEE</option>
-                                <option value="MECH">MECH</option>
-                                <option value="CIVIL">CIVIL</option>
-                                <option value="IT">IT</option>
-                                <option value="VLSI">VLSI</option>
-                                <option value="MCA">MCA</option>
-                                <option value="MBA">MBA</option>
+                                <option value="AIDS">Artificial Intelligence and Data Science</option>
+                                <option value="AIML">Artificial Intelligence and Machine Learning</option>
+                                <option value="CSE">Computer Science Engineering</option>
+                                <option value="CSBS">Computer Science And Business Systems</option>
+                                <option value="ECE">Electronics & Communication Engineering</option>
+                                <option value="EEE">Electrical & Electronics Engineering</option>
+                                <option value="MECH">Mechanical Engineering</option>
+                                <option value="CIVIL">Civil Engineering</option>
+                                <option value="IT">Information Technology</option>
+                                <option value="VLSI">Electronics Engineering (VLSI Design)</option>
+                                <option value="MCA">Master Of Computer Applications</option>
+                                <option value="MBA">Master of Business Administration</option>
                             </select>
                         </div>
                         <div class="form-group">

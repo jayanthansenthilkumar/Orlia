@@ -321,7 +321,8 @@ if (isset($_GET['get_events'])) {
 
     // Ensure we select only active events or handle status logic if needed. 
     // For now, listing all events matching day and type.
-    $query = "SELECT event_name, event_key FROM events WHERE day='$day' AND event_type='$type'";
+    // Select events matching the specific type OR valid for 'Both'
+    $query = "SELECT event_name, event_key FROM events WHERE day='$day' AND (event_type='$type' OR event_type='Both')";
     $query_run = mysqli_query($conn, $query);
 
     $events = [];
